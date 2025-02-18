@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Professeur</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="profile-section">
+            <input type="file" id="profilePic" accept="image/*">
+            <img id="profileImage" src="default-profile.png" alt="Photo de profil">
+            <p class="username">Professeur</p>
+        </div>
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i><span class="title">Accueil</span></a></li>
+            <li><a href="#"><i class="fas fa-book"></i><span class="title">Mes Classes</span></a></li>
+            <li><a href="#"><i class="fas fa-calendar"></i><span class="title">Planning</span></a></li>
+            <li><a href="#"><i class="fas fa-clipboard"></i><span class="title">Évaluations</span></a></li>
+            <li><a href="#"><i class="fas fa-envelope"></i><span class="title">Messages</span></a></li>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i><span class="title">Déconnexion</span></a></li>
+        </ul>
+    </div>
+    
+    <div class="main-content">
+        <button id="toggleSidebar">☰</button>
+        <h1>Bienvenue sur le Tableau de Bord Professeur</h1>
+        <p>Gérez vos classes, plannings et évaluations ici.</p>
+    </div>
+
+    <script>
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+        
+        document.getElementById('profilePic').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion d'école</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./images/logocicaf.png" alt="logo" type="image/png">
+
+    <style>
+        /* Styles pour la mise en page du formulaire */
+        .form-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .form-group {
+            flex: 1 1 45%;
+            margin: 10px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333; /* Couleur du texte des labels */
+        }
+
+        .form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="email"], .form-group input[type="date"] {
+            font-size:12px;
+            color: #101041;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9; /* Couleur de fond des champs */
+            color: #333; /* Couleur du texte des champs */
+        }
+        .form-group input[type="date"] {
+            padding: 10px;
+        }
+        .form-group select {
+            appearance: none;
+            background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M4 6l4 4 4-4z"/></svg>') no-repeat right 10px center;
+            background-size: 12px;
+            font-size: 11px;
+            background-color: #fff; /* Couleur de fond du select */
+            color: #101041; /* Couleur du texte du select */
+        }
+        .form-group select option {
+            background-color: white; /* Couleur de fond des options */
+            color: #333; /* Couleur du texte des options */
+        }
+        .form-group.hidden {
+            display: none;
+        }
+        .section-title {
+            text-align: center;
+            width: 100%;
+            margin: 20px 0;
+            color: #101041; /* Couleur du titre de section */
+        }
+        button[type="submit"] {
+            background-color: #fff;
+            color: white;
+            width: 100px;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+    </style>
+</head>
+<body>
+    <section class="inscriptEleve">
+        <h2>Bienvenue et merci de nous faire confiance. Veuillez remplir le formulaire ci-dessous :</h2>
+        <form id="inscriptionForm">
+            <div class="form-container">
+                <!-- Titre et Champs Tuteur -->
+                <h1 class="section-title">Info sur le tuteur</h1>
+                <div class="form-group">
+                    <label for="nom_tuteur">Nom du tuteur</label>
+                    <input type="text" id="nom_tuteur" name="nom_tuteur" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom_tuteur">Prénom du tuteur</label>
+                    <input type="text" id="prenom_tuteur" name="prenom_tuteur" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone_tuteur">N°de phone du tuteur</label>
+                    <input type="tel" id="telephone_tuteur" name="telephone_tuteur" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_tuteur">Adresse e-mail du tuteur</label>
+                    <input type="email" id="email_tuteur" name="email_tuteur" required>
+                </div>
+                <div class="form-group">
+                    <label for="lien_eleve">Lien avec l’élève</label>
+                    <select id="lien_eleve" name="lien_eleve" required>
+                        <option value="parent">Parent</option>
+                        <option value="oncle">Oncle</option>
+                        <option value="tante">Tante</option>
+                        <option value="grand_parent">Grand-parent</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="adresse_tuteur">Adresse physique du tuteur</label>
+                    <input type="text" id="adresse_tuteur" name="adresse_tuteur" required>
+                </div>
+            </div>
+            <hr style="color:#101041;">
+            <div class="form-container">
+                <!-- Titre et Informations de l'élève -->
+                <h1 class="section-title">Info sur l'élève</h1>
+                <div class="form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="postnom">Post-nom</label>
+                    <input type="text" id="postnom" name="postnom">
+                </div>
+                <div class="form-group">
+                    <label for="sexe">Sexe</label>
+                    <select id="sexe" name="sexe" required>
+                        <option value="masculin">Masculin</option>
+                        <option value="feminin">Féminin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nationalite">Nationalité</label>
+                    <select id="nationalite" name="nationalite">
+                        <option value="congolaise">Congolaise</option>
+                        <option value="francaise">Française</option>
+                        <option value="belge">Belge</option>
+                        <option value="canadienne">Canadienne</option>
+                        <option value="americaine">Américaine</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date_naissance">Date de naissance</label>
+                    <input type="date" id="date_naissance" name="date_naissance" required>
+                </div>
+                <div class="form-group">
+                    <label for="telephone">Numéro de téléphone</label>
+                    <input type="tel" id="telephone" name="telephone" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_eleve">Adresse e-mail de l'élève</label>
+                    <input type="email" id="email_eleve" name="email_eleve" required>
+                </div>
+                <div class="form-group">
+                    <label for="niveau_etude">Niveau d'étude</label>
+                    <select id="niveau_etude" name="niveau_etude">
+                        <option value="1ere_annee">1ère année</option>
+                        <option value="2eme_annee">2ème année</option>
+                        <option value="3eme_annee">3ème année</option>
+                        <option value="4eme_annee">4ème année</option>
+                        <option value="5eme_annee">5ème année</option>
+                        <option value="6eme_annee">6ème année</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="section">Section</label>
+                    <select id="section" name="section" onchange="toggleOptions()">
+                        <option value="primaire">Primaire</option>
+                        <option value="secondaire">Secondaire</option>
+                        <option value="humanite">Humanité</option>
+                    </select>
+                </div>
+                <div class="form-group hidden" id="option_humanite">
+                    <label for="option_humanite_select">Option</label>
+                    <select id="option_humanite_select" name="option_humanite">
+                        <option value="commercial_gestion">Commercial & Gestion</option>
+                        <option value="couture">Couture</option>
+                        <option value="mecanique">Mécanique</option>
+                        <option value="hotellerie">Hôtellerie</option>
+                        <option value="electricite">Électricité</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit">S'inscrire</button>
+        </form>
+    </section>
+    
+    <script>
+        function toggleOptions() {
+            var section = document.getElementById('section').value;
+            var optionHumanite = document.getElementById('option_humanite');
+            if (section === 'humanite') {
+                optionHumanite.classList.remove('hidden');
+            } else {
+                optionHumanite.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('inscriptionForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            var formData = new FormData(event.target);
+            var data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            // Supprime l'option_humanite si la section n'est pas 'humanite'
+            if (data.section !== 'humanite') {
+                delete data.option_humanite;
+            }
+
+            console.log("Données envoyées :", JSON.stringify(data));
+
+
+            // Envoie des données avec les nouveaux champs du tuteur
+            fetch('http://localhost:5002/save',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('✅ Succès:', data);
+                window.location.href = './success.html'; // Redirection vers la page de succès
+            })
+            .catch((error) => {
+                console.error('❌ Erreur:', error);
+                alert("Une erreur est survenue lors de l'envoi du formulaire.");
+            });
+        });
+    </script>
+</body>
+</html>

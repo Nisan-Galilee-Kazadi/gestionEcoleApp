@@ -1,0 +1,84 @@
+Projet de Gestion d'École
+
+L'objectif de ce projet est de concevoir une interface d'accueil intuitive et fonctionnelle pour une application de gestion d'école. L'interface comprendra les sections suivantes : Accueil, À propos et Contact.
+
+### Fonctionnalités Principales
+
+1. **Connexion**
+    - Destinée aux utilisateurs déjà inscrits (élèves, enseignants, administrateurs).
+    - Permet l'accès à un tableau de bord personnalisé.
+
+2. **Inscription**
+    - Génère un formulaire d'inscription pour les nouveaux élèves.
+    - Les données collectées seront enregistrées dans la base de données de l'école.
+    - Une fois inscrits, les élèves pourront se connecter et accéder à leur tableau de bord.
+
+### Tableau de Bord Élève
+
+- **Identité et ID**
+- **Horaires de cours**
+- **Calendrier de planning individuel**
+- **Paiements et progression dans les matières**
+- **Notifications de l'établissement**
+- **Boîte mail**
+- **Espace de travail en groupe**
+- **Paramètres de personnalisation**
+- **Déconnexion**
+
+### Tableau de Bord Administrateur (Préfet)
+
+- **Identité et ID**
+- **Gestion des professeurs**
+  - Liste des professeurs
+  - Cours, horaires et paiements des professeurs
+  - Présences des professeurs
+- **Gestion des élèves**
+  - Nombre d'élèves par niveau d'étude
+  - Détails des paiements et progression des élèves
+- **Ajout de professeur**
+  - Bouton pour ajouter un professeur dans la base de données
+- **Validation des inscriptions**
+  - Traitement des demandes d'inscription et ajout des élèves dans la liste totale
+
+### Tableau de Bord Professeur
+
+- **Identité et ID**
+- **Classes et cours**
+- **Horaires**
+- **Calendrier de planning individuel**
+- **Fiche des élèves**
+- **Accès à la liste des élèves de ses classes**
+
+### Éléments Communs à Tous les Tableaux de Bord
+
+- **Déconnexion**
+- **Paramètres**
+- **Autres boutons spécifiques**
+
+### Base de Données
+
+Toutes les fonctionnalités collaborent harmonieusement grâce à une base de données unique, assurant la cohérence et l'intégrité des informations.
+### Suggestions de Boutons pour les Tableaux de Bord
+
+#### Tableau de Bord Élève
+- **Accueil** : Retour à la page d'accueil du tableau de bord.
+- **Mes Cours** : Accès direct aux cours inscrits.
+- **Messages** : Accès à la boîte de réception des messages.
+- **Notifications** : Voir les notifications récentes.
+- **Profil** : Modifier les informations personnelles.
+- **Support** : Accéder à l'aide et au support technique.
+
+#### Tableau de Bord Administrateur (Préfet)
+- **Accueil** : Retour à la page d'accueil du tableau de bord.
+- **Gestion des Utilisateurs** : Accès aux options de gestion des élèves et des professeurs.
+- **Rapports** : Générer et consulter des rapports sur les activités de l'école.
+- **Paramètres Système** : Modifier les paramètres de l'application.
+- **Support** : Accéder à l'aide et au support technique.
+
+#### Tableau de Bord Professeur
+- **Accueil** : Retour à la page d'accueil du tableau de bord.
+- **Mes Classes** : Voir la liste des classes et des cours.
+- **Planning** : Accéder au calendrier et aux horaires.
+- **Évaluations** : Gérer les évaluations et les notes des élèves.
+- **Messages** : Accéder à la boîte de réception des messages.
+- **Support** : Accéder à l'aide et au support technique.
