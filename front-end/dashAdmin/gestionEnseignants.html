@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin</title>
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        
+  <!-- Favicon -->
+  <link rel="icon" href="../images/logocicaf.png" alt="logo" type="image/png">
+  <!-- Votre CSS global -->
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    /* ============================
+       Styles généraux pour le layout
+    ============================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #444;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Wrapper en flex pour disposer la sidebar et le contenu */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ============================
+       HEADER (Topbar)
+    ============================ */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #b88f1e; /* Couleur d'accent doré */
+      padding: 20px 20px;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .topbar .navBar {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .topbar .top-left,
+    .topbar .top-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .top-right i{
+      color: white;
+    }
+
+    .top-right i:hover{
+      color: #101041;
+    }
+    .admin-menu li span {
+      color: white;
+    }
+
+    .admin-menu li span:hover {
+      color: #b88f1e;
+      
+    }
+
+    .menu-item:hover span {
+      color: #b88f1e;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .menu-item i {
+      color: white;
+    }
+
+    .menu-item:hover i {
+      color: #b88f1e;
+    }
+    .topbar .toggle-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #101041;
+    }
+    .topbar-logo-img {
+      height: 40px;
+      margin-right: 20px;
+    }
+    .topbar-search {
+      position: relative;
+    }
+    .topbar-search input[type="search"] {
+      padding: 10px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .topbar-search button {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #101041;
+    }
+    .topbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 15px;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .topbar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    /* ============================
+       SIDEBAR
+    ============================ */
+    aside.sidebar {
+      background-color: #101041; /* Bleu foncé */
+      overflow: hidden;
+      transition: width 0.3s;
+      width: 70px; /* état réduit */
+      height: 100vh;
+      z-index: 900;
+      position: fixed;
+    }
+    aside.sidebar.expanded {
+      width: 190px;
+    }
+    .menuContent {
+      padding-top: 60px;
+    }
+    .menuContent .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .menuContent .logo img {
+      max-width: 80%;
+    }
+    .app-menu {
+      overflow-y: auto;
+    }
+    .admin-menu {
+      list-style: none;
+      padding-top: 40px;
+      padding-left: 5px;
+      margin: 0;
+      gap: 10px;
+    }
+    .admin-menu li {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .admin-menu li:hover {
+      background-color: #1e282c;
+    }
+    .admin-menu li i {
+      margin-right: 10px;
+      font-size: 30px;
+    }
+    /* Masquer le texte lorsque la sidebar est réduite */
+    aside.sidebar.collapsed .admin-menu li span {
+      display: none;
+    }
+    /* ============================
+       PAGE CONTENT & MAIN
+    ============================ */
+    .page-content {
+      flex-grow: 1;
+      transition: margin-left 0.3s;
+      /* Pour laisser la place du header fixe */
+      padding-top: 60px;
+      background-color: #f4f6f9;
+    }
+    main {
+      padding: 20px;
+    }
+    .dashboard-header h2 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      color: #101041;
+    }
+    .dashboard-header p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+  
+     /* Styles pour la table */
+     table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #b88f1e;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+    /* Ajustement du contenu en fonction de la largeur de la sidebar */
+    @media (min-width: 768px) {
+      .page-content {
+        margin-left: 60px;
+      }
+      aside.sidebar.expanded + .page-content {
+        margin-left: 220px;
+      }
+    }
+
+    /* ============================
+       FOOTER
+    ============================ */
+    footer.footer {
+      background-color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+    }
+
+    /* Cacher l'input de recherche de la DataTable */
+    .dataTables_filter {
+      display: none;
+    }
+
+    /* Styles pour les modals */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      position: relative;
+    }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+    .modal-header h2 {
+      margin: 0;
+    }
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modal-body label {
+      font-weight: bold;
+    }
+    .modal-body input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .modal-footer button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .modal-footer .save-btn {
+      background-color: #b88f1e;
+      color: #fff;
+    }
+    .modal-footer .cancel-btn {
+      background-color: #ddd;
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+  <section class="dashboardSection">
+    <div class="wrapper">
+      <!-- SIDEBAR -->
+      <aside class="sidebar collapsed" id="sidebar">
+        <div class="menuContent">
+          
+          <div class="app-menu" data-simplebar>
+            <ul class="admin-menu">
+              <li class="menu-item" onclick="location.href='dashIndex.html'">
+                <a href="#"><i class="fas fa-home fa-2x"></i></a>
+                <span>Dashboard</span>
+              </li>
+              <li class="menu-item" onclick="location.href='gestionEleves.html'">
+                <i class="fas fa-user-graduate fa-2x"  ></i>
+                <span  >Élèves</span>
+              </li>
+              <li class="menu-item" onclick="location.href='gestionEnseignants.html'">
+                <i class="fas fa-chalkboard-teacher fa-2x" style="color: #b88f1e;" ></i>
+                <span style="color: #b88f1e;">Enseignants</span>
+              </li>
+              <li class="menu-item" onclick="location.href='paiements.html'">
+                <i class="fas fa-dollar-sign fa-2x"></i>
+                <span>Paiements</span>
+              </li>
+              <li class="menu-item" onclick="location.href='rapports.html'">
+                <i class="fas fa-chart-line fa-2x" ></i>
+                <span>Rapports</span>
+              </li>
+              <li class="menu-item" onclick="location.href='gestionInscriptions.html'">
+                <i class="fas fa-edit fa-2x" ></i>
+                <span>Inscriptions</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+
+      <!-- PAGE CONTENT -->
+      <div class="page-content">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="navBar">
+            <div class="top-left">
+              
+              <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
+                <i class="fas fa-bars"></i>
+              </button>
+              <a href="#" class="topbar-logo">
+                <!-- Remplacez "logo.png" par votre logo -->
+                 
+              </a>
+              <div class="topbar-search">
+                <input  type="search" id="headerSearch" placeholder="Recherhe automatique...">
+              </div>
+            </div>
+            <div class="top-right">
+              <button title="Changer de langue">
+                <i class="fas fa-globe"></i>
+              </button>
+              <button title="Notifications">
+                <i class="fas fa-bell"></i>
+              </button>
+              <button title="Plein écran" id="fullscreenBtn">
+                <i class="fas fa-expand" id="fullscreenIcon"></i>
+                <i class="fas fa-compress" id="compressIcon" style="display: none;"></i> <!-- Icône de réduction cachée au départ -->
+              </button>
+              
+              <div class="topbar-profile">
+                <button title="Profil">
+                  <img src="https://via.placeholder.com/40" alt="Profile">
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- MAIN CONTENT -->
+        <section class="dashboardSection">
+          <div class="wrapper">
+            <div class="page-content">
+              <main>
+                <h2 style="padding-bottom: 40px; color:101041;">Gestion des Enseignants</h2>
+                <button id="addTeacherBtn">Ajouter Enseignant</button>
+                <table id="teachersTable" class="display">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom</th>
+                      <th>Matière</th>
+                      <th>Email</th>
+                      <th>Téléphone</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Les données seront chargées dynamiquement depuis la base de données -->
+                  </tbody>
+                </table>
+              </main>
+            </div>
+          </div>
+        </section>
+
+        <!-- Modal pour ajouter/modifier un enseignant -->
+        <div id="teacherModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Ajouter/Modifier Enseignant</h2>
+              <span class="close" id="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+              <form id="teacherForm">
+                <input type="hidden" id="teacherId">
+                <label for="teacherName">Nom:</label>
+                <input type="text" id="teacherName" required>
+                <label for="teacherSubject">Matière:</label>
+                <input type="text" id="teacherSubject" required>
+                <label for="teacherEmail">Email:</label>
+                <input type="email" id="teacherEmail" required>
+                <label for="teacherPhone">Téléphone:</label>
+                <input type="text" id="teacherPhone" required>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="save-btn" form="teacherForm">Enregistrer</button>
+              <button type="button" class="cancel-btn" id="cancelBtn">Annuler</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal pour voir les informations d'un enseignant -->
+        <div id="viewTeacherModal" class="modal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2>Informations Enseignant</h2>
+              <span class="close" id="closeViewModal">&times;</span>
+            </div>
+            <div class="modal-body">
+              <p><strong>Nom:</strong> <span id="viewTeacherName"></span></p>
+              <p><strong>Matière:</strong> <span id="viewTeacherSubject"></span></p>
+              <p><strong>Email:</strong> <span id="viewTeacherEmail"></span></p>
+              <p><strong>Téléphone:</strong> <span id="viewTeacherPhone"></span></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="cancel-btn" id="closeViewBtn">Fermer</button>
+            </div>
+          </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+            const table = $('#teachersTable').DataTable({
+              "ajax": {
+              "url": "http://localhost:5002/api/enseignants", // Mettez à jour l'URL ici
+              "dataSrc": ""
+              },
+              "columns": [
+              { "data": "_id" },
+              { "data": "name" },
+              { "data": "subject" },
+              { "data": "email" },
+              { "data": "phone" },
+              {
+          "data": null,
+          "defaultContent": "<button class='viewBtn'>Voir</button> <button class='editBtn'>Modifier</button> <button class='deleteBtn'>Supprimer</button>"
+              }
+              ],
+              "language": {
+              "lengthMenu": "Afficher _MENU_ entrées",
+              "zeroRecords": "Aucun enseignant trouvé",
+              "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+              "infoEmpty": "Aucune entrée disponible",
+              "infoFiltered": "(filtré à partir de _MAX_ entrées au total)",
+              "search": "Rechercher :",
+              "paginate": {
+          "first": "Premier",
+          "last": "Dernier",
+          "next": "Suivant",
+          "previous": "Précédent"
+              }
+              }
+            });
+
+            // Utiliser l'input de recherche du header pour filtrer la DataTable
+            $('#headerSearch').on('keyup', function() {
+              table.search(this.value).draw();
+            });
+          
+            $('#addTeacherBtn').on('click', function() {
+              $('#teacherModal').show();
+              $('body').addClass('modal-open');
+            });
+          
+            $('#cancelBtn, #closeModal').on('click', function() {
+              $('#teacherModal').hide();
+              $('body').removeClass('modal-open');
+            });
+          
+            $('#teacherForm').on('submit', function(e) {
+              e.preventDefault();
+              const teacherData = {
+              id: $('#teacherId').val(),
+              name: $('#teacherName').val(),
+              subject: $('#teacherSubject').val(),
+              email: $('#teacherEmail').val(),
+              phone: $('#teacherPhone').val()
+              };
+              // Ajoutez ici la logique pour envoyer les données au serveur
+            });
+
+            // Gestion des boutons de la table
+            $('#teachersTable tbody').on('click', 'button.viewBtn', function() {
+              const data = table.row($(this).parents('tr')).data();
+              $('#viewTeacherName').text(data.name);
+              $('#viewTeacherSubject').text(data.subject);
+              $('#viewTeacherEmail').text(data.email);
+              $('#viewTeacherPhone').text(data.phone);
+              $('#viewTeacherModal').show();
+              $('body').addClass('modal-open');
+            });
+
+            $('#teachersTable tbody').on('click', 'button.editBtn', function() {
+              const data = table.row($(this).parents('tr')).data();
+              $('#teacherId').val(data._id);
+              $('#teacherName').val(data.name);
+              $('#teacherSubject').val(data.subject);
+              $('#teacherEmail').val(data.email);
+              $('#teacherPhone').val(data.phone);
+              $('#teacherModal').show();
+              $('body').addClass('modal-open');
+            });
+
+            $('#teachersTable tbody').on('click', 'button.deleteBtn', function() {
+              const data = table.row($(this).parents('tr')).data();
+              // Ajoutez ici la logique pour supprimer l'enseignant
+            });
+
+            $('#closeViewBtn, #closeViewModal').on('click', function() {
+              $('#viewTeacherModal').hide();
+              $('body').removeClass('modal-open');
+            });
+            });
+        </script>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Admin - connexion</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link rel="icon" href="images/logocicaf.png" type="image/png">
+        <style>
+            .adminLogin {
+                max-width: 600px;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border: 1px solid #ccc;
+                border-radius: 10px;
+                text-align: center;
+            }
+            .adminLogin h2 {
+                margin-bottom: 20px;
+                font-size: 24px;
+                color: #101041;
+            }
+            .adminLogin label {
+                display: block;
+                margin-bottom: 8px;
+                color: #101041;
+            }
+            .adminLogin input[type="text"],
+            .adminLogin input[type="password"] {
+                width: 100%;
+                padding: 10px;
+                font-size: 14px;
+                margin-bottom: 20px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+                text-align: center;
+            }
+            .adminLogin input[type="submit"] {
+                width: 100%;
+                background-color: #b88f1e;
+                color: white;
+                padding: 14px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: 500;
+            }
+            .adminLogin input[type="submit"]:hover {
+                background-color: #a77d1a;
+            }
+            .toggle-password {
+                cursor: pointer;
+                position: absolute;
+                right: 20px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        </style>
+    </head>
+    <body>
+        <section class="adminLogin">
+            <form id="adminLoginForm">
+                <img src="images/logocicaf.png" alt="Logo du site" class="site-logo">
+                <h2>Connexion Administrateur</h2>
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="username" name="username" required><br><br>
+                
+                <label for="password">Mot de passe:</label>
+                <div style="position: relative;">
+                    <input type="password" id="password" name="password" required>
+                    <span style="margin-top: -5px;" class="toggle-password" onclick="togglePassword()">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div><br><br>
+                
+                <input type="submit" class="submit" value="Se connecter">
+            </form>
+        </section>
+    
+        <script>
+            function togglePassword() {
+                const passwordField = document.getElementById('password');
+                const togglePasswordIcon = document.querySelector('.toggle-password i');
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    togglePasswordIcon.classList.remove('fa-eye');
+                    togglePasswordIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    togglePasswordIcon.classList.remove('fa-eye-slash');
+                    togglePasswordIcon.classList.add('fa-eye');
+                }
+            }
+    
+            document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var formData = new FormData(event.target);
+                var data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+    
+                fetch('http://localhost:5002/admin/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = '../dashAdmin/dashIndex.html'; // Redirection vers dashIndex.html
+                    } else {
+                        alert('Erreur de connexion : ' + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error('❌ Erreur:', error);
+                    alert("Une erreur est survenue lors de la connexion.");
+                });
+            });
+        </script>
+    </body>
+    </html>
+</html>
