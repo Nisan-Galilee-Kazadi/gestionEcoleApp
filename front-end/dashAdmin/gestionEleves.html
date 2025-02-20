@@ -12,12 +12,15 @@
   <link rel="stylesheet" href="../style.css">
   <!-- DataTables CSS -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<<<<<<< HEAD
 
     <!-- Inclusions JS -->
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- DataTables JS -->
   <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+=======
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   <style>
     /* ============================
        Styles généraux pour le layout
@@ -104,6 +107,7 @@
     .topbar-search {
       position: relative;
     }
+<<<<<<< HEAD
 
     .topbar-search input[type="search"] {
       padding: 15px 35px 10px 10px;
@@ -111,6 +115,8 @@
       border-radius: 5px;
       font-size: 11px;
     }
+=======
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     /* Style pour le formulaire modal pour qu'il ressemble au site */
     .modal-content {
       background: #fff;
@@ -163,15 +169,24 @@
     }
     /* Champ de recherche dans le header avec placeholder personnalisé */
     .topbar-search input[type="search"] {
+<<<<<<< HEAD
       padding: 10px 35px 10px 10px;
       border: none;
       border-radius: 5px;
       font-size: 12px;
+=======
+      padding: 5px 35px 5px 10px;
+      border: none;
+      border-radius: 3px;
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     .topbar-search input[type="search"]::placeholder {
       color: #888;
       font-style: italic;
+<<<<<<< HEAD
       font-size: 12px;
+=======
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     .topbar-search button {
       position: absolute;
@@ -196,8 +211,12 @@
       height: 40px;
       border-radius: 50%;
     }
+<<<<<<< HEAD
    
      /* ============================
+=======
+    /* ============================
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
        SIDEBAR
     ============================ */
     aside.sidebar {
@@ -231,7 +250,11 @@
       margin: 0;
     }
     .admin-menu li {
+<<<<<<< HEAD
       padding: 20px;
+=======
+      padding: 15px;
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -242,9 +265,13 @@
     }
     .admin-menu li i {
       margin-right: 10px;
+<<<<<<< HEAD
       font-size: 30px;
     }
 
+=======
+    }
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     /* Masquer le texte lorsque la sidebar est réduite */
     aside.sidebar.collapsed .admin-menu li span {
       display: none;
@@ -350,7 +377,11 @@
     }
     /* Personnalisation de la DataTable */
     table.dataTable thead {
+<<<<<<< HEAD
       background-color: #101041;
+=======
+      background-color: #b88f1e;
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
       color: #fff;
     }
     /* Masquer le champ de recherche par défaut de DataTables */
@@ -388,6 +419,7 @@
       padding: 10px 20px;
       margin-bottom: 20px;
       cursor: pointer;
+<<<<<<< HEAD
       border-radius: 5px;
     }
     .btn-ajouter:hover {
@@ -400,6 +432,13 @@
       outline:none;
     }
 
+=======
+      border-radius: 3px;
+    }
+    .btn-ajouter:hover {
+      opacity: 0.9;
+    }
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   </style>
 </head>
 <body>
@@ -409,6 +448,7 @@
       <span class="modal-close">&times;</span>
       <form id="inscriptionForm">
         <div class="form-container">
+<<<<<<< HEAD
             <!-- Titre et Champs Tuteur -->
             <h1 class="section-title">Info sur le tuteur</h1>
             <div class="form-group">
@@ -519,6 +559,129 @@
         </div>
         <button type="submit">S'inscrire</button>
     </form>
+=======
+          <!-- Titre et Champs Tuteur -->
+          <h1 class="section-title">Info sur le tuteur</h1>
+          <div class="form-group">
+            <label for="nom_tuteur">Nom du tuteur</label>
+            <input type="text" id="nom_tuteur" name="nom_tuteur" required>
+          </div>
+          <div class="form-group">
+            <label for="prenom_tuteur">Prénom du tuteur</label>
+            <input type="text" id="prenom_tuteur" name="prenom_tuteur" required>
+          </div>
+          <div class="form-group">
+            <label for="telephone_tuteur">N° de téléphone du tuteur</label>
+            <input type="tel" id="telephone_tuteur" name="telephone_tuteur" required>
+          </div>
+          <div class="form-group">
+            <label for="email_tuteur">Adresse e-mail du tuteur</label>
+            <input type="email" id="email_tuteur" name="email_tuteur" required>
+          </div>
+          <div class="form-group">
+            <label for="lien_eleve">Lien avec l’élève</label>
+            <select id="lien_eleve" name="lien_eleve" required>
+              <option value="parent">Parent</option>
+              <option value="oncle">Oncle</option>
+              <option value="tante">Tante</option>
+              <option value="grand_parent">Grand-parent</option>
+              <option value="autre">Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="adresse_tuteur">Adresse physique du tuteur</label>
+            <input type="text" id="adresse_tuteur" name="adresse_tuteur" required>
+          </div>
+        </div>
+        <hr style="color:#101041;">
+        <div class="form-container">
+          <!-- Titre et Informations de l'élève -->
+          <h1 class="section-title">Info sur l'élève</h1>
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" required>
+          </div>
+          <div class="form-group">
+            <label for="postnom">Post-nom</label>
+            <input type="text" id="postnom" name="postnom">
+          </div>
+          <div class="form-group">
+            <label for="sexe">Sexe</label>
+            <select id="sexe" name="sexe" required>
+              <option value="masculin">Masculin</option>
+              <option value="feminin">Féminin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nationalite">Nationalité</label>
+            <select id="nationalite" name="nationalite">
+              <option value="congolaise">Congolaise</option>
+              <option value="francaise">Française</option>
+              <option value="belge">Belge</option>
+              <option value="canadienne">Canadienne</option>
+              <option value="americaine">Américaine</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="date_naissance">Date de naissance</label>
+            <input type="date" id="date_naissance" name="date_naissance" required>
+          </div>
+          <div class="form-group">
+            <label for="telephone">Numéro de téléphone</label>
+            <input type="tel" id="telephone" name="telephone" required>
+          </div>
+          <div class="form-group">
+            <label for="email_eleve">Adresse e-mail de l'élève</label>
+            <input type="email" id="email_eleve" name="email_eleve" required>
+          </div>
+          <div class="form-group">
+            <label for="niveau_etude">Niveau d'étude</label>
+            <select id="niveau_etude" name="niveau_etude">
+              <option value="1ere_annee">1ère année</option>
+              <option value="2eme_annee">2ème année</option>
+              <option value="3eme_annee">3ème année</option>
+              <option value="4eme_annee">4ème année</option>
+              <option value="5eme_annee">5ème année</option>
+              <option value="6eme_annee">6ème année</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="section">Section</label>
+            <select id="section" name="section" onchange="toggleOptions()">
+              <option value="primaire">Primaire</option>
+              <option value="secondaire">Secondaire</option>
+              <option value="humanite">Humanité</option>
+            </select>
+          </div>
+          <div class="form-group hidden" id="option_humanite">
+            <label for="option_humanite_select">Option</label>
+            <select id="option_humanite_select" name="option_humanite">
+              <option value="commercial_gestion">Commercial & Gestion</option>
+              <option value="couture">Couture</option>
+              <option value="mecanique">Mécanique</option>
+              <option value="hotellerie">Hôtellerie</option>
+              <option value="electricite">Électricité</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit">S'inscrire</button>
+        <script>
+          document.getElementById('section').addEventListener('change', function() {
+            var section = this.value;
+            var optionHumanite = document.getElementById('option_humanite');
+            if (section === 'humanite') {
+              optionHumanite.classList.remove('hidden');
+            } else {
+              optionHumanite.classList.add('hidden');
+            }
+          });
+        </script>
+      </form>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     </div>
   </div>
   
@@ -529,6 +692,10 @@
         <div class="menuContent">
           <div class="app-menu" data-simplebar>
             <ul class="admin-menu">
+<<<<<<< HEAD
+=======
+              <li class="menu-title">Menu</li>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               <li class="menu-item" onclick="location.href='./dashIndex.html'">
                 <i class="fas fa-home fa-2x"></i>
                 <span>Dashboard</span>
@@ -570,8 +737,15 @@
                 <!-- Remplacez "logo.png" par votre logo -->
               </a>
               <div class="topbar-search">
+<<<<<<< HEAD
                 <input type="search" id="headerSearch" placeholder="recherche automatique...">
                
+=======
+                <input type="search" id="headerSearch" placeholder="recherche automatique">
+                <button type="button">
+                  <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
+                </button>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               </div>
             </div>
             <div class="top-right">
@@ -595,7 +769,12 @@
         <!-- MAIN CONTENT -->
         <main id="mainContent">
           <div class="dashboard-header">
+<<<<<<< HEAD
             <h2 style="margin-left: 20px;">Gestion des élèves</h2>
+=======
+            <h2>Gestion des élèves</h2>
+            <p>Interface de gestion et administration des élèves</p>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
           </div>
           <!-- Bouton d'ouverture du modal d'inscription -->
           <div class="container" style="padding: 20px;">
@@ -606,6 +785,7 @@
             <!-- Table des élèves -->
             <table id="elevesTable" class="display" style="width:100%">
               <thead>
+<<<<<<< HEAD
               <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -622,6 +802,19 @@
               </thead>
               <tbody>
               <!-- Les données seront chargées via AJAX -->
+=======
+                <tr>
+                  <th>Nom</th>
+                  <th>Prénom</th>
+                  <th>Date de naissance</th>
+                  <th>Email</th>
+                  <th>Téléphone</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Les données seront chargées via AJAX -->
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               </tbody>
             </table>
           </div>
@@ -636,6 +829,45 @@
     </div>
   </section>
   
+<<<<<<< HEAD
+=======
+  <!-- Inclusions JS -->
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- DataTables JS -->
+  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- SCRIPT pour initialiser le graphique (s'il y a lieu) -->
+  <script>
+    const ctx = document.getElementById('progressChart') ? document.getElementById('progressChart').getContext('2d') : null;
+    if(ctx){
+      const progressChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
+          datasets: [{
+            label: 'Progression des élèves',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            backgroundColor: 'rgba(184, 143, 30, 0.2)',
+            borderColor: 'rgba(184, 143, 30, 1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  </script>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   <!-- SCRIPT pour le toggle de la sidebar -->
   <script>
     const toggleBtn = document.getElementById('toggleBtn');
@@ -645,6 +877,7 @@
       sidebar.classList.toggle('collapsed');
     });
   </script>
+<<<<<<< HEAD
   
  <!-- SCRIPT pour la gestion des élèves avec DataTables et AJAX -->
 <script>
@@ -729,12 +962,86 @@
     });
   });
 </script>
+=======
+  <!-- SCRIPT pour la gestion des élèves avec DataTables et AJAX -->
+  <script>
+    $(document).ready(function(){
+      // Initialiser DataTable avec chargement AJAX
+      var table = $('#elevesTable').DataTable({
+        ajax: {
+          url: 'http://localhost:5002/api/eleves', // Assurez-vous que l'URL est correcte
+          dataSrc: ''
+        },
+        ordering: false, // Désactiver les boutons de tri
+        columns: [
+          { data: 'nom' },
+          { data: 'prenom' },
+          { 
+            data: 'date_naissance',
+            render: function(data) {
+              return new Date(data).toLocaleDateString();
+            }
+          },
+          { data: 'email_eleve' },
+          { data: 'telephone' },
+          {
+            data: '_id',
+            render: function(data) {
+              return '<button class="btn-view" data-id="'+ data +'">Voir</button> ' +
+                     '<button class="btn-edit" data-id="'+ data +'">Modifier</button> ' +
+                     '<button class="btn-delete" data-id="'+ data +'">Supprimer</button>';
+            }
+          }
+        ]
+      });
+      
+      // Recherche personnalisée via l'input du header
+      $('#headerSearch').on('keyup', function(){
+        table.search(this.value).draw();
+      });
+      
+      // Suppression d'un élève via AJAX
+      $('#elevesTable tbody').on('click', '.btn-delete', function(){
+        var id = $(this).data('id');
+        if(confirm('Voulez-vous vraiment supprimer cet élève ?')){
+          $.ajax({
+            url: 'http://localhost:5002/api/eleves/' + id,
+            type: 'DELETE',
+            success: function(result){
+              alert('Élève supprimé');
+              table.ajax.reload();
+            },
+            error: function(xhr, status, error){
+              console.error('Erreur lors de la suppression', error);
+            }
+          });
+        }
+      });
+      
+      // Édition d'un élève (redirection ou modal)
+      $('#elevesTable tbody').on('click', '.btn-edit', function(){
+        var id = $(this).data('id');
+        window.location.href = '/edit-eleve.html?id=' + id;
+      });
+      
+      // Voir les détails d'un élève
+      $('#elevesTable tbody').on('click', '.btn-view', function(){
+        var id = $(this).data('id');
+        window.location.href = '/view-eleve.html?id=' + id;
+      });
+    });
+  </script>
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   <!-- SCRIPT pour gérer l'ouverture/fermeture du modal d'inscription -->
   <script>
     const openModalBtn = document.getElementById('openModalBtn');
     const modalForm = document.getElementById('modalForm');
     const modalClose = document.querySelector('.modal-close');
     const mainContent = document.getElementById('mainContent');
+<<<<<<< HEAD
+=======
+
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     openModalBtn.addEventListener('click', function(){
       modalForm.classList.add('active');
       mainContent.classList.add('blur');
@@ -763,7 +1070,10 @@
         optionHumanite.classList.add('hidden');
       }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   </script>
 </body>
 </html>
@@ -778,8 +1088,15 @@
     background-color: #f4f6f9;
     color: #b88f1e;
   }
+<<<<<<< HEAD
   
   .form-group.hidden {
             display: none;
         }
+=======
+  /* Masquer l'élément avec la classe "hidden" */s
+  .hidden {
+    display: none;
+  }
+>>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
 </style>
