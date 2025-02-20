@@ -137,8 +137,7 @@
       height: 40px;
       border-radius: 50%;
     }
-
-    /* ============================
+ /* ============================
        SIDEBAR
     ============================ */
     aside.sidebar {
@@ -168,13 +167,12 @@
     }
     .admin-menu {
       list-style: none;
-      padding-top: 40px;
-      padding-left: 5px;
+      padding: 0;
       margin: 0;
-      gap: 10px;
+      padding-top: 20px;
     }
     .admin-menu li {
-      padding: 15px;
+      padding: 20px;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -202,7 +200,7 @@
       background-color: #f4f6f9;
     }
     main {
-      padding: 20px;
+      padding: 0px;
     }
     .dashboard-header h2 {
       font-size: 2rem;
@@ -337,6 +335,11 @@
       background-color: #ddd;
       color: #444;
     }
+
+    *{
+      outline: none;
+    }
+
   </style>
 </head>
 <body>
@@ -421,8 +424,8 @@
           <div class="wrapper">
             <div class="page-content">
               <main>
-                <h2 style="padding-bottom: 40px; color:101041;">Gestion des Enseignants</h2>
-                <button id="addTeacherBtn">Ajouter Enseignant</button>
+                <h2 style="color: #101041; padding-bottom: 40px; font-size: 25px;">Gestion des Enseignants</h2>
+                <button id="addTeacherBtn" ><span style="border: solid 1px #fff ;border-radius: 100% ;padding: 2px 4px;">+</span> Ajouter Enseignant</button>
                 <table id="teachersTable" class="display">
                   <thead>
                     <tr>
@@ -440,146 +443,312 @@
                 </table>
               </main>
             </div>
-          </div>
-        </section>
-
-        <!-- Modal pour ajouter/modifier un enseignant -->
-        <div id="teacherModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Ajouter/Modifier Enseignant</h2>
-              <span class="close" id="closeModal">&times;</span>
-            </div>
-            <div class="modal-body">
-              <form id="teacherForm">
-                <input type="hidden" id="teacherId">
-                <label for="teacherName">Nom:</label>
-                <input type="text" id="teacherName" required>
-                <label for="teacherSubject">Matière:</label>
-                <input type="text" id="teacherSubject" required>
-                <label for="teacherEmail">Email:</label>
-                <input type="email" id="teacherEmail" required>
-                <label for="teacherPhone">Téléphone:</label>
-                <input type="text" id="teacherPhone" required>
+            <!-- Modal pour ajouter un enseignant -->
+            <div id="addTeacherModal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+              <h2>Ajouter un Enseignant</h2>
+              <span class="close" id="closeAddModal">&times;</span>
+              </div>
+              <div class="modal-body">
+              <form id="addTeacherForm">
+                <label for="addTeacherName">Nom:</label>
+                <input type="text" id="addTeacherName" required>
+                <label for="addTeacherSubject">Matière:</label>
+                <input type="text" id="addTeacherSubject" required>
+                <label for="addTeacherEmail">Email:</label>
+                <input type="email" id="addTeacherEmail" required>
+                <label for="addTeacherPhone">Téléphone:</label>
+                <input type="text" id="addTeacherPhone" required>
               </form>
+              </div>
+              <div class="modal-footer">
+              <button type="submit" class="save-btn" form="addTeacherForm">Enregistrer</button>
+              <button type="button" class="cancel-btn" id="cancelAddBtn">Annuler</button>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="save-btn" form="teacherForm">Enregistrer</button>
-              <button type="button" class="cancel-btn" id="cancelBtn">Annuler</button>
+            </div>
+
+          <!-- Modal pour modifier un enseignant -->
+          <div id="editTeacherModal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Modifier les informations de l'Enseignant</h2>
+                <span class="close" id="closeEditModal">&times;</span>
+              </div>
+              <div class="modal-body">
+                <form id="editTeacherForm">
+                  <input type="hidden" id="editTeacherId">
+                  <label for="editTeacherName">Nom:</label>
+                  <input type="text" id="editTeacherName" required>
+                  <label for="editTeacherSubject">Matière:</label>
+                  <input type="text" id="editTeacherSubject" required>
+                  <label for="editTeacherEmail">Email:</label>
+                  <input type="email" id="editTeacherEmail" required>
+                  <label for="editTeacherPhone">Téléphone:</label>
+                  <input type="text" id="editTeacherPhone" required>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="save-btn" form="editTeacherForm">Enregistrer</button>
+                <button type="button" class="cancel-btn" id="cancelEditBtn">Annuler</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Modal pour voir les informations d'un enseignant -->
-        <div id="viewTeacherModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Informations Enseignant</h2>
-              <span class="close" id="closeViewModal">&times;</span>
-            </div>
-            <div class="modal-body">
-              <p><strong>Nom:</strong> <span id="viewTeacherName"></span></p>
-              <p><strong>Matière:</strong> <span id="viewTeacherSubject"></span></p>
-              <p><strong>Email:</strong> <span id="viewTeacherEmail"></span></p>
-              <p><strong>Téléphone:</strong> <span id="viewTeacherPhone"></span></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="closeViewBtn">Fermer</button>
+          <!-- Modal pour voir les informations d'un enseignant -->
+          <div id="viewTeacherModal" class="modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Informations Enseignant</h2>
+                <span class="close" id="closeViewModal">&times;</span>
+              </div>
+              <div class="modal-body">
+                <p><strong>Nom:</strong> <span id="viewTeacherName"></span></p>
+                <p><strong>Matière:</strong> <span id="viewTeacherSubject"></span></p>
+                <p><strong>Email:</strong> <span id="viewTeacherEmail"></span></p>
+                <p><strong>Téléphone:</strong> <span id="viewTeacherPhone"></span></p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="cancel-btn" id="closeViewBtn">Fermer</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <script>
+          <script>
             $(document).ready(function() {
-            const table = $('#teachersTable').DataTable({
-              "ajax": {
-              "url": "http://localhost:5002/api/enseignants", // Mettez à jour l'URL ici
-              "dataSrc": ""
-              },
-              "columns": [
-              { "data": "_id" },
-              { "data": "name" },
-              { "data": "subject" },
-              { "data": "email" },
-              { "data": "phone" },
-              {
-          "data": null,
-          "defaultContent": "<button class='viewBtn'>Voir</button> <button class='editBtn'>Modifier</button> <button class='deleteBtn'>Supprimer</button>"
+              const table = $('#teachersTable').DataTable({
+                "ajax": {
+                  "url": "http://localhost:5002/api/enseignants", // Mettez à jour l'URL ici
+                  "dataSrc": ""
+                },
+                "columns": [
+                  { "data": "_id" },
+                  { "data": "name" },
+                  { "data": "subject" },
+                  { "data": "email" },
+                  { "data": "phone" },
+                  {
+                    "data": null,
+                    "defaultContent": "<button class='viewBtn'>Voir</button> <button class='editBtn'>Modifier</button> <button class='deleteBtn'>Supprimer</button>"
+                  }
+                ],
+                "language": {
+                  "lengthMenu": "Afficher _MENU_ entrées",
+                  "zeroRecords": "Aucun enseignant trouvé",
+                  "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+                  "infoEmpty": "Aucune entrée disponible",
+                  "infoFiltered": "(filtré à partir de _MAX_ entrées au total)",
+                  "search": "Rechercher :",
+                  "paginate": {
+                    "first": "Premier",
+                    "last": "Dernier",
+                    "next": "Suivant",
+                    "previous": "Précédent"
+                  }
+                }
+              });
+
+              // Utiliser l'input de recherche du header pour filtrer la DataTable
+              $('#headerSearch').on('keyup', function() {
+                table.search(this.value).draw();
+              });
+
+              $('#addTeacherBtn').on('click', function() {
+                $('#addTeacherModal').show();
+                $('body').addClass('modal-open');
+              });
+
+              $('#cancelAddBtn, #closeAddModal').on('click', function() {
+                $('#addTeacherModal').hide();
+                $('body').removeClass('modal-open');
+              });
+
+              $('#addTeacherForm').on('submit', function(e) {
+                e.preventDefault();
+                const teacherData = {
+                  name: $('#addTeacherName').val(),
+                  subject: $('#addTeacherSubject').val(),
+                  email: $('#addTeacherEmail').val(),
+                  phone: $('#addTeacherPhone').val()
+                };
+                addTeacher(teacherData);
+              });
+
+              $('#editTeacherForm').on('submit', function(e) {
+                e.preventDefault();
+                const teacherData = {
+                  id: $('#editTeacherId').val(),
+                  name: $('#editTeacherName').val(),
+                  subject: $('#editTeacherSubject').val(),
+                  email: $('#editTeacherEmail').val(),
+                  phone: $('#editTeacherPhone').val()
+                };
+                updateTeacher(teacherData);
+              });
+
+              $('#cancelEditBtn, #closeEditModal').on('click', function() {
+                $('#editTeacherModal').hide();
+                $('body').removeClass('modal-open');
+              });
+
+              // Fonction pour ajouter un enseignant
+              function addTeacher(teacherData) {
+                $.ajax({
+                  url: 'http://localhost:5002/api/enseignants',
+                  type: 'POST',
+                  contentType: 'application/json',
+                  data: JSON.stringify(teacherData),
+                  success: function() {
+                    $('#addTeacherModal').hide();
+                    $('body').removeClass('modal-open');
+                    $('#teachersTable').DataTable().ajax.reload();
+                  },
+                  error: function() {
+                    alert('Erreur lors de l\'ajout de l\'enseignant');
+                  }
+                });
               }
-              ],
-              "language": {
-              "lengthMenu": "Afficher _MENU_ entrées",
-              "zeroRecords": "Aucun enseignant trouvé",
-              "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-              "infoEmpty": "Aucune entrée disponible",
-              "infoFiltered": "(filtré à partir de _MAX_ entrées au total)",
-              "search": "Rechercher :",
-              "paginate": {
-          "first": "Premier",
-          "last": "Dernier",
-          "next": "Suivant",
-          "previous": "Précédent"
+
+              // Fonction pour modifier un enseignant
+              function updateTeacher(teacherData) {
+                $.ajax({
+                  url: `http://localhost:5002/api/enseignants/${teacherData.id}`,
+                  type: 'PUT',
+                  contentType: 'application/json',
+                  data: JSON.stringify(teacherData),
+                  success: function() {
+                    $('#editTeacherModal').hide();
+                    $('body').removeClass('modal-open');
+                    $('#teachersTable').DataTable().ajax.reload();
+                  },
+                  error: function() {
+                    alert('Erreur lors de la modification de l\'enseignant');
+                  }
+                });
               }
+
+              // Fonction pour supprimer un enseignant
+              function deleteTeacher(id) {
+                $.ajax({
+                  url: `http://localhost:5002/api/enseignants/${id}`,
+                  type: 'DELETE',
+                  success: function() {
+                    $('#teachersTable').DataTable().ajax.reload();
+                  },
+                  error: function() {
+                    alert('Erreur lors de la suppression de l\'enseignant');
+                  }
+                });
               }
-            });
 
-            // Utiliser l'input de recherche du header pour filtrer la DataTable
-            $('#headerSearch').on('keyup', function() {
-              table.search(this.value).draw();
-            });
-          
-            $('#addTeacherBtn').on('click', function() {
-              $('#teacherModal').show();
-              $('body').addClass('modal-open');
-            });
-          
-            $('#cancelBtn, #closeModal').on('click', function() {
-              $('#teacherModal').hide();
-              $('body').removeClass('modal-open');
-            });
-          
-            $('#teacherForm').on('submit', function(e) {
-              e.preventDefault();
-              const teacherData = {
-              id: $('#teacherId').val(),
-              name: $('#teacherName').val(),
-              subject: $('#teacherSubject').val(),
-              email: $('#teacherEmail').val(),
-              phone: $('#teacherPhone').val()
-              };
-              // Ajoutez ici la logique pour envoyer les données au serveur
-            });
+              // Gestion des boutons de la table
+              $('#teachersTable tbody').on('click', 'button.deleteBtn', function() {
+                const data = table.row($(this).parents('tr')).data();
+                if (confirm('Êtes-vous sûr de vouloir supprimer cet enseignant ?')) {
+                  deleteTeacher(data._id);
+                }
+              });
 
-            // Gestion des boutons de la table
-            $('#teachersTable tbody').on('click', 'button.viewBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              $('#viewTeacherName').text(data.name);
-              $('#viewTeacherSubject').text(data.subject);
-              $('#viewTeacherEmail').text(data.email);
-              $('#viewTeacherPhone').text(data.phone);
-              $('#viewTeacherModal').show();
-              $('body').addClass('modal-open');
-            });
+              $('#teachersTable tbody').on('click', 'button.viewBtn', function() {
+                const data = table.row($(this).parents('tr')).data();
+                $('#viewTeacherName').text(data.name);
+                $('#viewTeacherSubject').text(data.subject);
+                $('#viewTeacherEmail').text(data.email);
+                $('#viewTeacherPhone').text(data.phone);
+                $('#viewTeacherModal').show();
+                $('body').addClass('modal-open');
+              });
 
-            $('#teachersTable tbody').on('click', 'button.editBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              $('#teacherId').val(data._id);
-              $('#teacherName').val(data.name);
-              $('#teacherSubject').val(data.subject);
-              $('#teacherEmail').val(data.email);
-              $('#teacherPhone').val(data.phone);
-              $('#teacherModal').show();
-              $('body').addClass('modal-open');
-            });
+              $('#teachersTable tbody').on('click', 'button.editBtn', function() {
+                const data = table.row($(this).parents('tr')).data();
+                $('#editTeacherId').val(data._id);
+                $('#editTeacherName').val(data.name);
+                $('#editTeacherSubject').val(data.subject);
+                $('#editTeacherEmail').val(data.email);
+                $('#editTeacherPhone').val(data.phone);
+                $('#editTeacherModal').show();
+                $('body').addClass('modal-open');
+              });
 
-            $('#teachersTable tbody').on('click', 'button.deleteBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              // Ajoutez ici la logique pour supprimer l'enseignant
+              $('#closeViewBtn, #closeViewModal').on('click', function() {
+                $('#viewTeacherModal').hide();
+                $('body').removeClass('modal-open');
+              });
             });
+          </script>
+          <style>
+            .viewBtn, .editBtn, .deleteBtn {
+              background-color: #101041;
+              color: white;
+              padding: 5px 5px;
+              border: none;
+              border-radius: 6px;
+              margin: 2px;
+              cursor: pointer;
+            }
 
-            $('#closeViewBtn, #closeViewModal').on('click', function() {
-              $('#viewTeacherModal').hide();
-              $('body').removeClass('modal-open');
-            });
-            });
-        </script>
+            .viewBtn:hover, .editBtn:hover, .deleteBtn:hover {
+              background-color: #b88f1e;
+              color: white;
+            }
+
+            #addTeacherBtn {
+              background-color: #101041;
+              color: white;
+              padding: 10px 15px;
+              margin-bottom: 30px ;
+              border: none;
+              border-radius: 6px;
+              cursor: pointer;
+              font-size: 11px;
+              display:flex;
+              gap: 10px;
+              align-items: center;
+            }
+
+            #addTeacherBtn:hover {
+              background-color: #b88f1e;
+              color: white;
+            }
+
+            #addTeacherForm input {
+              padding: 10px;
+              border: 1px solid #ddd;
+              border-radius: 5px;
+            }
+
+            #addTeacherForm label {
+              font-weight: bold;
+            }
+            #addTeacherForm, #editTeacherForm {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+            }
+          </style>
+           <!-- SCRIPT pour le toggle de la sidebar -->
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('expanded');
+      sidebar.classList.toggle('collapsed');
+    });
+  </script>
+</body>
+</html>
+<style>
+  /* Change the title "Menu" to be bold and white */
+  .menu-title {
+    font-weight: bold;
+    color: white;
+  }
+
+  /* Change sidebar item background and color on hover */
+  .admin-menu li:hover {
+    background-color: #f4f6f9; /* Même couleur que le fond principal */
+    color: #b88f1e; /* Même couleur que le header */
+  }
+</style>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config();
 const enseignantRoutes = require('./routes/enseignantRoutes');
+const eleveRoutes = require('./routes/eleveRoutes');
 
 const Eleve = require('./models/Eleve');
 const Admin = require('./models/Admin');
@@ -15,6 +16,7 @@ const port = process.env.PORT || 5002;
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 app.use('/api', enseignantRoutes);
+app.use('/api', eleveRoutes);
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -25,7 +27,7 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => {
     console.error('❌ Erreur de connexion à MongoDB:', err);
     process.exit(1);
-});
+}); 
 
 // Route d'inscription d'un élève
 app.post('/save', async (req, res) => {
