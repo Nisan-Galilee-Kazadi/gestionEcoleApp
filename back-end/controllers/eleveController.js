@@ -65,3 +65,19 @@ exports.deleteEleve = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+
+exports.modifyEleve = async (req, res) => {
+  try {
+    const { id } = req.params; // Récupérer l'ID depuis l'URL
+    const updateData = req.body; // Les données de modification
+    const updatedEleve = await Eleve.findByIdAndUpdate(id, updateData, { new: true });
+    if (!updatedEleve) {
+      return res.status(404).json({ message: 'Élève non trouvé' });
+    }
+    res.json(updatedEleve);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+};

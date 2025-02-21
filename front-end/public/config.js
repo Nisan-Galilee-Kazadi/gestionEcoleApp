@@ -24,3 +24,27 @@ window.addEventListener("scroll", () => {
         backTop.style.display = "none";
     }
 });
+
+const fullscreenBtn = document.getElementById('fullscreenBtn');
+    
+fullscreenBtn.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    // Passer en mode plein écran
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+      document.documentElement.msRequestFullscreen();
+    }
+  } else {
+    // Quitter le mode plein écran
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+  }
+});

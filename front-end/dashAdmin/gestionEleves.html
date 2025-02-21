@@ -11,16 +11,9 @@
   <!-- Votre CSS global -->
   <link rel="stylesheet" href="../style.css">
   <!-- DataTables CSS -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<<<<<<< HEAD
-
-    <!-- Inclusions JS -->
-  <!-- jQuery -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+  <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
   <style>
     /* ============================
        Styles généraux pour le layout
@@ -51,7 +44,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #b88f1e; /* Couleur d'accent doré */
+      background-color: #b88f1e;
       padding: 20px 20px;
       color: #fff;
       position: fixed;
@@ -107,22 +100,18 @@
     .topbar-search {
       position: relative;
     }
-<<<<<<< HEAD
-
     .topbar-search input[type="search"] {
       padding: 15px 35px 10px 10px;
       border: none;
       border-radius: 5px;
       font-size: 11px;
     }
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-    /* Style pour le formulaire modal pour qu'il ressemble au site */
     .modal-content {
       background: #fff;
       padding: 20px;
       border-radius: 5px;
-      max-width: 600px;
+      max-width: 750px;
+      font-size:14px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -167,26 +156,16 @@
     .modal-content button[type="submit"]:hover {
       opacity: 0.9;
     }
-    /* Champ de recherche dans le header avec placeholder personnalisé */
     .topbar-search input[type="search"] {
-<<<<<<< HEAD
       padding: 10px 35px 10px 10px;
       border: none;
       border-radius: 5px;
       font-size: 12px;
-=======
-      padding: 5px 35px 5px 10px;
-      border: none;
-      border-radius: 3px;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     .topbar-search input[type="search"]::placeholder {
       color: #888;
       font-style: italic;
-<<<<<<< HEAD
       font-size: 12px;
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     .topbar-search button {
       position: absolute;
@@ -211,19 +190,31 @@
       height: 40px;
       border-radius: 50%;
     }
-<<<<<<< HEAD
-   
-     /* ============================
-=======
+
+        .top-right #fullscreenBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    .top-right #fullscreenBtn i {
+      color: white;
+      font-size: 18px;
+    }
+
+    .top-right #fullscreenBtn:hover i {
+      color: #101041;
+    }
     /* ============================
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
        SIDEBAR
     ============================ */
     aside.sidebar {
-      background-color: #101041; /* Bleu foncé */
+      background-color: #101041;
       overflow: hidden;
       transition: width 0.3s;
-      width: 70px; /* état réduit */
+      width: 70px;
       height: 100vh;
       z-index: 900;
       position: fixed;
@@ -248,13 +239,10 @@
       list-style: none;
       padding: 0;
       margin: 0;
+      padding-top: 20px;
     }
     .admin-menu li {
-<<<<<<< HEAD
-      padding: 20px;
-=======
-      padding: 15px;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+      padding: 15px 20px;
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -265,14 +253,8 @@
     }
     .admin-menu li i {
       margin-right: 10px;
-<<<<<<< HEAD
       font-size: 30px;
     }
-
-=======
-    }
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-    /* Masquer le texte lorsque la sidebar est réduite */
     aside.sidebar.collapsed .admin-menu li span {
       display: none;
     }
@@ -282,7 +264,7 @@
     .page-content {
       flex-grow: 1;
       transition: margin-left 0.3s;
-      padding-top: 60px; /* Pour laisser la place du header fixe */
+      padding-top: 60px;
       background-color: #f4f6f9;
       margin-left: 70px;
     }
@@ -354,16 +336,6 @@
     .modal.active {
       display: flex;
     }
-    .modal-content {
-      background: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-    }
     .modal-close {
       position: absolute;
       top: 10px;
@@ -371,24 +343,16 @@
       font-size: 1.5rem;
       cursor: pointer;
     }
-    /* Flou sur le contenu de fond quand le modal est actif */
     .blur {
       filter: blur(4px);
     }
-    /* Personnalisation de la DataTable */
     table.dataTable thead {
-<<<<<<< HEAD
       background-color: #101041;
-=======
-      background-color: #b88f1e;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
       color: #fff;
     }
-    /* Masquer le champ de recherche par défaut de DataTables */
     .dataTables_filter {
       display: none;
     }
-    /* Style de type Excel pour la table (bordures légères) */
     table.dataTable {
       border-collapse: collapse;
     }
@@ -397,7 +361,6 @@
       border: 1px solid #ddd;
       padding: 8px;
     }
-    /* Boutons d'actions dans la table */
     .btn-view,
     .btn-edit,
     .btn-delete {
@@ -411,7 +374,6 @@
     .btn-view { background-color: #5bc0de; }
     .btn-edit { background-color: #f0ad4e; }
     .btn-delete { background-color: #d9534f; }
-    /* Bouton d'ajout d'élève */
     .btn-ajouter {
       background-color: #b88f1e;
       color: #fff;
@@ -419,26 +381,59 @@
       padding: 10px 20px;
       margin-bottom: 20px;
       cursor: pointer;
-<<<<<<< HEAD
       border-radius: 5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+    }
+    .btn-ajouter i{
+      color: #fff;
+      border: solid 1px #fff;
+      padding: 4px 4px;
+      cursor: pointer;
+      border-radius: 100%;
     }
     .btn-ajouter:hover {
       opacity: 0.9;
       background-color: #101041;
+      border-radius: 20px;
     }
-
-
     *{
       outline:none;
     }
 
-=======
-      border-radius: 3px;
+    .info-eleve .form-group{
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      
     }
-    .btn-ajouter:hover {
-      opacity: 0.9;
+
+    .info-eleve .form-group label{
+      font-weight: 800;
     }
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+
+    .sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 70px; /* même largeur que la sidebar réduite */
+    background-color: #101041;
+    padding: 10px 0;
+    transition: width 0.3s;
+  }
+
+  .sidebar.expanded .sidebar-bottom {
+    width: 190px; /* même largeur que la sidebar étendue */
+  }
+
+  .sidebar-bottom .admin-menu li {
+    padding: 10px 20px;
+  }
+
+  .sidebar-bottom .admin-menu li:last-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
   </style>
 </head>
 <body>
@@ -448,7 +443,6 @@
       <span class="modal-close">&times;</span>
       <form id="inscriptionForm">
         <div class="form-container">
-<<<<<<< HEAD
             <!-- Titre et Champs Tuteur -->
             <h1 class="section-title">Info sur le tuteur</h1>
             <div class="form-group">
@@ -460,7 +454,7 @@
                 <input type="text" id="prenom_tuteur" name="prenom_tuteur" required>
             </div>
             <div class="form-group">
-                <label for="telephone_tuteur">N°de phone du tuteur</label>
+                <label for="telephone_tuteur">N° de téléphone du tuteur</label>
                 <input type="tel" id="telephone_tuteur" name="telephone_tuteur" required>
             </div>
             <div class="form-group">
@@ -468,7 +462,7 @@
                 <input type="email" id="email_tuteur" name="email_tuteur" required>
             </div>
             <div class="form-group">
-                <label for="lien_eleve">Lien avec l’élève</label>
+                <label for="lien_eleve">Lien avec l'élève</label>
                 <select id="lien_eleve" name="lien_eleve" required>
                     <option value="parent">Parent</option>
                     <option value="oncle">Oncle</option>
@@ -557,30 +551,122 @@
                 </select>
             </div>
         </div>
-        <button type="submit">S'inscrire</button>
-    </form>
-=======
+        <button type="submit">Ajouter l'élève</button>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Modal pour visualiser les détails d'un élève -->
+  <div id="viewEleveModal" class="modal">
+    <div class="modal-content" style=" width:700px;top: 100px ; margin: auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+      <span class="modal-close" id="closeViewModal" style="color: #b88f1e; font-size: 1.5rem; cursor: pointer; margin-top: 15px; right: 30px; border-radius: 100%; border: solid 1px #b88f1e; padding: 1px 4px;">&times;</span>
+    <div class="info-eleve" style="display: flex; justify-content: space-around; gap: 50px ; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+        <div class="left">
+          <h1 class="section-title" style="color: #101041; font-size: 1.5rem; margin-bottom: 20px;">Détails de l'élève</h1>
+          <div class="form-group">
+            <label>Nom:</label>
+            <p id="viewEleveNom"></p>
+          </div>
+          <div class="form-group">
+            <label>Prénom:</label>
+            <p id="viewElevePrenom"></p>
+          </div>
+          <div class="form-group">
+            <label>Post-nom:</label>
+            <p id="viewElevePostnom"></p>
+          </div>
+          <div class="form-group">
+            <label>Sexe:</label>
+            <p id="viewEleveSexe"></p>
+          </div>
+          <div class="form-group">
+            <label>Nationalité:</label>
+            <p id="viewEleveNationalite"></p>
+          </div>
+          <div class="form-group">
+            <label>Date de naissance:</label>
+            <p id="viewEleveDateNaissance"></p>
+          </div>
+          <div class="form-group">
+            <label>Téléphone:</label>
+            <p id="viewEleveTelephone"></p>
+          </div>
+          <div class="form-group">
+            <label>Email:</label>
+            <p id="viewEleveEmail"></p>
+          </div>
+          <div class="form-group">
+            <label>Niveau d'étude:</label>
+            <p id="viewEleveNiveauEtude"></p>
+          </div>
+          <div class="form-group">
+            <label>Section:</label>
+            <p id="viewEleveSection"></p>
+          </div>
+          <div class="form-group">
+            <label>Option:</label>
+            <p id="viewEleveOption"></p>
+          </div>
+        </div>
+        <div class="right" >
+            <h1 class="section-title" style="color: #101041; font-size: 1.5rem; margin-top: 0px;">Détails du tuteur</h1>
+            <div class="form-group">
+              <label>Nom:</label>
+              <p id="viewTuteurNom"></p>
+            </div>
+            <div class="form-group">
+              <label>Prénom:</label>
+              <p id="viewTuteurPrenom"></p>
+            </div>
+            <div class="form-group">
+              <label>Téléphone:</label>
+              <p id="viewTuteurTelephone"></p>
+            </div>
+            <div class="form-group">
+              <label>Email:</label>
+              <p id="viewTuteurEmail"></p>
+            </div>
+            <div class="form-group">
+              <label>Lien avec l'élève:</label>
+              <p id="viewTuteurLien"></p>
+            </div>
+            <div class="form-group">
+              <label>Adresse:</label>
+              <p id="viewTuteurAdresse"></p>
+            </div>
+        </div>
+    </div> 
+      <button id="closeViewBtn" style="background-color: #b88f1e; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; font-size: 1rem; margin-top: 20px; margin-left: 280px;">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Modal pour modification d'élève -->
+  <div id="editModalForm" class="modal">
+    <div class="modal-content">
+      <span class="modal-close">&times;</span>
+      <form id="editForm">
+        <div class="form-container">
           <!-- Titre et Champs Tuteur -->
-          <h1 class="section-title">Info sur le tuteur</h1>
+          <h1 class="section-title">Modifier les infos du tuteur</h1>
           <div class="form-group">
-            <label for="nom_tuteur">Nom du tuteur</label>
-            <input type="text" id="nom_tuteur" name="nom_tuteur" required>
+            <label for="edit_nom_tuteur">Nom du tuteur</label>
+            <input type="text" id="edit_nom_tuteur" name="nom_tuteur" required>
           </div>
           <div class="form-group">
-            <label for="prenom_tuteur">Prénom du tuteur</label>
-            <input type="text" id="prenom_tuteur" name="prenom_tuteur" required>
+            <label for="edit_prenom_tuteur">Prénom du tuteur</label>
+            <input type="text" id="edit_prenom_tuteur" name="prenom_tuteur" required>
           </div>
           <div class="form-group">
-            <label for="telephone_tuteur">N° de téléphone du tuteur</label>
-            <input type="tel" id="telephone_tuteur" name="telephone_tuteur" required>
+            <label for="edit_telephone_tuteur">N° de téléphone du tuteur</label>
+            <input type="tel" id="edit_telephone_tuteur" name="telephone_tuteur" required>
           </div>
           <div class="form-group">
-            <label for="email_tuteur">Adresse e-mail du tuteur</label>
-            <input type="email" id="email_tuteur" name="email_tuteur" required>
+            <label for="edit_email_tuteur">Adresse e-mail du tuteur</label>
+            <input type="email" id="edit_email_tuteur" name="email_tuteur" required>
           </div>
           <div class="form-group">
-            <label for="lien_eleve">Lien avec l’élève</label>
-            <select id="lien_eleve" name="lien_eleve" required>
+            <label for="edit_lien_eleve">Lien avec l'élève</label>
+            <select id="edit_lien_eleve" name="lien_eleve" required>
               <option value="parent">Parent</option>
               <option value="oncle">Oncle</option>
               <option value="tante">Tante</option>
@@ -589,36 +675,36 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="adresse_tuteur">Adresse physique du tuteur</label>
-            <input type="text" id="adresse_tuteur" name="adresse_tuteur" required>
+            <label for="edit_adresse_tuteur">Adresse physique du tuteur</label>
+            <input type="text" id="edit_adresse_tuteur" name="adresse_tuteur" required>
           </div>
         </div>
         <hr style="color:#101041;">
         <div class="form-container">
           <!-- Titre et Informations de l'élève -->
-          <h1 class="section-title">Info sur l'élève</h1>
+          <h1 class="section-title">Modifier les infos de l'élève</h1>
           <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" name="nom" required>
+            <label for="edit_nom">Nom</label>
+            <input type="text" id="edit_nom" name="nom" required>
           </div>
           <div class="form-group">
-            <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" name="prenom" required>
+            <label for="edit_prenom">Prénom</label>
+            <input type="text" id="edit_prenom" name="prenom" required>
           </div>
           <div class="form-group">
-            <label for="postnom">Post-nom</label>
-            <input type="text" id="postnom" name="postnom">
+            <label for="edit_postnom">Post-nom</label>
+            <input type="text" id="edit_postnom" name="postnom">
           </div>
           <div class="form-group">
-            <label for="sexe">Sexe</label>
-            <select id="sexe" name="sexe" required>
+            <label for="edit_sexe">Sexe</label>
+            <select id="edit_sexe" name="sexe" required>
               <option value="masculin">Masculin</option>
               <option value="feminin">Féminin</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="nationalite">Nationalité</label>
-            <select id="nationalite" name="nationalite">
+            <label for="edit_nationalite">Nationalité</label>
+            <select id="edit_nationalite" name="nationalite">
               <option value="congolaise">Congolaise</option>
               <option value="francaise">Française</option>
               <option value="belge">Belge</option>
@@ -627,20 +713,20 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="date_naissance">Date de naissance</label>
-            <input type="date" id="date_naissance" name="date_naissance" required>
+            <label for="edit_date_naissance">Date de naissance</label>
+            <input type="date" id="edit_date_naissance" name="date_naissance" required>
           </div>
           <div class="form-group">
-            <label for="telephone">Numéro de téléphone</label>
-            <input type="tel" id="telephone" name="telephone" required>
+            <label for="edit_telephone">Numéro de téléphone</label>
+            <input type="tel" id="edit_telephone" name="telephone" required>
           </div>
           <div class="form-group">
-            <label for="email_eleve">Adresse e-mail de l'élève</label>
-            <input type="email" id="email_eleve" name="email_eleve" required>
+            <label for="edit_email_eleve">Adresse e-mail de l'élève</label>
+            <input type="email" id="edit_email_eleve" name="email_eleve" required>
           </div>
           <div class="form-group">
-            <label for="niveau_etude">Niveau d'étude</label>
-            <select id="niveau_etude" name="niveau_etude">
+            <label for="edit_niveau_etude">Niveau d'étude</label>
+            <select id="edit_niveau_etude" name="niveau_etude">
               <option value="1ere_annee">1ère année</option>
               <option value="2eme_annee">2ème année</option>
               <option value="3eme_annee">3ème année</option>
@@ -650,16 +736,16 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="section">Section</label>
-            <select id="section" name="section" onchange="toggleOptions()">
+            <label for="edit_section">Section</label>
+            <select id="edit_section" name="section" onchange="toggleEditOptions()">
               <option value="primaire">Primaire</option>
               <option value="secondaire">Secondaire</option>
               <option value="humanite">Humanité</option>
             </select>
           </div>
-          <div class="form-group hidden" id="option_humanite">
-            <label for="option_humanite_select">Option</label>
-            <select id="option_humanite_select" name="option_humanite">
+          <div class="form-group hidden" id="edit_option_humanite">
+            <label for="edit_option_humanite_select">Option</label>
+            <select id="edit_option_humanite_select" name="option_humanite">
               <option value="commercial_gestion">Commercial & Gestion</option>
               <option value="couture">Couture</option>
               <option value="mecanique">Mécanique</option>
@@ -668,20 +754,8 @@
             </select>
           </div>
         </div>
-        <button type="submit">S'inscrire</button>
-        <script>
-          document.getElementById('section').addEventListener('change', function() {
-            var section = this.value;
-            var optionHumanite = document.getElementById('option_humanite');
-            if (section === 'humanite') {
-              optionHumanite.classList.remove('hidden');
-            } else {
-              optionHumanite.classList.add('hidden');
-            }
-          });
-        </script>
+        <button type="submit">Enregistrer</button>
       </form>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     </div>
   </div>
   
@@ -692,10 +766,6 @@
         <div class="menuContent">
           <div class="app-menu" data-simplebar>
             <ul class="admin-menu">
-<<<<<<< HEAD
-=======
-              <li class="menu-title">Menu</li>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               <li class="menu-item" onclick="location.href='./dashIndex.html'">
                 <i class="fas fa-home fa-2x"></i>
                 <span>Dashboard</span>
@@ -723,6 +793,26 @@
             </ul>
           </div>
         </div>
+        
+      <!-- Ajout des icônes en bas -->
+      <div class="sidebar-bottom">
+        <ul class="admin-menu">
+          <li class="menu-item" >
+            <a href="#settings" style="display: flex;
+          align-items: center;">
+              <i class="fas fa-cog"></i>
+              <span>Paramètres</span>
+            </a>
+          </li>
+          <li class="menu-item">
+            <a href="#" id="logoutBtn" style="display: flex;
+          align-items: center;">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Déconnexion</span>
+            </a>
+          </li>
+        </ul>
+      </div>
       </aside>
       <!-- PAGE CONTENT -->
       <div class="page-content">
@@ -737,26 +827,18 @@
                 <!-- Remplacez "logo.png" par votre logo -->
               </a>
               <div class="topbar-search">
-<<<<<<< HEAD
                 <input type="search" id="headerSearch" placeholder="recherche automatique...">
-               
-=======
-                <input type="search" id="headerSearch" placeholder="recherche automatique">
-                <button type="button">
-                  <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
-                </button>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               </div>
             </div>
             <div class="top-right">
+              <button id="fullscreenBtn" title="Plein écran">
+                <i class="fas fa-expand"></i>
+              </button>
               <button title="Changer de langue">
                 <i class="fas fa-globe"></i>
               </button>
               <button title="Notifications">
                 <i class="fas fa-bell"></i>
-              </button>
-              <button title="Plein écran">
-                <i class="fas fa-expand"></i>
               </button>
               <div class="topbar-profile">
                 <button title="Profil">
@@ -769,23 +851,14 @@
         <!-- MAIN CONTENT -->
         <main id="mainContent">
           <div class="dashboard-header">
-<<<<<<< HEAD
             <h2 style="margin-left: 20px;">Gestion des élèves</h2>
-=======
-            <h2>Gestion des élèves</h2>
-            <p>Interface de gestion et administration des élèves</p>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
           </div>
-          <!-- Bouton d'ouverture du modal d'inscription -->
           <div class="container" style="padding: 20px;">
             <button class="btn-ajouter" id="openModalBtn">
               <i class="fas fa-plus"></i> Ajouter Élève
             </button>
-            <!-- Champ de recherche personnalisé déjà géré par le header -->
-            <!-- Table des élèves -->
             <table id="elevesTable" class="display" style="width:100%">
               <thead>
-<<<<<<< HEAD
               <tr>
                 <th>Nom</th>
                 <th>Prénom</th>
@@ -801,20 +874,6 @@
               </tr>
               </thead>
               <tbody>
-              <!-- Les données seront chargées via AJAX -->
-=======
-                <tr>
-                  <th>Nom</th>
-                  <th>Prénom</th>
-                  <th>Date de naissance</th>
-                  <th>Email</th>
-                  <th>Téléphone</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Les données seront chargées via AJAX -->
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
               </tbody>
             </table>
           </div>
@@ -829,45 +888,6 @@
     </div>
   </section>
   
-<<<<<<< HEAD
-=======
-  <!-- Inclusions JS -->
-  <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <!-- DataTables JS -->
-  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- SCRIPT pour initialiser le graphique (s'il y a lieu) -->
-  <script>
-    const ctx = document.getElementById('progressChart') ? document.getElementById('progressChart').getContext('2d') : null;
-    if(ctx){
-      const progressChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['Jan', 'Feb', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
-          datasets: [{
-            label: 'Progression des élèves',
-            data: [65, 59, 80, 81, 56, 55, 40],
-            backgroundColor: 'rgba(184, 143, 30, 0.2)',
-            borderColor: 'rgba(184, 143, 30, 1)',
-            borderWidth: 2,
-            fill: true,
-            tension: 0.4
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
-        }
-      });
-    }
-  </script>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
   <!-- SCRIPT pour le toggle de la sidebar -->
   <script>
     const toggleBtn = document.getElementById('toggleBtn');
@@ -877,102 +897,23 @@
       sidebar.classList.toggle('collapsed');
     });
   </script>
-<<<<<<< HEAD
   
- <!-- SCRIPT pour la gestion des élèves avec DataTables et AJAX -->
-<script>
-  $(document).ready(function(){
-    // Initialiser DataTable avec chargement AJAX
-    var table = $('#elevesTable').DataTable({
-      ajax: {
-        url: 'http://localhost:5002/api/eleves', // Assurez-vous que l'URL est correcte
-        dataSrc: '',
-        error: function(xhr, error, thrown) {
-          console.error('Erreur lors du chargement des données:', xhr.responseText);
-          alert('Erreur lors du chargement des données. Veuillez vérifier l\'URL de l\'API et le serveur.');
-        }
-      },
-      ordering: false, // Désactiver les boutons de tri
-      columns: [
-        { data: 'nom' },
-        { data: 'prenom' },
-        { 
-          data: 'date_naissance',
-          render: function(data) {
-            return new Date(data).toLocaleDateString();
-          }
-        },
-        { 
-          data: 'email_eleve',
-          defaultContent: '', // Ajoutez une valeur par défaut si la propriété est absente
-          render: function(data, type, row) {
-            return data ? data : 'N/A'; // Affichez 'N/A' si la propriété est absente
-          }
-        },
-        { data: 'telephone' },
-        { data: 'sexe' },
-        { data: 'nationalite' },
-        { data: 'niveau_etude' },
-        { data: 'section' },
-        { data: 'option_humanite' },
-        {
-          data: '_id',
-          render: function(data) {
-            return '<button class="btn-view" data-id="'+ data +'">Voir</button> ' +
-                   '<button class="btn-edit" data-id="'+ data +'">Modifier</button> ' +
-                   '<button class="btn-delete" data-id="'+ data +'">Supprimer</button>';
-          }
-        }
-      ]
-    });
-    
-    // Recherche personnalisée via l'input du header
-    $('#headerSearch').on('keyup', function(){
-      table.search(this.value).draw();
-    });
-    
-    // Suppression d'un élève via AJAX
-    $('#elevesTable tbody').on('click', '.btn-delete', function(){
-      var id = $(this).data('id');
-      if(confirm('Voulez-vous vraiment supprimer cet élève ?')){
-        $.ajax({
-          url: 'http://localhost:5002/api/eleves/' + id,
-          type: 'DELETE',
-          success: function(result){
-            alert('Élève supprimé');
-            table.ajax.reload();
-          },
-          error: function(xhr, status, error){
-            console.error('Erreur lors de la suppression', error);
-          }
-        });
-      }
-    });
-    
-    // Édition d'un élève (redirection ou modal)
-    $('#elevesTable tbody').on('click', '.btn-edit', function(){
-      var id = $(this).data('id');
-      window.location.href = '/edit-eleve.html?id=' + id;
-    });
-    
-    // Voir les détails d'un élève
-    $('#elevesTable tbody').on('click', '.btn-view', function(){
-      var id = $(this).data('id');
-      window.location.href = '/view-eleve.html?id=' + id;
-    });
-  });
-</script>
-=======
   <!-- SCRIPT pour la gestion des élèves avec DataTables et AJAX -->
   <script>
+    var currentEditId = null; // variable globale pour stocker l'ID de l'élève en modification
+    
     $(document).ready(function(){
       // Initialiser DataTable avec chargement AJAX
       var table = $('#elevesTable').DataTable({
         ajax: {
-          url: 'http://localhost:5002/api/eleves', // Assurez-vous que l'URL est correcte
-          dataSrc: ''
+          url: 'http://localhost:5002/api/eleves',
+          dataSrc: '',
+          error: function(xhr, error, thrown) {
+            console.error('Erreur lors du chargement des données:', xhr.responseText);
+            alert('Erreur lors du chargement des données. Veuillez vérifier l\'URL de l\'API et le serveur.');
+          }
         },
-        ordering: false, // Désactiver les boutons de tri
+        ordering: false,
         columns: [
           { data: 'nom' },
           { data: 'prenom' },
@@ -982,14 +923,31 @@
               return new Date(data).toLocaleDateString();
             }
           },
-          { data: 'email_eleve' },
+          { 
+            data: 'email_eleve',
+            defaultContent: '',
+            render: function(data, type, row) {
+              return data ? data : 'non_enregisté';
+            }
+          },
           { data: 'telephone' },
+          { data: 'sexe' },
+          { data: 'nationalite' },
+          { data: 'niveau_etude' },
+          { data: 'section' },
+          { 
+            data: 'option_humanite',
+            defaultContent: '',
+            render: function(data, type, row) {
+              return data ? data : 'pas_necessaire';
+            }
+          },
           {
             data: '_id',
-            render: function(data) {
-              return '<button class="btn-view" data-id="'+ data +'">Voir</button> ' +
-                     '<button class="btn-edit" data-id="'+ data +'">Modifier</button> ' +
-                     '<button class="btn-delete" data-id="'+ data +'">Supprimer</button>';
+            render: function(data, type, row) {
+              return '<button class="btn-view" data-id="'+ data +'" title="Voir"><i class="fas fa-eye"></i></button> ' +
+                     '<button class="btn-edit" data-id="'+ data +'" title="Modifier"><i class="fas fa-edit"></i></button> ' +
+                     '<button class="btn-delete" data-id="'+ data +'" title="Supprimer"><i class="fas fa-trash"></i></button>';
             }
           }
         ]
@@ -1018,49 +976,121 @@
         }
       });
       
-      // Édition d'un élève (redirection ou modal)
+      // Édition d'un élève : récupérer les données et ouvrir le modal de modification
       $('#elevesTable tbody').on('click', '.btn-edit', function(){
         var id = $(this).data('id');
-        window.location.href = '/edit-eleve.html?id=' + id;
+        currentEditId = id; // stocker l'ID pour le formulaire de modification
+        $.ajax({
+          url: 'http://localhost:5002/api/eleves/' + id,
+          type: 'GET',
+          success: function(data){
+            // Remplir le formulaire de modification avec les données de l'élève
+            $('#edit_nom').val(data.nom);
+            $('#edit_prenom').val(data.prenom);
+            $('#edit_postnom').val(data.postnom);
+            $('#edit_sexe').val(data.sexe);
+            $('#edit_nationalite').val(data.nationalite);
+            $('#edit_date_naissance').val(new Date(data.date_naissance).toISOString().split('T')[0]);
+            $('#edit_telephone').val(data.telephone);
+            $('#edit_email_eleve').val(data.email_eleve);
+            $('#edit_niveau_etude').val(data.niveau_etude);
+            $('#edit_section').val(data.section);
+            $('#edit_option_humanite_select').val(data.option_humanite);
+            
+            // Remplir le formulaire avec les données du tuteur
+            $('#edit_nom_tuteur').val(data.nom_tuteur);
+            $('#edit_prenom_tuteur').val(data.prenom_tuteur);
+            $('#edit_telephone_tuteur').val(data.telephone_tuteur);
+            $('#edit_email_tuteur').val(data.email_tuteur);
+            $('#edit_lien_eleve').val(data.lien_eleve);
+            $('#edit_adresse_tuteur').val(data.adresse_tuteur);
+            
+            // Afficher le modal avec les données remplies
+            editModalForm.classList.add('active');
+            mainContent.classList.add('blur');
+          },
+          error: function(xhr, status, error){
+            console.error('Erreur lors de la récupération des données', error);
+          }
+        });
       });
       
       // Voir les détails d'un élève
       $('#elevesTable tbody').on('click', '.btn-view', function(){
         var id = $(this).data('id');
-        window.location.href = '/view-eleve.html?id=' + id;
+        $.ajax({
+          url: 'http://localhost:5002/api/eleves/' + id,
+          type: 'GET',
+          success: function(data){
+        // Remplir le modal avec les données de l'élève
+        $('#viewEleveNom').text(data.nom);
+        $('#viewElevePrenom').text(data.prenom);
+        $('#viewElevePostnom').text(data.postnom);
+        $('#viewEleveSexe').text(data.sexe);
+        $('#viewEleveNationalite').text(data.nationalite);
+        $('#viewEleveDateNaissance').text(new Date(data.date_naissance).toLocaleDateString());
+        $('#viewEleveTelephone').text(data.telephone);
+        $('#viewEleveEmail').text(data.email_eleve);
+        $('#viewEleveNiveauEtude').text(data.niveau_etude);
+        $('#viewEleveSection').text(data.section);
+        $('#viewEleveOption').text(data.option_humanite ? data.option_humanite : 'pas_necessaire');
+        
+        // Remplir le modal avec les données du tuteur
+        $('#viewTuteurNom').text(data.nom_tuteur);
+        $('#viewTuteurPrenom').text(data.prenom_tuteur);
+        $('#viewTuteurTelephone').text(data.telephone_tuteur);
+        $('#viewTuteurEmail').text(data.email_tuteur);
+        $('#viewTuteurLien').text(data.lien_eleve);
+        $('#viewTuteurAdresse').text(data.adresse_tuteur);
+        
+        // Afficher le modal
+        $('#viewEleveModal').show();
+        $('body').addClass('modal-open');
+          },
+          error: function(xhr, status, error){
+        console.error('Erreur lors de la récupération des données', error);
+          }
+        });
       });
-    });
+      
+      $('#closeViewBtn, #closeViewModal').on('click', function() {
+        $('#viewEleveModal').hide();
+        $('body').removeClass('modal-open');
+      });
+        });
   </script>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-  <!-- SCRIPT pour gérer l'ouverture/fermeture du modal d'inscription -->
+  
+  <!-- SCRIPT pour gérer l'ouverture/fermeture des modaux et l'envoi des formulaires -->
   <script>
     const openModalBtn = document.getElementById('openModalBtn');
     const modalForm = document.getElementById('modalForm');
-    const modalClose = document.querySelector('.modal-close');
+    const editModalForm = document.getElementById('editModalForm');
+    const modalClose = document.querySelectorAll('.modal-close');
     const mainContent = document.getElementById('mainContent');
-<<<<<<< HEAD
-=======
-
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+    
     openModalBtn.addEventListener('click', function(){
       modalForm.classList.add('active');
       mainContent.classList.add('blur');
     });
 
-    modalClose.addEventListener('click', function(){
-      modalForm.classList.remove('active');
-      mainContent.classList.remove('blur');
+    modalClose.forEach(closeBtn => {
+      closeBtn.addEventListener('click', function(){
+        modalForm.classList.remove('active');
+        editModalForm.classList.remove('active');
+        mainContent.classList.remove('blur');
+      });
     });
 
-    // Optionnel : fermer le modal en cliquant en dehors du contenu
+    // Fermer le modal en cliquant en dehors du contenu
     window.addEventListener('click', function(e) {
-      if(e.target === modalForm) {
+      if(e.target === modalForm || e.target === editModalForm) {
         modalForm.classList.remove('active');
+        editModalForm.classList.remove('active');
         mainContent.classList.remove('blur');
       }
     });
 
-    // Fonction pour afficher ou masquer les options supplémentaires pour la section "Humanité"
+    // Affichage/masquage des options supplémentaires pour la section "Humanité"
     function toggleOptions(){
       var section = document.getElementById('section').value;
       var optionHumanite = document.getElementById('option_humanite');
@@ -1070,33 +1100,173 @@
         optionHumanite.classList.add('hidden');
       }
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+    function toggleEditOptions(){
+      var section = document.getElementById('edit_section').value;
+      var optionHumanite = document.getElementById('edit_option_humanite');
+      if(section === 'humanite'){
+        optionHumanite.classList.remove('hidden');
+      } else {
+        optionHumanite.classList.add('hidden');
+      }
+    }
+
+    // Soumission du formulaire d'inscription (ajout)
+    document.getElementById('inscriptionForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      var formData = new FormData(event.target);
+      var data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      if (data.section !== 'humanite') {
+        delete data.option_humanite;
+      }
+
+      console.log("Données envoyées (ajout):", JSON.stringify(data));
+
+      const apiUrl = 'http://localhost:5002/save';
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status} - ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('✅ Succès (ajout):', data);
+        modalForm.classList.remove('active');
+        mainContent.classList.remove('blur');
+
+        const successModal = document.createElement('div');
+        successModal.classList.add('modal', 'active');
+        successModal.innerHTML = `
+          <div class="modal-content" style="background-color: #b88f1e; color: #101041; border-radius: 10px;">
+            <span class="modal-close" style="color: #101041;">&times;</span>
+            <div style="display: flex; align-items: center;">
+              <i class="fas fa-check-circle" style="color: #101041; font-size: 2rem; margin-right: 10px;"></i>
+              <p style="font-size:14px;"> Élève ajouté avec succès</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(successModal);
+        successModal.querySelector('.modal-close').addEventListener('click', function() {
+          successModal.classList.remove('active');
+          document.body.removeChild(successModal);
+        });
+        window.addEventListener('click', function(e) {
+          if (e.target === successModal) {
+            successModal.classList.remove('active');
+            document.body.removeChild(successModal);
+          }
+        });
+        $('#elevesTable').DataTable().ajax.reload();
+      })
+      .catch((error) => {
+        console.error('❌ Erreur (ajout):', error);
+        alert("Une erreur est survenue lors de l'envoi du formulaire : " + error.message);
+      });
+    });
+
+    // Soumission du formulaire de modification
+    document.getElementById('editForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      var formData = new FormData(event.target);
+      var data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      // Utiliser l'ID stocké lors de l'ouverture du modal d'édition
+      data.id = currentEditId;
+
+      if (data.section !== 'humanite') {
+        delete data.option_humanite;
+      }
+
+      console.log("Données envoyées (modification):", JSON.stringify(data));
+
+        // Utilise la méthode PUT sur l'endpoint '/api/eleves/:id'
+        const apiUrl = 'http://localhost:5002/api/eleves/' + currentEditId;
+        fetch(apiUrl, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP : ${response.status} - ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('✅ Succès (modification):', data);
+        editModalForm.classList.remove('active');
+        mainContent.classList.remove('blur');
+
+        const editSuccessModal = document.createElement('div');
+        editSuccessModal.classList.add('modal', 'active');
+        editSuccessModal.innerHTML = `
+          <div class="modal-content" style="background-color: #b88f1e; color: #101041; border-radius: 10px;">
+            <span class="modal-close" style="color: #101041;">&times;</span>
+            <div style="display: flex; align-items: center;">
+              <i class="fas fa-check-circle" style="color: #101041; font-size: 2rem; margin-right: 10px;"></i>
+              <p style="font-size:14px;"> Modification enregistrée avec succès</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(editSuccessModal);
+        editSuccessModal.querySelector('.modal-close').addEventListener('click', function() {
+          editSuccessModal.classList.remove('active');
+          document.body.removeChild(editSuccessModal);
+        });
+        window.addEventListener('click', function(e) {
+          if (e.target === editSuccessModal) {
+            editSuccessModal.classList.remove('active');
+            document.body.removeChild(editSuccessModal);
+          }
+        });
+        $('#elevesTable').DataTable().ajax.reload();
+      })
+      .catch((error) => {
+        console.error('❌ Erreur (modification):', error);
+        alert("Une erreur est survenue lors de l'envoi du formulaire : " + error.message);
+      });
+    });
   </script>
+  <!-- Ajout du script pour la déconnexion -->
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      // Redirection vers la page de connexion
+      window.location.href = '../public/index.html'
+    }
+  });
+</script>
+<style>
+    .menu-title {
+      font-weight: bold;
+      color: white;
+    }
+    .admin-menu li:hover {
+      background-color: #f4f6f9;
+      color: #b88f1e;
+    }
+    .form-group.hidden {
+      display: none;
+    }
+  </style>
+  <script src="js/fullscreen.js"></script>
 </body>
 </html>
-<style>
-  /* Change the title "Menu" to be bold and white */
-  .menu-title {
-    font-weight: bold;
-    color: white;
-  }
-  /* Change sidebar item background and color on hover */
-  .admin-menu li:hover {
-    background-color: #f4f6f9;
-    color: #b88f1e;
-  }
-<<<<<<< HEAD
-  
-  .form-group.hidden {
-            display: none;
-        }
-=======
-  /* Masquer l'élément avec la classe "hidden" */s
-  .hidden {
-    display: none;
-  }
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-</style>

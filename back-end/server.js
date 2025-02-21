@@ -4,10 +4,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config();
 const enseignantRoutes = require('./routes/enseignantRoutes');
-<<<<<<< HEAD
 const eleveRoutes = require('./routes/eleveRoutes');
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+const eventRoutes = require('./routes/eventRoutes');
+
+
 
 const Eleve = require('./models/Eleve');
 const Admin = require('./models/Admin');
@@ -19,10 +19,10 @@ const port = process.env.PORT || 5002;
 app.use(express.json());
 app.use(cors({ origin: '*' }));
 app.use('/api', enseignantRoutes);
-<<<<<<< HEAD
 app.use('/api', eleveRoutes);
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+app.use('/api/events', eventRoutes);
+
+
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -33,11 +33,11 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => {
     console.error('❌ Erreur de connexion à MongoDB:', err);
     process.exit(1);
-<<<<<<< HEAD
+
 }); 
-=======
-});
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+
+
+
 
 // Route d'inscription d'un élève
 app.post('/save', async (req, res) => {

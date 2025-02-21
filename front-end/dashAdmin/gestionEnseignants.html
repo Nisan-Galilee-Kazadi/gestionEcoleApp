@@ -137,12 +137,7 @@
       height: 40px;
       border-radius: 50%;
     }
-<<<<<<< HEAD
  /* ============================
-=======
-
-    /* ============================
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
        SIDEBAR
     ============================ */
     aside.sidebar {
@@ -172,22 +167,12 @@
     }
     .admin-menu {
       list-style: none;
-<<<<<<< HEAD
       padding: 0;
       margin: 0;
       padding-top: 20px;
     }
     .admin-menu li {
       padding: 20px;
-=======
-      padding-top: 40px;
-      padding-left: 5px;
-      margin: 0;
-      gap: 10px;
-    }
-    .admin-menu li {
-      padding: 15px;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -215,11 +200,7 @@
       background-color: #f4f6f9;
     }
     main {
-<<<<<<< HEAD
       padding: 0px;
-=======
-      padding: 20px;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     .dashboard-header h2 {
       font-size: 2rem;
@@ -354,14 +335,49 @@
       background-color: #ddd;
       color: #444;
     }
-<<<<<<< HEAD
 
     *{
       outline: none;
     }
 
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
+    .sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 70px; /* même largeur que la sidebar réduite */
+    background-color: #101041;
+    padding: 10px 0;
+    transition: width 0.3s;
+  }
+
+  .sidebar.expanded .sidebar-bottom {
+    width: 190px; /* même largeur que la sidebar étendue */
+  }
+
+  .sidebar-bottom .admin-menu li {
+    padding: 10px 20px;
+  }
+
+  .sidebar-bottom .admin-menu li:last-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .top-right #fullscreenBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  .top-right #fullscreenBtn i {
+    color: white;
+    font-size: 18px;
+  }
+
+  .top-right #fullscreenBtn:hover i {
+    color: #101041;
+  }
+
   </style>
 </head>
 <body>
@@ -399,6 +415,24 @@
               </li>
             </ul>
           </div>
+        </div>
+        <div class="sidebar-bottom">
+          <ul class="admin-menu">
+            <li class="menu-item" >
+              <a href="#settings" style="display: flex;
+            align-items: center;">
+                <i class="fas fa-cog"></i>
+                <span>Paramètres</span>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="#" id="logoutBtn" style="display: flex;
+            align-items: center;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+            </li>
+          </ul>
         </div>
       </aside>
 
@@ -446,13 +480,8 @@
           <div class="wrapper">
             <div class="page-content">
               <main>
-<<<<<<< HEAD
                 <h2 style="color: #101041; padding-bottom: 40px; font-size: 25px;">Gestion des Enseignants</h2>
                 <button id="addTeacherBtn" ><span style="border: solid 1px #fff ;border-radius: 100% ;padding: 2px 4px;">+</span> Ajouter Enseignant</button>
-=======
-                <h2 style="padding-bottom: 40px; color:101041;">Gestion des Enseignants</h2>
-                <button id="addTeacherBtn">Ajouter Enseignant</button>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
                 <table id="teachersTable" class="display">
                   <thead>
                     <tr>
@@ -470,7 +499,6 @@
                 </table>
               </main>
             </div>
-<<<<<<< HEAD
             <!-- Modal pour ajouter un enseignant -->
             <div id="addTeacherModal" class="modal">
             <div class="modal-content">
@@ -765,8 +793,20 @@
       sidebar.classList.toggle('collapsed');
     });
   </script>
+
+  <script src="js/fullscreen.js"></script>  
 </body>
 </html>
+<!-- Ajout du script pour la déconnexion -->
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      // Redirection vers la page de connexion
+      window.location.href = '../index.html';
+    }
+  });
+</script>
 <style>
   /* Change the title "Menu" to be bold and white */
   .menu-title {
@@ -780,148 +820,3 @@
     color: #b88f1e; /* Même couleur que le header */
   }
 </style>
-=======
-          </div>
-        </section>
-
-        <!-- Modal pour ajouter/modifier un enseignant -->
-        <div id="teacherModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Ajouter/Modifier Enseignant</h2>
-              <span class="close" id="closeModal">&times;</span>
-            </div>
-            <div class="modal-body">
-              <form id="teacherForm">
-                <input type="hidden" id="teacherId">
-                <label for="teacherName">Nom:</label>
-                <input type="text" id="teacherName" required>
-                <label for="teacherSubject">Matière:</label>
-                <input type="text" id="teacherSubject" required>
-                <label for="teacherEmail">Email:</label>
-                <input type="email" id="teacherEmail" required>
-                <label for="teacherPhone">Téléphone:</label>
-                <input type="text" id="teacherPhone" required>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="submit" class="save-btn" form="teacherForm">Enregistrer</button>
-              <button type="button" class="cancel-btn" id="cancelBtn">Annuler</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Modal pour voir les informations d'un enseignant -->
-        <div id="viewTeacherModal" class="modal">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h2>Informations Enseignant</h2>
-              <span class="close" id="closeViewModal">&times;</span>
-            </div>
-            <div class="modal-body">
-              <p><strong>Nom:</strong> <span id="viewTeacherName"></span></p>
-              <p><strong>Matière:</strong> <span id="viewTeacherSubject"></span></p>
-              <p><strong>Email:</strong> <span id="viewTeacherEmail"></span></p>
-              <p><strong>Téléphone:</strong> <span id="viewTeacherPhone"></span></p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="cancel-btn" id="closeViewBtn">Fermer</button>
-            </div>
-          </div>
-        </div>
-
-        <script>
-            $(document).ready(function() {
-            const table = $('#teachersTable').DataTable({
-              "ajax": {
-              "url": "http://localhost:5002/api/enseignants", // Mettez à jour l'URL ici
-              "dataSrc": ""
-              },
-              "columns": [
-              { "data": "_id" },
-              { "data": "name" },
-              { "data": "subject" },
-              { "data": "email" },
-              { "data": "phone" },
-              {
-          "data": null,
-          "defaultContent": "<button class='viewBtn'>Voir</button> <button class='editBtn'>Modifier</button> <button class='deleteBtn'>Supprimer</button>"
-              }
-              ],
-              "language": {
-              "lengthMenu": "Afficher _MENU_ entrées",
-              "zeroRecords": "Aucun enseignant trouvé",
-              "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
-              "infoEmpty": "Aucune entrée disponible",
-              "infoFiltered": "(filtré à partir de _MAX_ entrées au total)",
-              "search": "Rechercher :",
-              "paginate": {
-          "first": "Premier",
-          "last": "Dernier",
-          "next": "Suivant",
-          "previous": "Précédent"
-              }
-              }
-            });
-
-            // Utiliser l'input de recherche du header pour filtrer la DataTable
-            $('#headerSearch').on('keyup', function() {
-              table.search(this.value).draw();
-            });
-          
-            $('#addTeacherBtn').on('click', function() {
-              $('#teacherModal').show();
-              $('body').addClass('modal-open');
-            });
-          
-            $('#cancelBtn, #closeModal').on('click', function() {
-              $('#teacherModal').hide();
-              $('body').removeClass('modal-open');
-            });
-          
-            $('#teacherForm').on('submit', function(e) {
-              e.preventDefault();
-              const teacherData = {
-              id: $('#teacherId').val(),
-              name: $('#teacherName').val(),
-              subject: $('#teacherSubject').val(),
-              email: $('#teacherEmail').val(),
-              phone: $('#teacherPhone').val()
-              };
-              // Ajoutez ici la logique pour envoyer les données au serveur
-            });
-
-            // Gestion des boutons de la table
-            $('#teachersTable tbody').on('click', 'button.viewBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              $('#viewTeacherName').text(data.name);
-              $('#viewTeacherSubject').text(data.subject);
-              $('#viewTeacherEmail').text(data.email);
-              $('#viewTeacherPhone').text(data.phone);
-              $('#viewTeacherModal').show();
-              $('body').addClass('modal-open');
-            });
-
-            $('#teachersTable tbody').on('click', 'button.editBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              $('#teacherId').val(data._id);
-              $('#teacherName').val(data.name);
-              $('#teacherSubject').val(data.subject);
-              $('#teacherEmail').val(data.email);
-              $('#teacherPhone').val(data.phone);
-              $('#teacherModal').show();
-              $('body').addClass('modal-open');
-            });
-
-            $('#teachersTable tbody').on('click', 'button.deleteBtn', function() {
-              const data = table.row($(this).parents('tr')).data();
-              // Ajoutez ici la logique pour supprimer l'enseignant
-            });
-
-            $('#closeViewBtn, #closeViewModal').on('click', function() {
-              $('#viewTeacherModal').hide();
-              $('body').removeClass('modal-open');
-            });
-            });
-        </script>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e

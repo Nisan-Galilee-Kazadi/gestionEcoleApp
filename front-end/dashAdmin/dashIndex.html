@@ -19,6 +19,7 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      outline:none;
     }
     body {
       font-family: Arial, sans-serif;
@@ -35,14 +36,14 @@
       min-height: 100vh;
     }
 
-    /* ============================
+   /* ============================
        HEADER (Topbar)
     ============================ */
     header.topbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #b88f1e; /* Couleur d'accent doré */
+      background-color: #b88f1e;
       padding: 20px 20px;
       color: #fff;
       position: fixed;
@@ -55,12 +56,17 @@
       display: flex;
       width: 100%;
       justify-content: space-between;
-      align-items: center;
+      align-items: center;      gap: 2000px;
     }
     .topbar .top-left,
     .topbar .top-right {
       display: flex;
       align-items: center;
+    }
+
+    .top-right {
+      right: 30px;
+      position:absolute;
     }
     .top-right i {
       color: white;
@@ -68,6 +74,11 @@
     .top-right i:hover {
       color: #101041;
     }
+
+    .admin-menu {
+      padding-top: 20px;
+    }
+
     .admin-menu li span {
       color: white;
     }
@@ -99,9 +110,71 @@
       position: relative;
     }
     .topbar-search input[type="search"] {
-      padding: 5px 35px 5px 10px;
+      padding: 15px 35px 10px 10px;
       border: none;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 750px;
+      font-size:14px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content h1.section-title {
+      color: #101041;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .modal-content .form-group {
+      margin-bottom: 15px;
+    }
+    .modal-content .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    .modal-content .form-group input,
+    .modal-content .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
       border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content .form-group input:focus,
+    .modal-content .form-group select:focus {
+      border-color: #b88f1e;
+      outline: none;
+    }
+    .modal-content button[type="submit"] {
+      background-color: #b88f1e;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+    .topbar-search input[type="search"] {
+      padding: 10px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    .topbar-search input[type="search"]::placeholder {
+      color: #888;
+      font-style: italic;
+      font-size: 12px;
     }
     .topbar-search button {
       position: absolute;
@@ -125,6 +198,24 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
+    }
+
+        
+    .top-right #fullscreenBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    .top-right #fullscreenBtn i {
+      color: white;
+      font-size: 18px;
+    }
+
+    .top-right #fullscreenBtn:hover i {
+      color: #101041;
     }
 
     /* ============================
@@ -155,17 +246,10 @@
     .app-menu {
       overflow-y: auto;
     }
-    .admin-menu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
+  
     .admin-menu li {
-<<<<<<< HEAD
       padding: 20px;
-=======
       padding: 15px;
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
       display: flex;
       align-items: center;
       cursor: pointer;
@@ -176,15 +260,33 @@
     }
     .admin-menu li i {
       margin-right: 10px;
-<<<<<<< HEAD
       font-size: 30px;
-=======
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
     }
     /* Masquer le texte lorsque la sidebar est réduite */
     aside.sidebar.collapsed .admin-menu li span {
       display: none;
     }
+
+    .sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 70px; /* même largeur que la sidebar réduite */
+    background-color: #101041;
+    padding: 10px 0;
+    transition: width 0.3s;
+  }
+
+  .sidebar.expanded .sidebar-bottom {
+    width: 190px; /* même largeur que la sidebar étendue */
+  }
+
+  .sidebar-bottom .admin-menu li {
+    padding: 10px 20px;
+  }
+
+  .sidebar-bottom .admin-menu li:last-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
     /* ============================
        PAGE CONTENT & MAIN
     ============================ */
@@ -201,7 +303,7 @@
       }
     }
     main {
-      padding: 20px;
+      padding: 40px;
     }
     .dashboard-header h2 {
       font-size: 2rem;
@@ -247,183 +349,235 @@
   </style>
 </head>
 <body>
-  <section class="dashboardSection">
-    <div class="wrapper">
-      <!-- SIDEBAR -->
-      <aside class="sidebar collapsed" id="sidebar">
-        <div class="menuContent">
-          <div class="app-menu" data-simplebar>
+    <section class="dashboardSection">
+      <div class="wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar collapsed" id="sidebar">
+          <div class="menuContent">
+            <div class="app-menu" data-simplebar>
+              <ul class="admin-menu">
+                <li class="menu-item" onclick="location.href='./dashIndex.html'">
+                  <i class="fas fa-home fa-2x"></i>
+                  <span>Dashboard</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionEleves.html'">
+                  <i class="fas fa-user-graduate fa-2x"></i>
+                  <span>Élèves</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionEnseignants.html'">
+                  <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                  <span>Enseignants</span>
+                </li>
+                <li class="menu-item" onclick="location.href='paiements.html'">
+                  <i class="fas fa-dollar-sign fa-2x"></i>
+                  <span>Paiements</span>
+                </li>
+                <li class="menu-item" onclick="location.href='rapports.html'">
+                  <i class="fas fa-chart-line fa-2x"></i>
+                  <span>Rapports</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionInscriptions.html'">
+                  <i class="fas fa-edit fa-2x"></i>
+                  <span>Inscriptions</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Ajout des icônes en bas -->
+          <div class="sidebar-bottom">
             <ul class="admin-menu">
-<<<<<<< HEAD
-            
-=======
-              <li class="menu-title">Menu</li>
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-              <li class="menu-item" onclick="location.href='./dashIndex.html'">
-                <i class="fas fa-home fa-2x"></i>
-                <span>Dashboard</span>
+              <li class="menu-item" >
+                <a href="#settings" style="display: flex;
+              align-items: center;">
+                  <i class="fas fa-cog"></i>
+                  <span>Paramètres</span>
+                </a>
               </li>
-              <li class="menu-item" onclick="location.href='gestionEleves.html'">
-                <i class="fas fa-user-graduate fa-2x"></i>
-                <span>Élèves</span>
-              </li>
-              <li class="menu-item" onclick="location.href='gestionEnseignants.html'">
-                <i class="fas fa-chalkboard-teacher fa-2x"></i>
-                <span>Enseignants</span>
-              </li>
-              <li class="menu-item" onclick="location.href='paiements.html'">
-                <i class="fas fa-dollar-sign fa-2x"></i>
-                <span>Paiements</span>
-              </li>
-              <li class="menu-item" onclick="location.href='rapports.html'">
-                <i class="fas fa-chart-line fa-2x"></i>
-                <span>Rapports</span>
-              </li>
-              <li class="menu-item" onclick="location.href='gestionInscriptions.html'">
-                <i class="fas fa-edit fa-2x"></i>
-                <span>Inscriptions</span>
+              <li class="menu-item">
+                <a href="#" id="logoutBtn" style="display: flex;
+              align-items: center;">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Déconnexion</span>
+                </a>
               </li>
             </ul>
           </div>
+        </aside>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+          <!-- TOPBAR -->
+          <header class="topbar">
+            <div class="navBar">
+              <div class="top-left">
+              <div class="top-left">
+                <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
+                  <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="topbar-logo">
+                  <!-- Remplacez "logo.png" par votre logo -->
+                </a>
+                <div class="topbar-search">
+                  <input type="search" placeholder="Search...">
+                  <button type="button">
+                    <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="top-right">
+                <button title="Changer de langue">
+                  <i class="fas fa-globe"></i>
+                </button>
+                <button title="Notifications">
+                  <i class="fas fa-bell"></i>
+                </button>
+                <button id="fullscreenBtn" title="Plein écran">
+                  <i class="fas fa-expand"></i>
+                </button>
+                <div class="topbar-profile">
+                  <button title="Profil">
+                    <img src="https://via.placeholder.com/40" alt="Profile">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <!-- MAIN CONTENT -->
+          <main>
+            <div class="dashboard-header">
+              <h2>Tableau de bord principal</h2>
+              <p>Vue d'ensemble des statistiques de l'école</p>
+            </div>
+
+            <div class="stats">
+              <div class="stat-box">
+                <h3>Total Élèves</h3>
+                <p>1200</p>
+              </div>
+              <div class="stat-box">
+                <h3>Total Enseignants</h3>
+                <p>75</p>
+              </div>
+              <div class="stat-box">
+                <h3>Inscriptions en attente</h3>
+                <p>45</p>
+              </div>
+              <div class="stat-box">
+                <h3>Paiements récents</h3>
+                <p>30</p>
+              </div>
+              <div class="stat-box">
+                <h3>Sessions à venir</h3>
+                <p>5</p>
+              </div>
+              <div class="stat-box">
+                <h3>Présence Enseignants</h3>
+                <p>92%</p>
+              </div>
+              <!-- Section pour le graphique avec Chart.js -->
+              <div class="stat-box">
+                <h3>Graphique Progression</h3>
+                <canvas id="progressChart" width="300" height="200"></canvas>
+              </div>
+            </div>
+
+            <div class="calendar-section">
+              <div class="calendar-container">
+                <div id='calendar'></div>
+              </div>
+              
+              <div class="event-form-container">
+                <h3>Ajouter un événement</h3>
+                <form id="eventForm">
+                  <div class="form-group">
+                    <label for="eventTitle">Titre</label>
+                    <input type="text" id="eventTitle" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="eventDate">Date</label>
+                    <input type="date" id="eventDate" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="eventTime">Heure</label>
+                    <input type="time" id="eventTime" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="eventDescription">Description</label>
+                    <textarea id="eventDescription" rows="3"></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="eventColor">Couleur</label>
+                    <input type="color" id="eventColor" value="#b88f1e">
+                  </div>
+                  
+                  <button type="submit" class="btn-submit">Ajouter l'événement</button>
+                </form>
+              </div>
+            </div>
+          </main>
+
+          <!-- FOOTER -->
+          <footer class="footer">
+            <div class="footer-content">
+              <p>&copy; <script>document.write(new Date().getFullYear())</script> Nisan-Galilée Kazadi_Gestion d'école. Tout droit réservés</p>
+            </div> 
+          </footer>
         </div>
-      </aside>
-
-      <!-- PAGE CONTENT -->
-      <div class="page-content">
-        <!-- TOPBAR -->
-        <header class="topbar">
-          <div class="navBar">
-<<<<<<< HEAD
-            <div class="top-left">
-=======
-            <div class="top-left">a
->>>>>>> c45ea0c59cd6232b22d0d1506a21bf214406c90e
-              <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
-                <i class="fas fa-bars"></i>
-              </button>
-              <a href="#" class="topbar-logo">
-                <!-- Remplacez "logo.png" par votre logo -->
-              </a>
-              <div class="topbar-search">
-                <input type="search" placeholder="Search...">
-                <button type="button">
-                  <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
-                </button>
-              </div>
-            </div>
-            <div class="top-right">
-              <button title="Changer de langue">
-                <i class="fas fa-globe"></i>
-              </button>
-              <button title="Notifications">
-                <i class="fas fa-bell"></i>
-              </button>
-              <button title="Plein écran">
-                <i class="fas fa-expand"></i>
-              </button>
-              <div class="topbar-profile">
-                <button title="Profil">
-                  <img src="https://via.placeholder.com/40" alt="Profile">
-                </button>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        <!-- MAIN CONTENT -->
-        <main>
-          <div class="dashboard-header">
-            <h2>Tableau de bord principal</h2>
-            <p>Vue d’ensemble des statistiques de l’école</p>
-          </div>
-          <div class="stats">
-            <div class="stat-box">
-              <h3>Total Élèves</h3>
-              <p>1200</p>
-            </div>
-            <div class="stat-box">
-              <h3>Total Enseignants</h3>
-              <p>75</p>
-            </div>
-            <div class="stat-box">
-              <h3>Inscriptions en attente</h3>
-              <p>45</p>
-            </div>
-            <div class="stat-box">
-              <h3>Paiements récents</h3>
-              <p>30</p>
-            </div>
-            <div class="stat-box">
-              <h3>Sessions à venir</h3>
-              <p>5</p>
-            </div>
-            <div class="stat-box">
-              <h3>Présence Enseignants</h3>
-              <p>92%</p>
-            </div>
-            <!-- Section pour le graphique avec Chart.js -->
-            <div class="stat-box">
-              <h3>Graphique Progression</h3>
-              <canvas id="progressChart" width="300" height="200"></canvas>
-            </div>
-          </div>
-        </main>
-
-        <!-- FOOTER -->
-        <footer class="footer">
-          <div class="footer-content">
-            <p>&copy; <script>document.write(new Date().getFullYear())</script> Nisan-Galilée Kazadi_Gestion d'école. Tout droit réservés</p>
-          </div> 
-        </footer>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Inclure Chart.js depuis un CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <!-- SCRIPT pour initialiser le graphique -->
-  <script>
-    // Vérifier que l'élément canvas existe
-    const ctx = document.getElementById('progressChart').getContext('2d');
-    const progressChart = new Chart(ctx, {
-      type: 'line', // Type de graphique (line, bar, etc.)
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
-        datasets: [{
-          label: 'Progression des élèves',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          backgroundColor: 'rgba(184, 143, 30, 0.2)', // couleur d'accent en transparence
-          borderColor: 'rgba(184, 143, 30, 1)',
-          borderWidth: 2,
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true
+    <!-- Inclure Chart.js depuis un CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- SCRIPT pour initialiser le graphique -->
+    <script>
+      // Vérifier que l'élément canvas existe
+      const ctx = document.getElementById('progressChart').getContext('2d');
+      const progressChart = new Chart(ctx, {
+        type: 'line', // Type de graphique (line, bar, etc.)
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
+          datasets: [{
+            label: 'Progression des élèves',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            backgroundColor: 'rgba(184, 143, 30, 0.2)', // couleur d'accent en transparence
+            borderColor: 'rgba(184, 143, 30, 1)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
-      }
-    });
-  </script>
+      });
+    </script>
 
-  <!-- SCRIPT pour le toggle de la sidebar -->
-  <script>
-    const toggleBtn = document.getElementById('toggleBtn');
-    const sidebar = document.getElementById('sidebar');
-    
-    toggleBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('expanded');
-      sidebar.classList.toggle('collapsed');
-    });
-  </script>
-</body>
-</html>
+    <!-- SCRIPT pour le toggle de la sidebar -->
+    <script>
+      const toggleBtn = document.getElementById('toggleBtn');
+      const sidebar = document.getElementById('sidebar');
+      
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+        sidebar.classList.toggle('collapsed');
+      });
+    </script>
+  // <!-- SCRIPT pour le mode plein écran !-->
+  <script src="js/fullscreen.js"></script>
+
 <style>
+
   /* Change the title "Menu" to be bold and white */
   .menu-title {
     font-weight: bold;
@@ -435,4 +589,305 @@
     background-color: #f4f6f9; /* Même couleur que le fond principal */
     color: #b88f1e; /* Même couleur que le header */
   }
+
+  .calendar-section {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .calendar-container {
+    flex: 2;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .event-form-container {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #101041;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .btn-submit {
+    background: #b88f1e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
 </style>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      // Redirection vers la page de connexion
+      window.location.href = 'public/index.html';
+    }
+  });
+</script>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      locale: 'fr',
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: function(info, successCallback, failureCallback) {
+        console.log("Fetching events..."); // Debug
+        fetch('http://localhost:5002/api/events')
+          .then(response => {
+            console.log("Response status:", response.status); // Debug
+            return response.json();
+          })
+          .then(data => {
+            console.log("Raw data received:", data); // Debug
+            const events = data.map(event => ({
+              id: event._id,
+              title: event.title,
+              start: `${event.date}T${event.time}`,
+              description: event.description,
+              color: event.color || '#b88f1e',
+              allDay: false
+            }));
+            console.log("Formatted events:", events); // Debug
+            successCallback(events);
+          })
+          .catch(error => {
+            console.error('Erreur de chargement:', error);
+            failureCallback(error);
+          });
+      },
+      // Configuration de l'affichage des événements
+      eventDidMount: function(info) {
+        info.el.title = `${info.event.title}\n${info.event.extendedProps.description || ''}`;
+      },
+      // Gestion du clic sur un événement
+      eventClick: function(info) {
+        const event = info.event;
+        const startDate = new Date(event.start);
+        
+        const detailModal = document.createElement('div');
+        detailModal.classList.add('modal', 'active');
+        detailModal.innerHTML = `
+          <div class="modal-content" style="background-color: white; color: #101041; border-radius: 10px;">
+            <span class="modal-close" style="color: #101041;">&times;</span>
+            <div style="padding: 20px;">
+              <h3 style="color: #b88f1e; margin-bottom: 15px;">${event.title}</h3>
+              <p><strong>Date:</strong> ${startDate.toLocaleDateString('fr-FR')}</p>
+              <p><strong>Heure:</strong> ${startDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</p>
+              <p><strong>Description:</strong> ${event.extendedProps.description || 'Aucune description'}</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(detailModal);
+
+        // Gestion de la fermeture du modal
+        detailModal.querySelector('.modal-close').addEventListener('click', function() {
+          detailModal.classList.remove('active');
+          document.body.removeChild(detailModal);
+        });
+
+        // Fermeture en cliquant en dehors du modal
+        window.addEventListener('click', function(e) {
+          if (e.target === detailModal) {
+            detailModal.classList.remove('active');
+            document.body.removeChild(detailModal);
+          }
+        });
+      }
+    });
+    calendar.render();
+
+    // Gestion du formulaire
+    document.getElementById('eventForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const eventData = {
+        title: document.getElementById('eventTitle').value,
+        date: document.getElementById('eventDate').value,
+        time: document.getElementById('eventTime').value,
+        description: document.getElementById('eventDescription').value,
+        color: document.getElementById('eventColor').value
+      };
+
+      console.log("Données à envoyer:", eventData); // Debug
+
+      try {
+        const response = await fetch('http://localhost:5002/api/events', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(eventData)
+        });
+
+        console.log("Statut de la réponse:", response.status); // Debug
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log("Événement créé:", result); // Debug
+          // Création du modal de succès
+          const successModal = document.createElement('div');
+          successModal.classList.add('modal', 'active');
+          successModal.innerHTML = `
+            <div class="modal-content" style="background-color: #b88f1e; color: #101041; border-radius: 10px;">
+              <span class="modal-close" style="color: #101041;">&times;</span>
+              <div style="display: flex; align-items: center;">
+                <i class="fas fa-check-circle" style="color: #101041; font-size: 2rem; margin-right: 10px;"></i>
+                <p style="font-size:14px;">Événement ajouté avec succès</p>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(successModal);
+
+          // Gestion de la fermeture du modal
+          successModal.querySelector('.modal-close').addEventListener('click', function() {
+            successModal.classList.remove('active');
+            document.body.removeChild(successModal);
+          });
+
+          // Fermeture du modal en cliquant en dehors
+          window.addEventListener('click', function(e) {
+            if (e.target === successModal) {
+              successModal.classList.remove('active');
+              document.body.removeChild(successModal);
+            }
+          });
+
+          calendar.refetchEvents(); // Rafraîchir le calendrier
+          this.reset(); // Réinitialiser le formulaire
+        } else {
+          throw new Error('Erreur lors de l\'ajout de l\'événement');
+        }
+      } catch (error) {
+        console.error('Erreur complète:', error);
+        // Modal d'erreur
+        const errorModal = document.createElement('div');
+        errorModal.classList.add('modal', 'active');
+        errorModal.innerHTML = `
+          <div class="modal-content" style="background-color: #ff4444; color: white; border-radius: 10px;">
+            <span class="modal-close" style="color: white;">&times;</span>
+            <div style="display: flex; align-items: center;">
+              <i class="fas fa-exclamation-circle" style="color: white; font-size: 2rem; margin-right: 10px;"></i>
+              <p style="font-size:14px;">Erreur lors de l'ajout de l'événement</p>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(errorModal);
+
+        // Gestion de la fermeture du modal d'erreur
+        errorModal.querySelector('.modal-close').addEventListener('click', function() {
+          errorModal.classList.remove('active');
+          document.body.removeChild(errorModal);
+        });
+      }
+    });
+  });
+</script>
+
+<!-- Ajout des styles pour le modal -->
+<style>
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+  }
+
+  .modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    padding: 20px;
+    min-width: 300px;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+</style>
+
+  <!-- Styles pour améliorer l'affichage des événements -->
+  <style>
+    .fc-event {
+      cursor: pointer;
+      padding: 2px 5px;
+      margin: 1px 0;
+      border-radius: 3px;
+    }
+
+    .fc-event-title {
+      font-weight: 500;
+      font-size: 0.9em;
+    }
+
+    .fc-event:hover {
+      opacity: 0.9;
+    }
+
+    /* Styles pour le modal de détails */
+    .modal-content {
+      max-width: 500px;
+      width: 90%;
+    }
+
+    .modal-content h3 {
+      font-size: 1.2em;
+      border-bottom: 2px solid #b88f1e;
+      padding-bottom: 10px;
+    }
+
+    .modal-content p {
+      margin: 10px 0;
+      line-height: 1.4;
+    }
+
+    .modal-content strong {
+      color: #101041;
+    }
+  </style>
+
+</body>
+</html>
