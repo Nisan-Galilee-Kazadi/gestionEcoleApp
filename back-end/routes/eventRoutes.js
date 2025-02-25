@@ -7,11 +7,15 @@ router.post('/', eventController.createEvent);
 router.get('/', async (req, res) => {
   try {
     const events = await Event.find();
-    console.log("Événements trouvés:", events); // Pour debug
-    res.json(events);
+    res.json({
+      status: 'success',
+      data: events
+    });
   } catch (error) {
-    console.error("Erreur de récupération:", error); // Pour debug
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      status: 'error',
+      message: error.message
+    });
   }
 });
 router.get('/:id', eventController.getEvent);

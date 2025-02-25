@@ -91,47 +91,7 @@
             </div>
             
         </section>
-        <div class="calendar-container">
-            <!-- Formulaire -->
-            <div class="form-section">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Nouvel événement</h3>
-                    </div>
-                    <div class="card-body">
-                        <form id="eventForm">
-                            <div class="form-group">
-                                <label for="eventTitle">Titre de l'événement</label>
-                                <input type="text" id="eventTitle" name="title" class="form-control" required>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="eventDate">Date</label>
-                                    <input type="date" id="eventDate" name="date" class="form-control" required>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label for="eventTime">Heure</label>
-                                    <input type="time" id="eventTime" name="time" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="eventDescription">Description</label>
-                                <textarea id="eventDescription" name="description" class="form-control" rows="3"></textarea>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Créer l'événement</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Calendrier -->
-            <div class="calendar-main">
-                <div id='calendar'></div>
-            </div>
-        </div>
+        
     </main>
     <footer>
         <div class="bottom">
@@ -157,98 +117,6 @@
         <a href="connectEleve.html">🎓 Élève</a>
         <button class="close-btn" onclick="closeDialog('connexionDialog')">Fermer</button>
     </div>
-    <style>
-        .calendar-container {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .form-section {
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .calendar-main {
-            flex: 2;
-            min-height: 600px;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-            background: #f8f9fa;
-        }
-
-        .card-header h3 {
-            margin: 0;
-            color: #333;
-            font-size: 1.2rem;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 1rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #666;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .form-control:focus {
-            border-color: #b88f1e;
-            outline: none;
-            box-shadow: 0 0 0 2px rgba(184, 143, 30, 0.2);
-        }
-
-        .btn-primary {
-            background: #b88f1e;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 14px;
-        }
-
-        .btn-primary:hover {
-            background: #a07c1a;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 100px;
-        }
-    </style>
+    
 </body>
 </html>

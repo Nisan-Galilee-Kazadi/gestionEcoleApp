@@ -1,22 +1,50 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // Schéma de l'administrateur
-const AdminSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+const adminSchema = new mongoose.Schema({
+    fullname: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: String
+    },
+    address: {
+        type: String
+    },
+    photo: {
+        type: String,
+        default: 'default-avatar.jpg'
+    },
+    role: {
+        type: String,
+        default: 'admin'
+    }
+}, {
+    timestamps: true
 });
 
-// Méthode pour hacher le mot de passe avant de sauvegarder
-AdminSchema.pre('save', async function(next) {
-    if (!this.isModified('password')) {
-        return next();
+// Middleware pour hasher le mot de passe avant sauvegarde
+adminSchema.pre('save', async function(next) {
+    if (this.isModified('password')) {
+        this.password = await bcrypt.hash(this.password, 10);
     }
-    const hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
     next();
 });
 
-const Admin = mongoose.model('Admin', AdminSchema);
+// Méthode pour vérifier le mot de passe
+adminSchema.methods.comparePassword = async function(candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
+};
 
-module.exports = Admin;
+module.exports = mongoose.model('Admin', adminSchema);
