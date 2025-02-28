@@ -58,6 +58,58 @@
                 top: 50%;
                 transform: translateY(-50%);
             }
+
+            @media screen and (max-width:414px) {
+                .adminLogin {
+                    max-width: 400px;
+                    padding: 40px 20px 70px;
+                    background-color: #f9f9f9;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    text-align: center;
+                }
+                .adminLogin h2 {
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                    color: #101041;
+                }
+                .adminLogin label {
+                    display: block;
+                    margin-bottom: 8px;
+                    color: #101041;
+                }
+                .adminLogin input[type="text"],
+                .adminLogin input[type="password"] {
+                    width: 100%;
+                    padding: 10px;
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+                .adminLogin input[type="submit"] {
+                    width: 100%;
+                    background-color: #b88f1e;
+                    color: white;
+                    padding: 14px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 500;
+                }
+                .adminLogin input[type="submit"]:hover {
+                    background-color: #a77d1a;
+                }
+                .toggle-password {
+                    cursor: pointer;
+                    position: absolute;
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
         </style>
     </head>
     <body>

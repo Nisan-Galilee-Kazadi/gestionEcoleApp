@@ -22,12 +22,12 @@
             margin-bottom: 5px;
             color: #333; /* Couleur du texte des labels */
         }
-
+    
         .form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="email"], .form-group input[type="date"] {
             font-size:12px;
             color: #101041;
         }
-
+    
         .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
@@ -73,6 +73,88 @@
             cursor: pointer;
             font-size: 16px;
         }
+    
+        @media screen and (max-width:414px) {
+
+            *{
+                width: 414px;
+            }
+
+                /* Styles pour la mise en page du formulaire */
+            .form-container {
+                display: flex;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                margin: 10px;
+                padding:0 10px;
+                font-size: 14px;
+            }
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+                color: #333; /* Couleur du texte des labels */
+            }
+
+            .hr{
+                width: 360px;
+            }
+        
+            .form-group input[type="text"], .form-group input[type="tel"], .form-group input[type="email"], .form-group input[type="date"] {
+                font-size:14px;
+                color: #101041;
+                width: 320px;
+            }
+        
+            .form-group input, .form-group select {
+                width: auto;
+                padding: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 18px;
+                margin-bottom: 10px;
+                background-color: #f9f9f9; /* Couleur de fond des champs */
+                color: #333; /* Couleur du texte des champs */
+            }
+            .form-group input[type="date"] {
+                padding: 10px;
+            }
+            .form-group select {
+                appearance: none;
+                background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray"><path d="M4 6l4 4 4-4z"/></svg>') no-repeat right 10px center;
+                background-size: 12px;
+                font-size: 11px;
+                background-color: #fff; /* Couleur de fond du select */
+                color: #101041; /* Couleur du texte du select */
+            }
+            .form-group select option {
+                background-color: white; /* Couleur de fond des options */
+                color: #333; /* Couleur du texte des options */
+            }
+            .form-group.hidden {
+                display: none;
+            }
+            .section-title {
+                text-align: center;
+                width: 100%;
+                margin: 20px 0;
+                color: #101041; /* Couleur du titre de section */
+            }
+            button[type="submit"] {
+                background-color: #fff;
+                color: white;
+                width: 330px;
+                padding: 10px 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        }
         
     </style>
 </head>
@@ -111,10 +193,10 @@
                 </div>
                 <div class="form-group">
                     <label for="adresse_tuteur">Adresse physique du tuteur</label>
-                    <input type="text" id="adresse_tuteur" name="adresse_tuteur" required>
+                    <input type="text" id="adresse_tuteur" name="adresse_tuteur" required placeholder="Ex: 233 Masoso / Limete / Kinshasa">
                 </div>
             </div>
-            <hr style="color:#101041;">
+            <hr class="hr" style="color:#101041;">
             <div class="form-container">
                 <!-- Titre et Informations de l'élève -->
                 <h1 class="section-title">Info sur l'élève</h1>
@@ -188,6 +270,30 @@
                         <option value="electricite">Électricité</option>
                     </select>
                 </div>
+            </div>
+            <hr class="hr" style="color:#101041;">
+            <div class="form-container">
+                <!-- Titre et Informations de l'ancienne ecole -->
+                <h1 class="section-title">Info sur l'ecole de Provenance</h1>
+                <div class="form-group">
+                    <label for="nom">Denomination de l'école</label>
+                    <input type="text" id="denomination_ecole" name="denomination_ecole" required>
+                </div>
+                <div class="form-group">
+                    <label for="prenom">situation Geographique</label>
+                    <input type="text" id="adresse_ecole" name="adresse_ecole" required placeholder="Ex: 233 Masoso / Limete / Kinshasa">
+                </div>
+                
+                
+                <div class="form-group">
+                    <label for="telephone">Numéro de Contact</label>
+                    <input type="tel" id="contact_ecole" name="contact_ecole" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_eleve">Adresse e-mail de l'ecole</label>
+                    <input type="email" id="email_ecole" name="email_ecole" required>
+                </div>
+            
             </div>
             <button type="submit">S'inscrire</button>
         </form>

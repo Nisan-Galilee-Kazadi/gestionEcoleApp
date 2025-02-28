@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Admin</title>
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        
+  <!-- Favicon -->
+  <link rel="icon" href="../public/images/logocicaf.png" alt="logo" type="image/png">
+  <!-- Votre CSS global -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- Ajouter dans le head -->
+  <style>
+    /* ============================
+       Styles généraux pour le layout
+    ============================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline: none;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #444;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Wrapper en flex pour disposer la sidebar et le contenu */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+   /* ============================
+       HEADER (Topbar)
+    ============================ */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #b88f1e;
+      padding: 20px 20px;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .topbar .navBar {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;      
+      gap: 2000px;
+    }
+    .topbar .top-left,
+    .topbar .top-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .top-right {
+      right: 30px;
+      position: absolute;
+    }
+    .top-right i {
+      color: white;
+    }
+    .top-right i:hover {
+      color: #101041;
+    }
+
+    .admin-menu {
+      padding-top: 20px;
+    }
+
+    .admin-menu li span {
+      color: white;
+    }
+    .admin-menu li span:hover {
+      color: #b88f1e;
+    }
+    .menu-item:hover span {
+      color: #b88f1e;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .menu-item i {
+      color: white;
+    }
+    .menu-item:hover i {
+      color: #b88f1e;
+    }
+    .topbar .toggle-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #101041;
+    }
+    .topbar-logo-img {
+      height: 40px;
+      margin-right: 20px;
+    }
+    .topbar-search {
+      position: relative;
+    }
+    .topbar-search input[type="search"] {
+      padding: 15px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 750px;
+      font-size: 14px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content h1.section-title {
+      color: #101041;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .modal-content .form-group {
+      margin-bottom: 15px;
+    }
+    .modal-content .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    .modal-content .form-group input,
+    .modal-content .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content .form-group input:focus,
+    .modal-content .form-group select:focus {
+      border-color: #b88f1e;
+      outline: none;
+    }
+    .modal-content button[type="submit"] {
+      background-color: #b88f1e;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+    .topbar-search input[type="search"] {
+      padding: 10px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    .topbar-search input[type="search"]::placeholder {
+      color: #888;
+      font-style: italic;
+      font-size: 12px;
+    }
+    .topbar-search button {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #101041;
+    }
+    .topbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 15px;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .topbar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .top-right #fullscreenBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    .top-right #fullscreenBtn i {
+      color: white;
+      font-size: 18px;
+    }
+
+    .top-right #fullscreenBtn:hover i {
+      color: #101041;
+    }
+
+    /* ============================
+       SIDEBAR
+    ============================ */
+    aside.sidebar {
+      background-color: #101041; /* Bleu foncé */
+      overflow: hidden;
+      transition: width 0.3s;
+      width: 70px; /* état réduit */
+      height: 100vh;
+      z-index: 900;
+      position: fixed;
+    }
+    aside.sidebar.expanded {
+      width: 190px;
+    }
+    
+    .menuContent {
+      padding-top: 60px;
+    }
+    .menuContent .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .menuContent .logo img {
+      max-width: 80%;
+    }
+    .app-menu {
+      overflow-y: auto;
+    }
+  
+    .admin-menu li {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .admin-menu li:hover {
+      background-color: #1e282c;
+    }
+    .admin-menu li i {
+      margin-right: 10px;
+      font-size: 30px;
+    }
+    /* Masquer le texte lorsque la sidebar est réduite */
+    aside.sidebar.collapsed .admin-menu li span {
+      display: none;
+    }
+
+    .sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 70px; /* même largeur que la sidebar réduite */
+    background-color: #101041;
+    padding: 10px 0;
+    transition: width 0.3s;
+  }
+
+  .sidebar.expanded .sidebar-bottom {
+    width: 190px; /* même largeur que la sidebar étendue */
+  }
+
+  .sidebar-bottom .admin-menu li {
+    padding: 10px 20px;
+  }
+
+  .sidebar-bottom .admin-menu li:last-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+    /* ============================
+       PAGE CONTENT & MAIN
+    ============================ */
+    .page-content {
+      flex-grow: 1;
+      transition: margin-left 0.3s;
+      padding-top: 60px; /* Pour laisser la place du header fixe */
+      background-color: #f4f6f9;
+      margin-left: 70px;
+    }
+    @media (min-width: 768px) {
+      aside.sidebar.expanded + .page-content {
+        margin-left: 190px;
+      }
+    }
+    
+    /* ============================
+       FOOTER
+    ============================ */
+    footer.footer {
+      background-color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+    }
+
+    /* Styles pour la page paramètres */
+.profile-container {
+    padding: 0px;
+    gap: 20px;
+}
+
+/* Carte de profil */
+.profile-card {
+    background: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 370px;
+    height: 550px;
+}
+
+.profile-header {
+    padding: 30px;
+    text-align: center;
+    position: relative;
+    height: 270px;
+}
+
+.profile-image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #b88f1e;
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #b88f1e;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.image-overlay:hover {
+    background: #101041;
+}
+
+.upload-icon {
+    color: var(--light);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.profile-name {
+    color: white;
+    margin: 10px 0;
+    font-size: 1.8rem;
+}
+
+.profile-role {
+    color: #b88f1e;
+    font-size: 1.2rem;
+}
+
+/* Informations du profil */
+.profile-info {
+    padding: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid var(--grey);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item i {
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.info-content {
+    flex: 1;
+    color: #101041;
+    font-size: 14px;
+}
+
+.info-content label {
+    display: block;
+    color: var(--dark);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.info-content p {
+    color: var(--dark);
+    margin: 0;
+}
+
+/* Carte des paramètres */
+.settings-card {
+    background: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 400px;
+    height: 550px;
+    padding: 30px 20px;
+}
+
+.settings-nav {
+    display: flex;
+    background: #f5f5f5;
+    padding: 10px;
+    gap: 10px;
+}
+
+.nav-btn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    color: var(--dark);
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    font-size: 1.1rem;
+}
+
+.nav-btn.active {
+    background: #b88f1e;
+    color: white;
+    font-weight: 600;
+}
+
+.nav-btn:hover {
+    background: #101041;
+    color: white;
+}
+
+/* Contenu des paramètres */
+.settings-content {
+    padding: 10px;
+    width: 100%;
+
+}
+
+.settings-tab {
+    display: none;
+}
+
+.settings-tab.active {
+    display: block;
+}
+
+.settings-tab h3 {
+    color: var(--dark);
+    font-size: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #b88f1e;
+}
+
+/* Formulaire */
+.settings-form {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group2 {
+    margin-bottom: 20px;
+    padding: 15px 00px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.password-input {
+    position: relative;
+    display: flex ;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.password-input i{
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;  
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 10px;
+    background-color: #f3dfa968;
+    border: 2px solid var(--grey);
+    border-radius: 5px;
+    transition: 0.3s;   
+    font-size: 11px;
+}
+
+.form-group2 input {
+    width: 100%;
+    padding: 14px 10px;
+    background-color: #f3dfa968;
+    border: 2px solid var(--grey);
+    border-radius: 5px;
+    transition: 0.3s;   
+    font-size: 11px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--dark);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--grey);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.form-control:focus {
+    border-color: #b88f1e;
+    outline: none;
+}
+
+.form-check {
+    margin-bottom: 15px;
+    font-size: 14px;
+    color: var(--dark);
+    padding: 30px 10px;
+}
+
+.form-check input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #b88f1e;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.form-check input[type="checkbox"]:checked {
+    background-color: #b88f1e;
+    border-color: #101041;
+}
+
+/* Bouton de sauvegarde */
+.btn-save {
+    background: #b88f1e;
+    color: #fff;
+    font-size: 14px;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-save:hover {
+    background: #101041;
+    transform: translateY(-2px);
+}
+
+/* Animations */
+.profile-card, .settings-card {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+
+    .settings-nav {
+        flex-direction: column;
+    }
+
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+  </style>
+</head>
+<body>
+    <section class="dashboardSection">
+      <div class="wrapper">
+        <!-- SIDEBAR -->
+        <aside class="sidebar collapsed" id="sidebar">
+          <div class="menuContent">
+            <div class="app-menu" data-simplebar>
+              <ul class="admin-menu">
+                <li class="menu-item" onclick="location.href='./dashIndex.html'">
+                  <i class="fas fa-home fa-2x" ></i>
+                  <span >Dashboard</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionEleves.html'">
+                  <i class="fas fa-user-graduate fa-2x"></i>
+                  <span>Élèves</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionEnseignants.html'">
+                  <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                  <span>Enseignants</span>
+                </li>
+                <li class="menu-item" onclick="location.href='paiements.html'">
+                  <i class="fas fa-dollar-sign fa-2x"></i>
+                  <span>Paiements</span>
+                </li>
+                <li class="menu-item" onclick="location.href='rapports.html'">
+                  <i class="fas fa-chart-line fa-2x"></i>
+                  <span>Rapports</span>
+                </li>
+                <li class="menu-item" onclick="location.href='gestionInsertion.html'">
+                  <i class="fas fa-edit fa-2x"></i>
+                  <span>Inscriptions</span>
+                </li>
+                <li class="menu-item" onclick="location.href='cartes.html'">
+                  <i class="fas far fa-id-card fa-2x"></i>
+                  <span>cartes</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Ajout des icônes en bas -->
+          <div class="sidebar-bottom">
+            <ul class="admin-menu">
+              <li class="menu-item" >
+                <a href="parametres.html" style="display: flex;
+              align-items: center;">
+                  <i class="fas fa-cog" style="color: #b88f1e;"></i>
+                  <span style="color: #b88f1e;">Paramètres</span>
+                </a>
+              </li>
+              <li class="menu-item">
+                <a href="#" id="logoutBtn" style="display: flex;
+              align-items: center;">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>Déconnexion</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        <!-- PAGE CONTENT -->
+        <div class="page-content">
+          <!-- TOPBAR -->
+          <header class="topbar">
+            <div class="navBar">
+              <div class="top-left">
+              <div class="top-left">
+                <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
+                  <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="topbar-logo">
+                  <!-- Remplacez "logo.png" par votre logo -->
+                </a>
+                <div class="topbar-search">
+                  <input type="search" placeholder="Search...">
+                  <button type="button">
+                    <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="top-right">
+                <button title="Changer de langue">
+                  <i class="fas fa-globe"></i>
+                </button>
+                <button title="Notifications">
+                  <i class="fas fa-bell"></i>
+                </button>
+                <button id="fullscreenBtn" title="Plein écran">
+                  <i class="fas fa-expand"></i>
+                </button>
+                <div class="topbar-profile">
+                  <button title="Profil">
+                    <img src="https://via.placeholder.com/40" alt="Profile">
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <!-- MAIN CONTENT -->
+    <main style="padding: 20px;">
+        <h1 class="section-title">Paiements</h1>
+
+        <div class="paiements-container">
+          <div class="paiements-header">
+            <button class="btn-add-paiement" onclick="openPaiementModal()">Ajouter un paiement</button>
+          </div>
+          <table class="paiements-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nom de l'élève</th>
+                <th>Montant</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Jean Dupont</td>
+                <td>500€</td>
+                <td>01/10/2023</td>
+                <td>
+                  <button class="btn-edit" onclick="editPaiement(1)">Modifier</button>
+                  <button class="btn-delete" onclick="deletePaiement(1)">Supprimer</button>
+                </td>
+              </tr>
+              <!-- More rows as needed -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Modal for adding/editing paiement -->
+        <div id="paiementModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closePaiementModal()">&times;</span>
+            <h1 class="section-title">Ajouter / Modifier Paiement</h1>
+            <form id="paiementForm">
+              <div class="form-group">
+                <label for="studentName">Nom de l'élève</label>
+                <input type="text" id="studentName" name="studentName" required>
+              </div>
+              <div class="form-group">
+                <label for="amount">Montant</label>
+                <input type="number" id="amount" name="amount" required>
+              </div>
+              <div class="form-group">
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+              </div>
+              <button type="submit">Enregistrer</button>
+            </form>
+          </div>
+        </div>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('paiementModal').style.display = 'none';
+          });
+        </script>
+
+        <script>
+          function openPaiementModal() {
+            document.getElementById('paiementModal').style.display = 'block';
+          }
+
+          function closePaiementModal() {
+            document.getElementById('paiementModal').style.display = 'none';
+          }
+
+          function editPaiement(id) {
+            // Logic to edit paiement
+            openPaiementModal();
+          }
+
+          function deletePaiement(id) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer ce paiement ?')) {
+              // Logic to delete paiement
+            }
+          }
+
+          document.getElementById('paiementForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Logic to save paiement
+            closePaiementModal();
+          });
+        </script>
+        
+    </main>   
+           
+  </section>
+  <style>
+    .paiements-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .paiements-table th, .paiements-table td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .paiements-table th {
+      background-color: #b88f1e;
+      color: white;
+    }
+
+    .paiements-table tr:nth-child(even) {
+      background-color: #f4f6f9;
+    }
+
+    .paiements-table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .btn-add-paiement {
+      background-color: #b88f1e;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .btn-add-paiement:hover {
+      opacity: 0.9;
+    }
+
+    .btn-edit, .btn-delete {
+      background-color: #101041;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 0.9rem;
+    }
+
+    .btn-edit:hover, .btn-delete:hover {
+      opacity: 0.9;
+    }
+
+    .btn-delete {
+      background-color: #b88f1e;
+    }
+  </style>
+    
+    
+
+    // <!-- SCRIPT pour le toggle de la sidebar -->
+    <script>
+      const toggleBtn = document.getElementById('toggleBtn');
+      const sidebar = document.getElementById('sidebar');
+      
+      toggleBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('expanded');
+        sidebar.classList.toggle('collapsed');
+      });
+
+    </script>
+  // <!-- SCRIPT pour le mode plein écran !-->
+  <script src="js/fullscreen.js"></script>
+
+<style>
+
+  /* Change the title "Menu" to be bold and white */
+  .menu-title {
+    font-weight: bold;
+    color: white;
+  }
+
+  /* Change sidebar item background and color on hover */
+  .admin-menu li:hover {
+    background-color: #f4f6f9; /* Même couleur que le fond principal */
+    color: #b88f1e; /* Même couleur que le header */
+  }
+
+ 
+  </style>
+<script>
+  document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+      // Redirection vers la page de connexion
+      window.location.href = 'public/index.html';
+    }
+  });
+</script>
+
+
+</body>
+</html>

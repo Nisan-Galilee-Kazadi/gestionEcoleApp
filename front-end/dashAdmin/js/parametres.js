@@ -1,16 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Éléments du DOM
-    const profileForm = document.querySelector('#profile-form');
-    const securityForm = document.querySelector('#security-form');
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const tabs = document.querySelectorAll('.settings-tab');
+    
+    function switchTab(tabId) {
+        tabs.forEach(tab => tab.classList.remove('active'));
+        navBtns.forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(`${tabId}-tab`).classList.add('active');
+        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+    
+    navBtns.forEach(btn => {
+        btn.addEventListener('click', (event) => {
+            event.preventDefault();
+            switchTab(btn.dataset.tab);
+        });
+    });
+    
+    const profileUpload = document.getElementById('profile-upload');
     const profileImage = document.querySelector('.profile-image');
-    const profileUpload = document.querySelector('#profile-upload');
-    const profileName = document.querySelector('.profile-name');
-
-    // Gestion de l'upload d'image
+    
     profileUpload.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
-            // Prévisualisation de l'image
             const reader = new FileReader();
             reader.onload = function(e) {
                 profileImage.src = e.target.result;
@@ -19,83 +31,78 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Mise à jour du profil
-    profileForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        try {
-            const formData = new FormData(this);
-            
-            // Ajout de la photo si elle existe
-            if (profileUpload.files[0]) {
-                formData.append('photo', profileUpload.files[0]);
-            }
+    const forms = document.querySelectorAll('.settings-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-            const response = await fetch('backend/update_profile.php', {
-                method: 'POST',
-                body: formData
-            });
+            const btn = form.querySelector('.btn-save');
+            btn.style.pointerEvents = 'none';
+            btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sauvegarde...';
 
-            const data = await response.json();
-
-            if (data.success) {
-                // Mise à jour de l'interface
-                profileName.textContent = formData.get('fullname');
-                document.querySelector('.info-content[data-type="email"] p').textContent = formData.get('email');
-                document.querySelector('.info-content[data-type="phone"] p').textContent = formData.get('phone');
-                document.querySelector('.info-content[data-type="address"] p').textContent = formData.get('address');
-
-                showNotification('Profil mis à jour avec succès', 'success');
-            } else {
-                throw new Error(data.message);
-            }
-        } catch (error) {
-            showNotification(error.message, 'error');
-        }
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bx bx-check"></i> Sauvegardé!';
+                btn.style.background = '#28a745';
+                
+                setTimeout(() => {
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.background = '#b88f1e';
+                    btn.innerHTML = btn.dataset.originalText || '<i class="bx bx-save"></i> Enregistrer';
+                }, 2000);
+            }, 1500);
+        });
+    });
+    
+    document.querySelectorAll('.btn-save').forEach(btn => {
+        btn.dataset.originalText = btn.innerHTML;
     });
 
-    // Modification du mot de passe
-    securityForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-
+    // Fonction pour charger les informations de l'admin
+    async function loadAdminInfo() {
         try {
-            const formData = new FormData(this);
-            
-            // Vérification de la correspondance des mots de passe
-            if (formData.get('new_password') !== formData.get('confirm_password')) {
-                throw new Error('Les nouveaux mots de passe ne correspondent pas');
+            const response = await fetch('http://localhost:5002/admin/info');
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données');
             }
-
-            const response = await fetch('backend/update_password.php', {
-                method: 'POST',
-                body: formData
-            });
-
             const data = await response.json();
-
-            if (data.success) {
-                showNotification('Mot de passe mis à jour avec succès', 'success');
-                this.reset();
-            } else {
-                throw new Error(data.message);
-            }
+            document.getElementById('adminName').textContent = data.name;
+            document.getElementById('adminPhone').textContent = data.phone;
+            document.getElementById('adminEmail').textContent = data.email;
+            document.getElementById('adminAddress').textContent = data.address;
         } catch (error) {
-            showNotification(error.message, 'error');
+            console.error('Erreur:', error);
+            alert('Erreur lors de la récupération des données');
         }
-    });
+    }
 
-    // Fonction pour afficher les notifications
-    function showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        document.body.appendChild(notification);
+    loadAdminInfo();
+});
 
+function validatePassword() {
+    const newPass = document.querySelector('input[type="password"]:nth-of-type(2)').value;
+    const confirmPass = document.querySelector('input[type="password"]:nth-of-type(3)').value;
+    
+    if (newPass !== confirmPass) {
+        alert('Les mots de passe ne correspondent pas');
+        return false;
+    }
+    return true;
+}
+
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.innerHTML = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
         setTimeout(() => {
-            notification.classList.add('show');
+            notification.classList.remove('show');
             setTimeout(() => {
                 notification.remove();
-            }, 3000);
-        }, 100);
-    }
-}); 
+            }, 300);
+        }, 3000);
+    }, 100);
+}

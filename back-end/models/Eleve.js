@@ -17,7 +17,11 @@ const eleveSchema = new mongoose.Schema({
   telephone_tuteur: { type: String, required: true },
   email_tuteur: { type: String, required: true, match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/ },
   lien_eleve: { type: String, required: true },
-  adresse_tuteur: { type: String, required: true }
+  adresse_tuteur: { type: String, required: true },
+  denomination_ecole: { type: String, required: true },
+  adresse_ecole: { type: String, required: true },
+  contact_ecole: { type: String, required: true },
+  email_ecole: { type: String, required: true, match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/ },
 }, { timestamps: true });
 
 const Eleve = mongoose.model('Eleve', eleveSchema);

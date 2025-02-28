@@ -76,3 +76,28 @@ exports.updatePassword = async (req, res) => {
     });
   }
 }; 
+
+
+const getAdminInfo = (req, res) => {
+  // Simuler la récupération des données de l'admin depuis une base de données
+  const adminData = {
+    name: 'Admin CICAF',
+    phone: '+243 821 762 521',
+    email: 'admin@cicaf.com',
+    address: 'Mososo, Limete'
+  };
+
+  res.json(adminData);
+};
+
+const updateAdminInfo = (req, res) => {
+  // Simuler la mise à jour des données de l'admin dans une base de données
+  const updatedData = req.body;
+  // Logique pour mettre à jour les données dans la base de données
+  res.json({ message: 'Informations mises à jour avec succès', data: updatedData });
+};
+
+module.exports = {
+  getAdminInfo,
+  updateAdminInfo
+};

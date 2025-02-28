@@ -19,9 +19,9 @@ window.addEventListener("scroll", () => {
     const aboutSection = document.getElementById("a-propos").offsetTop;
 
     if (window.scrollY >= 1000 * window.innerHeight) {  // Condition de 1000vh
-        backTop.style.display = "block";
-    } else {
         backTop.style.display = "none";
+    } else {
+        backTop.style.display = "block";
     }
 });
 
@@ -48,3 +48,5 @@ fullscreenBtn.addEventListener('click', () => {
     }
   }
 });
+
+

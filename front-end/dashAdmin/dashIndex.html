@@ -376,9 +376,13 @@
                   <i class="fas fa-chart-line fa-2x"></i>
                   <span>Rapports</span>
                 </li>
-                <li class="menu-item" onclick="location.href='gestionInscriptions.html'">
+                <li class="menu-item" onclick="location.href='gestionInsertion.html'">
                   <i class="fas fa-edit fa-2x"></i>
                   <span>Inscriptions</span>
+                </li>
+                <li class="menu-item" onclick="location.href='cartes.html'">
+                  <i class="fas far fa-id-card fa-2x"></i>
+                  <span>cartes</span>
                 </li>
               </ul>
             </div>
@@ -640,7 +644,7 @@
     width: 100%;
   }
 </style>
-<script>
+<script> 
   document.getElementById('logoutBtn').addEventListener('click', function(e) {
     e.preventDefault();
     if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {

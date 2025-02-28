@@ -1,13 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config();
 const enseignantRoutes = require('./routes/enseignantRoutes');
 const eleveRoutes = require('./routes/eleveRoutes');
 const eventRoutes = require('./routes/eventRoutes');
-
-
+const adminRoutes = require('./routes/adminRoutes');
 
 const Eleve = require('./models/Eleve');
 const Admin = require('./models/Admin');
@@ -18,11 +18,15 @@ const port = process.env.PORT || 5002;
 // Middleware
 app.use(express.json());
 app.use(cors({ origin: '*' }));
+app.use(bodyParser.json());
 app.use('/api', enseignantRoutes);
 app.use('/api', eleveRoutes);
 app.use('/api/events', eventRoutes);
+// app.use('/api/admin', adminRoutes);
+app.use(bodyParser.urlencoded({ extended: true }));
 
-
+// Utilisation des routes
+// app.use('/admin', adminRoutes);
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -35,9 +39,6 @@ mongoose.connect(process.env.MONGO_URI, {
     process.exit(1);
 
 }); 
-
-
-
 
 // Route d'inscription d'un élève
 app.post('/save', async (req, res) => {
@@ -53,7 +54,6 @@ app.post('/save', async (req, res) => {
         res.status(500).json({ message: '❌ Erreur serveur', errors: err.errors });
     }
 });
-
 
 // Route d'enregistrement de l'administrateur (à utiliser une seule fois)
 app.post('/admin/register', async (req, res) => {

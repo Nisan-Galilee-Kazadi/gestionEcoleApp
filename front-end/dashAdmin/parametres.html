@@ -671,10 +671,11 @@
                   <i class="fas fa-chart-line fa-2x"></i>
                   <span>Rapports</span>
                 </li>
-                <li class="menu-item" onclick="location.href='gestionInscriptions.html'">
+                <li class="menu-item" onclick="location.href='gestionInsertion.html'">
                   <i class="fas fa-edit fa-2x"></i>
                   <span>Inscriptions</span>
                 </li>
+                
               </ul>
             </div>
           </div>
@@ -752,42 +753,42 @@
               <div class="profile-card">
                   <div class="profile-header" style="background: #101041;">
                       <div class="profile-image-container">
-                          <img src="avatar/admin.jpg" alt="Admin" class="profile-image" id="profileImage">
+                          <img id="profileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
                           <div class="image-overlay">
                               <label for="profile-upload" class="upload-icon">
-                                  <i class="bx bx-camera"></i>
+                                  <i class="fa fa-camera"></i>
                               </label>
-                              <input type="file" id="profile-upload" accept="image/*" hidden>
+                              <input type="file" id="profile-upload" hidden>
                           </div>
                       </div>
-                      <h3 class="profile-name" id="adminName">Admin CICAF</h3>
+                      <h3 id="adminName" class="profile-name">Chargement...</h3>
                       <p class="profile-role">Super Administrateur</p>
                   </div>
 
                   <div class="profile-info">
                       <div class="info-item">
-                          <i class="bx bx-phone" style="color: #b88f1e;"></i>
-                          <div class="info-content">
+                          <i class="fa fa-phone" style="color: #b88f1e;"></i>
+                          <div class="info-content" data-type="phone">
                               <label>Téléphone</label>
-                              <p id="adminPhone">+243 821 762 521</p>
+                              <p id="adminPhone">Chargement...</p>
                           </div>
                       </div>
                       <div class="info-item">
-                          <i class="bx bx-envelope" style="color: #b88f1e;"></i>
-                          <div class="info-content">
+                          <i class="fa fa-envelope" style="color: #b88f1e;"></i>
+                          <div class="info-content" data-type="email">
                               <label>Email</label>
-                              <p id="adminEmail">admin@cicaf.com</p>
+                              <p id="adminEmail">Chargement...</p>
                           </div>
                       </div>
                       <div class="info-item">
-                          <i class="bx bx-map" style="color: #b88f1e;"></i>
-                          <div class="info-content">
+                          <i class="fa fa-map-marker" style="color: #b88f1e;"></i>
+                          <div class="info-content" data-type="address">
                               <label>Adresse</label>
-                              <p id="adminAddress">Mososo, Limete</p>
+                              <p id="adminAddress">Chargement...</p>
                           </div>
                       </div>
                       <div class="info-item">
-                          <i class="bx bx-user" style="color: #b88f1e;"></i>
+                          <i class="fa fa-user" style="color: #b88f1e;"></i>
                           <div class="info-content">
                               <label>Statut</label>
                               <p>Actif</p>
@@ -868,6 +869,29 @@
                                   <i class="bx bx-lock-alt"></i> Mettre à jour le mot de passe
                               </button>
                           </form>
+                      </div>
+
+                           <!-- Onglet Notifications -->
+                          <div class="settings-tab" id="notifications-tab">
+                              <h3>Préférences de notification</h3>
+                              <form class="settings-form">
+                                  <div class="form-check">
+                                      <input type="checkbox" id="email-notif" checked>
+                                      <label for="email-notif">Notifications par email</label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input type="checkbox" id="browser-notif">
+                                      <label for="browser-notif">Notifications du navigateur</label>
+                                  </div>
+                                  <div class="form-check">
+                                      <input type="checkbox" id="updates-notif" checked>
+                                      <label for="updates-notif">Mises à jour du système</label>
+                                  </div>
+                                  <button type="submit" class="btn-save">
+                                      <i class="bx bx-bell"></i> Sauvegarder les préférences
+                                  </button>
+                              </form>
+                          </div>
 
                           <script>
                           function togglePassword(inputId, iconId) {
@@ -923,29 +947,7 @@
                           });
                       </script>
 
-                      // <!-- Onglet Notifications -->
-                      <div class="settings-tab" id="notifications-tab">
-                          <h3>Préférences de notification</h3>
-                          <form class="settings-form">
-                              <div class="form-check">
-                                  <input type="checkbox" id="email-notif" checked>
-                                  <label for="email-notif">Notifications par email</label>
-                              </div>
-                              <div class="form-check">
-                                  <input type="checkbox" id="browser-notif">
-                                  <label for="browser-notif">Notifications du navigateur</label>
-                              </div>
-                              <div class="form-check">
-                                  <input type="checkbox" id="updates-notif" checked>
-                                  <label for="updates-notif">Mises à jour du système</label>
-                              </div>
-                              <button type="submit" class="btn-save">
-                                  <i class="bx bx-bell"></i> Sauvegarder les préférences
-                              </button>
-                          </form>
-                              </div>
-                          </div>
-                      </div>
+                      
                   </div>
           
       </div>
@@ -1030,36 +1032,36 @@
     });
 });
 
-// Validation des formulaires
-function validatePassword() {
-    const newPass = document.querySelector('input[type="password"]:nth-of-type(2)').value;
-    const confirmPass = document.querySelector('input[type="password"]:nth-of-type(3)').value;
-    
-    if (newPass !== confirmPass) {
-        alert('Les mots de passe ne correspondent pas');
-        return false;
-    }
-    return true;
-}
+  // Validation des formulaires
+  function validatePassword() {
+      const newPass = document.querySelector('input[type="password"]:nth-of-type(2)').value;
+      const confirmPass = document.querySelector('input[type="password"]:nth-of-type(3)').value;
+      
+      if (newPass !== confirmPass) {
+          alert('Les mots de passe ne correspondent pas');
+          return false;
+      }
+      return true;
+  }
 
-// Notifications
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `notification ${type}`;
-    notification.innerHTML = message;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.classList.add('show');
-        setTimeout(() => {
-            notification.classList.remove('show');
-            setTimeout(() => {
-                notification.remove();
-            }, 300);
-        }, 3000);
-    }, 100);
-}
+  // Notifications
+  function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      notification.innerHTML = message;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+          notification.classList.add('show');
+          setTimeout(() => {
+              notification.classList.remove('show');
+              setTimeout(() => {
+                  notification.remove();
+              }, 300);
+          }, 3000);
+      }, 100);
+  }
     </script>
   // <!-- SCRIPT pour le mode plein écran !-->
   <script src="js/fullscreen.js"></script>
@@ -1090,6 +1092,8 @@ function showNotification(message, type = 'success') {
   });
 </script>
 
+<!-- À ajouter juste avant la fermeture de </body> -->
+<script src="js/parametres.js"></script>
 
 </body>
 </html>
