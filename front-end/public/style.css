@@ -1436,6 +1436,179 @@ width: 400px;
     #optionField {
         display: none;
     }
+    @media screen and (max-width: 380px) {
+        /* Adjustments for screens up to 380px */
+        #navBar {
+            padding: 10px 15px;
+        }
 
-    
+        .logo img {
+            height: 55px;
+        }
+
+        #menu-list {
+            width: 100%;
+            padding: 150px 10px;
+        }
+
+        #menu-list a {
+            padding: 10px 20px;
+        }
+
+        .acceuilDetail {
+            padding: 100px 10px 10px;
+        }
+
+        .acceuilDetail .left h1 {
+            font-size: 30px;
+        }
+
+        .acceuilDetail .left p {
+            font-size: 14px;
+        }
+
+        .acceuilDetail .right img {
+            height: 350px;
+        }
+
+        .a-proposDetail {
+            padding: 70px 10px 30px;
+        }
+
+        .a-proposDetail .left img {
+            height: 350px;
+        }
+
+        .contactDetail {
+            padding: 30px 10px;
+        }
+
+        .contactDetail .right img {
+            height: 300px;
+            width: 300px;
+        }
+
+        form {
+            width: 300px;
+        }
+
+        .login-form {
+            width: 300px;
+        }
+
+        .inscriptEleve {
+            width: 100%;
+        }
+
+        .inscriptEleve form {
+            width: 100%;
+        }
+
+        .inscriptEleve input[type="text"],
+        .inscriptEleve input[type="date"],
+        .inscriptEleve input[type="tel"],
+        .inscriptEleve input[type="email"],
+        .inscriptEleve select {
+            width: 260px;
+        }
+
+        .inscriptEleve button[type="submit"] {
+            width: 260px;
+        }
+    }
+
+    @media screen and (max-width: 290px) {
+        /* Adjustments for screens up to 290px */
+        #navBar {
+            padding: 5px 10px;
+        }
+
+        .logo img {
+            height: 50px;
+        }
+
+        #menu-list {
+            width: 100%;
+            padding: 120px 5px;
+        }
+
+        #menu-list a {
+            padding: 8px 15px;
+        }
+
+        .acceuilDetail {
+            padding: 80px 5px 5px;
+        }
+
+        .acceuilDetail .left h1 {
+            font-size: 25px;
+        }
+
+        .acceuilDetail .left p {
+            font-size: 12px;
+        }
+
+        .acceuilDetail .right img {
+            height: 300px;
+        }
+
+        .a-proposDetail {
+            padding: 50px 5px 20px;
+        }
+
+        .a-proposDetail .left img {
+            height: 300px;
+        }
+
+        .contactDetail {
+            padding: 20px 5px;
+        }
+
+        .contactDetail .right img {
+            height: 250px;
+            width: 250px;
+        }
+
+        form {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .login-form {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .inscriptEleve {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .inscriptEleve form {
+            width: 95%;
+            box-sizing: border-box;
+        }
+
+        .inscriptEleve input[type="text"],
+        .inscriptEleve input[type="date"],
+        .inscriptEleve input[type="tel"],
+        .inscriptEleve input[type="email"],
+        .inscriptEleve select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .inscriptEleve button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    }
 }
