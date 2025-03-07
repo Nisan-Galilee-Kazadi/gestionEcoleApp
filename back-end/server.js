@@ -2,12 +2,12 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config();
 const enseignantRoutes = require('./routes/enseignantRoutes');
 const eleveRoutes = require('./routes/eleveRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const jwt = require('jsonwebtoken');
 
 const Eleve = require('./models/Eleve');
 const Admin = require('./models/Admin');
@@ -17,16 +17,24 @@ const port = process.env.PORT || 5002;
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: '*' }));
+app.use(cors({
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 204
+}));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Servir les fichiers statiques
+app.use('/uploads', express.static('uploads'));
+
+// Utilisation des routes
+app.use('/admin', adminRoutes);
 app.use('/api', enseignantRoutes);
 app.use('/api', eleveRoutes);
 app.use('/api/events', eventRoutes);
-// app.use('/api/admin', adminRoutes);
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Utilisation des routes
-// app.use('/admin', adminRoutes);
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -37,7 +45,6 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => {
     console.error('❌ Erreur de connexion à MongoDB:', err);
     process.exit(1);
-
 }); 
 
 // Route d'inscription d'un élève
@@ -74,24 +81,102 @@ app.post('/admin/register', async (req, res) => {
     }
 });
 
+const adminConfig = require('./config/admin');
+
+// Route pour l'authentification admin
+app.post('/api/auth/login', (req, res) => {
+    const { username, password } = req.body;
+    
+    // Vérification des identifiants avec adminConfig
+    if (username === adminConfig.username && password === adminConfig.password) {
+        // Si les identifiants sont corrects
+        res.json({
+            success: true,
+            message: 'Authentification réussie',
+            user: {
+                username: adminConfig.username,
+                email: adminConfig.email,
+                role: adminConfig.role
+            }
+        });
+    } else {
+        // Si les identifiants sont incorrects
+        res.status(401).json({
+            success: false,
+            message: 'Nom d\'utilisateur ou mot de passe incorrect'
+        });
+    }
+});
+
 // Route de connexion administrateur
 app.post('/admin/login', async (req, res) => {
     try {
         const { username, password } = req.body;
-        const admin = await Admin.findOne({ username });
+        console.log('👉 Tentative de connexion pour:', username);
 
-        if (!admin || !(await bcrypt.compare(password, admin.password))) {
-            return res.status(400).json({ success: false, message: '❌ Identifiants incorrects' });
+        // Rechercher l'admin avec le username exact
+        const admin = await Admin.findOne({ username: username });
+        console.log('🔍 Recherche admin avec username:', username);
+
+        if (!admin) {
+            console.log('❌ Admin non trouvé');
+            return res.status(400).json({ 
+                success: false, 
+                message: '❌ Identifiants incorrects' 
+            });
         }
 
-        res.status(200).json({ success: true, message: '✅ Connexion réussie' });
+        // Vérifier le mot de passe
+        const isValidPassword = await bcrypt.compare(password, admin.password);
+        console.log('🔐 Vérification mot de passe');
+
+        if (!isValidPassword) {
+            console.log('❌ Mot de passe incorrect');
+            return res.status(400).json({ 
+                success: false, 
+                message: '❌ Identifiants incorrects' 
+            });
+        }
+
+        // Créer un token JWT avec les informations de l'admin
+        const token = jwt.sign(
+            { 
+                id: admin._id,
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                role: admin.role
+            },
+            process.env.JWT_SECRET || 'votre_secret_jwt',
+            { expiresIn: '1h' }
+        );
+
+        // Envoyer la réponse avec les informations de l'admin
+        res.status(200).json({
+            success: true,
+            message: '✅ Connexion réussie',
+            token,
+            admin: {
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                phone: admin.phone,
+                address: admin.address,
+                photo: admin.photo,
+                role: admin.role
+            }
+        });
+
     } catch (err) {
         console.error('❌ Erreur connexion admin:', err);
-        res.status(500).json({ success: false, message: '❌ Erreur serveur' });
+        res.status(500).json({ 
+            success: false, 
+            message: '❌ Erreur serveur' 
+        });
     }
 });
 
 // Démarrer le serveur
 app.listen(port, () => {
-    console.log(`🚀 Serveur démarré sur le port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });

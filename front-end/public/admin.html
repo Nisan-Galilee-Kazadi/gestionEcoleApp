@@ -59,6 +59,58 @@
                 transform: translateY(-50%);
             }
 
+            @media screen and (max-width:720px) {
+                .adminLogin {
+                    max-width: 680px;
+                    padding: 40px 20px 70px;
+                    background-color: #f9f9f9;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    text-align: center;
+                }
+                .adminLogin h2 {
+                    margin-bottom: 20px;
+                    font-size: 24px;
+                    color: #101041;
+                }
+                .adminLogin label {
+                    display: block;
+                    margin-bottom: 8px;
+                    color: #101041;
+                }
+                .adminLogin input[type="text"],
+                .adminLogin input[type="password"] {
+                    width: 100%;
+                    padding: 10px;
+                    font-size: 14px;
+                    margin-bottom: 20px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    box-sizing: border-box;
+                    text-align: center;
+                }
+                .adminLogin input[type="submit"] {
+                    width: 100%;
+                    background-color: #b88f1e;
+                    color: white;
+                    padding: 14px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-weight: 500;
+                }
+                .adminLogin input[type="submit"]:hover {
+                    background-color: #a77d1a;
+                }
+                .toggle-password {
+                    cursor: pointer;
+                    position: absolute;
+                    right: 20px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+            }
+
             @media screen and (max-width:414px) {
                 .adminLogin {
                     max-width: 400px;
@@ -147,40 +199,48 @@
                 }
             }
     
-            document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                var formData = new FormData(event.target);
-                var data = {};
+            
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            try {
+                const formData = new FormData(event.target);
+                const data = {};
                 formData.forEach((value, key) => {
                     data[key] = value;
                 });
-    
-                fetch('http://localhost:5002/admin/login', {
+
+                console.log('Tentative de connexion avec:', data);
+
+                const response = await fetch('http://127.0.0.1:5002/admin/login', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
                     },
+                    mode: 'cors',
+                    credentials: 'include',
                     body: JSON.stringify(data)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.success) {
-                        window.location.href = '../dashAdmin/dashIndex.html'; // Redirection vers dashIndex.html
-                    } else {
-                        alert('Erreur de connexion : ' + data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error('❌ Erreur:', error);
-                    alert("Une erreur est survenue lors de la connexion.");
                 });
-            });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                console.log('Réponse du serveur:', result);
+
+                if (result.success) {
+                    localStorage.setItem('token', result.token);
+                    window.location.href = '../dashAdmin/dashIndex.html';
+                } else {
+                    alert('Erreur de connexion : ' + result.message);
+                }
+            } catch (error) {
+                console.error('❌ Erreur détaillée:', error);
+                alert("Erreur de connexion au serveur. Vérifiez que le serveur est bien démarré.");
+            }
+        });
         </script>
     </body>
-    </html>
 </html>

@@ -1,9 +1,10 @@
 const Admin = require('../models/Admin');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 
-// Configuration de multer pour l'upload d'images
+// Configuration de multer pour l'upload d'images (pour la photo de profil)
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
     cb(null, 'uploads/avatars/');
@@ -14,6 +15,125 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
+
+// Exporter le middleware d'upload
+exports.uploadAvatar = upload.single('photo');
+
+// Fonction d'enregistrement d'un admin
+exports.registerAdmin = async (req, res) => {
+  try {
+    const { username, fullname, email, phone, address, password } = req.body;
+    if (!username || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: 'Les champs username, email et password sont obligatoires'
+      });
+    }
+
+    // Vérifier si l'admin existe déjà (selon email ou username)
+    const existingAdmin = await Admin.findOne({ email });
+    if (existingAdmin) {
+      return res.status(400).json({
+        success: false,
+        message: 'Un admin avec cet email existe déjà'
+      });
+    }
+
+    // Hacher le mot de passe
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Si une image est uploadée, la prendre en compte
+    const photo = req.file ? req.file.filename : '';
+
+    const newAdmin = await Admin.create({
+      username,
+      fullname,
+      email,
+      phone,
+      address,
+      photo,
+      password: hashedPassword
+    });
+
+    res.status(201).json({
+      success: true,
+      message: 'Admin enregistré avec succès',
+      data: newAdmin
+    });
+  } catch (error) {
+    console.error('Erreur lors de l\'enregistrement :', error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+// Fonction pour récupérer les informations de l'admin
+const getAdminInfo = async (req, res) => {
+  try {
+    console.log('Tentative de récupération des informations admin');
+    const admin = await Admin.findOne();
+    console.log('Admin trouvé :', admin);
+
+    if (!admin) {
+      console.log('Aucun admin trouvé');
+      return res.status(404).json({
+        success: false,
+        message: 'Admin non trouvé'
+      });
+    }
+
+    // Construire l'objet de réponse : utiliser fullname ou username
+    const adminData = {
+      name: (admin.fullname && admin.fullname.trim() !== '') ? admin.fullname : admin.username,
+      phone: admin.phone || '',
+      email: admin.email,
+      address: admin.address || '',
+      photo: admin.photo || ''
+    };
+
+    console.log('Données admin envoyées :', adminData);
+    res.status(200).json({
+      success: true,
+      data: adminData
+    });
+  } catch (error) {
+    console.error('Erreur dans getAdminInfo:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la récupération des données admin'
+    });
+  }
+};
+
+exports.getAdminInfo = getAdminInfo;
+
+// Fonction de connexion d'un admin
+exports.loginAdmin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    console.log('Tentative de connexion avec:', { username, password });
+
+    const admin = await Admin.findOne({ username });
+    console.log('Admin trouvé:', admin);
+
+    if (!admin || !(await bcrypt.compare(password, admin.password))) {
+      console.log('Identifiants incorrects');
+      return res.status(400).json({ success: false, message: '❌ Identifiants incorrects' });
+    }
+
+    // Créer un token JWT
+    const token = jwt.sign({ id: admin._id, role: admin.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({ success: true, message: '✅ Connexion réussie', token });
+  } catch (err) {
+    console.error('❌ Erreur connexion admin:', err);
+    res.status(500).json({ success: false, message: '❌ Erreur serveur' });
+  }
+};
+
+// Autres fonctions existantes (updateProfile, updatePassword, etc.) restent inchangées
 
 exports.updateProfile = async (req, res) => {
   try {
@@ -75,29 +195,51 @@ exports.updatePassword = async (req, res) => {
       message: error.message
     });
   }
-}; 
-
-
-const getAdminInfo = (req, res) => {
-  // Simuler la récupération des données de l'admin depuis une base de données
-  const adminData = {
-    name: 'Admin CICAF',
-    phone: '+243 821 762 521',
-    email: 'admin@cicaf.com',
-    address: 'Mososo, Limete'
-  };
-
-  res.json(adminData);
 };
 
-const updateAdminInfo = (req, res) => {
-  // Simuler la mise à jour des données de l'admin dans une base de données
+exports.updateAdminInfo = (req, res) => {
+  // Une implémentation possible de la mise à jour des données
   const updatedData = req.body;
-  // Logique pour mettre à jour les données dans la base de données
   res.json({ message: 'Informations mises à jour avec succès', data: updatedData });
 };
 
+// Mettre à jour la photo de profil
+exports.updatePhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: 'Aucune photo fournie'
+      });
+    }
+
+    const admin = await Admin.findByIdAndUpdate(
+      req.admin.id,
+      { photo: req.file.filename },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Photo mise à jour avec succès',
+      photo: req.file.filename
+    });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour de la photo:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur lors de la mise à jour de la photo'
+    });
+  }
+};
+
 module.exports = {
-  getAdminInfo,
-  updateAdminInfo
+  registerAdmin: exports.registerAdmin,
+  getAdminInfo: exports.getAdminInfo,
+  updateAdminInfo: exports.updateAdminInfo,
+  updateProfile: exports.updateProfile,
+  updatePassword: exports.updatePassword,
+  uploadAvatar: exports.uploadAvatar,
+  loginAdmin: exports.loginAdmin,
+  updatePhoto: exports.updatePhoto
 };

@@ -70,7 +70,74 @@
                     <h3>Objectif de l'école</h3>
                     <p>Notre objectif est de fournir une éducation de qualité, de promouvoir la créativité et de favoriser l'épanouissement de chaque élève.</p>
                 </div>
+            </div>            <!-- Ajout du modal pour la vidéo -->
+            <div id="videoModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <video id="schoolVideo" controls>
+                        <source src="videos/ecole.mp4" type="video/mp4">
+                        Votre navigateur ne supporte pas la lecture de vidéos.
+                    </video>
+                </div>
             </div>
+            
+            <!-- Style pour le modal -->
+            <style>
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 999;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(15, 6, 35, 0.779);
+            }
+            
+            .modal-content {
+                position: relative;
+                margin: auto;
+                padding: 20px;
+                width: 80%;
+                max-width: 800px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            
+            .close {
+                position: absolute;
+                right: 0;
+                top: -30px;
+                color: #fff;
+                font-size: 30px;
+                cursor: pointer;
+            }
+            
+            #schoolVideo {
+                width: 100%;
+                border-radius: 10px;
+            }
+            </style>
+            
+            <!-- Script pour gérer le modal -->
+            <script>
+            document.getElementById('parcourBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('videoModal').style.display = 'block';
+            });
+            
+            document.querySelector('.close').addEventListener('click', function() {
+                document.getElementById('videoModal').style.display = 'none';
+                document.getElementById('schoolVideo').pause();
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target == document.getElementById('videoModal')) {
+                    document.getElementById('videoModal').style.display = 'none';
+                    document.getElementById('schoolVideo').pause();
+                }
+            });
+            </script>
         </section>
         <section id="contact">
             <div class="contactDetail">
