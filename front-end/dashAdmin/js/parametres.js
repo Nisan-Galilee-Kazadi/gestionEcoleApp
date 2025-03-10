@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const navBtns = document.querySelectorAll('.nav-btn');
     const tabs = document.querySelectorAll('.settings-tab');
     
@@ -17,17 +17,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Gestion de l'upload d'image
     const profileUpload = document.getElementById('profile-upload');
-    const profileImage = document.querySelector('.profile-image');
-    
-    profileUpload.addEventListener('change', function(e) {
+    const profileImage = document.getElementById('profileImage');
+
+    profileUpload.addEventListener('change', async function(e) {
         const file = e.target.files[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                profileImage.src = e.target.result;
+            try {
+                const formData = new FormData();
+                formData.append('photo', file);
+
+                const response = await fetch('http://localhost:5002/admin/update-photo', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'upload');
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Mettre à jour l'image affichée avec la nouvelle URL
+                    profileImage.src = `http://localhost:5002/uploads/avatars/${result.photo}`;
+                    showNotification('✅ Photo de profil mise à jour avec succès', 'success');
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('❌ Erreur:', error);
+                showNotification('❌ Erreur lors de la mise à jour de la photo', 'error');
+                // En cas d'erreur, remettre l'ancienne photo
+                loadAdminInfo();
             }
-            reader.readAsDataURL(file);
         }
     });
 
@@ -57,25 +81,56 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.dataset.originalText = btn.innerHTML;
     });
 
-    // Fonction pour charger les informations de l'admin
+    // Fonction simplifiée pour charger les informations de l'admin
     async function loadAdminInfo() {
         try {
-            const response = await fetch('http://localhost:5002/admin/info');
+            const response = await fetch('http://localhost:5002/admin/test-data', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
             if (!response.ok) {
-                throw new Error('Erreur lors de la récupération des données');
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
-            document.getElementById('adminName').textContent = data.name;
-            document.getElementById('adminPhone').textContent = data.phone;
-            document.getElementById('adminEmail').textContent = data.email;
-            document.getElementById('adminAddress').textContent = data.address;
+
+            const result = await response.json();
+            console.log('📥 Données admin reçues:', result);
+
+            if (result.success) {
+                // Mise à jour des informations textuelles
+                document.getElementById('adminName').textContent = result.admin.fullname || 'Admin';
+                document.getElementById('adminPhone').textContent = result.admin.phone || 'Non renseigné';
+                document.getElementById('adminEmail').textContent = result.admin.email || 'Non renseigné';
+                document.getElementById('adminAddress').textContent = result.admin.address || 'Non renseigné';
+
+                // Mise à jour de la photo de profil
+                const profileImage = document.getElementById('profileImage');
+                if (result.admin.photo) {
+                    profileImage.src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
+                    profileImage.onerror = function() {
+                        this.src = 'avatar/admin.jpg';
+                    };
+                }
+
+                // Pré-remplir le formulaire de profil
+                const profileForm = document.getElementById('profileForm');
+                if (profileForm) {
+                    profileForm.querySelector('input[name="fullname"]').value = result.admin.fullname || '';
+                    profileForm.querySelector('input[name="email"]').value = result.admin.email || '';
+                    profileForm.querySelector('input[name="phone"]').value = result.admin.phone || '';
+                    profileForm.querySelector('input[name="address"]').value = result.admin.address || '';
+                }
+            }
         } catch (error) {
-            console.error('Erreur:', error);
-            alert('Erreur lors de la récupération des données');
+            console.error('❌ Erreur chargement données admin:', error);
+            showNotification('Erreur lors du chargement des données', 'error');
         }
     }
 
-    loadAdminInfo();
+    // Appel de la fonction au chargement
+    await loadAdminInfo();
 });
 
 function validatePassword() {

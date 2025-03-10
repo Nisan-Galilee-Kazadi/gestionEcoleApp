@@ -2,12 +2,16 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 const dotenv = require('dotenv').config();
+const path = require('path');
+const bcrypt = require('bcrypt');
 const enseignantRoutes = require('./routes/enseignantRoutes');
 const eleveRoutes = require('./routes/eleveRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const fs = require('fs').promises;
 
 const Eleve = require('./models/Eleve');
 const Admin = require('./models/Admin');
@@ -17,16 +21,24 @@ const port = process.env.PORT || 5002;
 
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: '*' }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configuration CORS
+app.use(cors({
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Accept', 'Authorization'],
+    credentials: true,
+    optionsSuccessStatus: 204
+}));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 app.use('/api', enseignantRoutes);
 app.use('/api', eleveRoutes);
 app.use('/api/events', eventRoutes);
-// app.use('/api/admin', adminRoutes);
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// Utilisation des routes
-// app.use('/admin', adminRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Connexion à MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -37,8 +49,20 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => {
     console.error('❌ Erreur de connexion à MongoDB:', err);
     process.exit(1);
-
 }); 
+
+// Configuration de multer pour le stockage des fichiers
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/avatars')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, uniqueSuffix + path.extname(file.originalname))
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Route d'inscription d'un élève
 app.post('/save', async (req, res) => {
@@ -78,16 +102,219 @@ app.post('/admin/register', async (req, res) => {
 app.post('/admin/login', async (req, res) => {
     try {
         const { username, password } = req.body;
-        const admin = await Admin.findOne({ username });
+        console.log('👉 Tentative de connexion pour:', username);
 
-        if (!admin || !(await bcrypt.compare(password, admin.password))) {
-            return res.status(400).json({ success: false, message: '❌ Identifiants incorrects' });
+        // Rechercher l'admin avec le username exact
+        const admin = await Admin.findOne({ username: username });
+        console.log('🔍 Recherche admin avec username:', username);
+
+        if (!admin) {
+            console.log('❌ Admin non trouvé');
+            return res.status(400).json({ 
+                success: false, 
+                message: '❌ Identifiants incorrects' 
+            });
         }
 
-        res.status(200).json({ success: true, message: '✅ Connexion réussie' });
+        // Vérifier le mot de passe
+        const isValidPassword = await bcrypt.compare(password, admin.password);
+        console.log('🔐 Vérification mot de passe');
+
+        if (!isValidPassword) {
+            console.log('❌ Mot de passe incorrect');
+            return res.status(400).json({ 
+                success: false, 
+                message: '❌ Identifiants incorrects' 
+            });
+        }
+
+        // Créer un token JWT avec les informations de l'admin
+        const token = jwt.sign(
+            { 
+                id: admin._id,
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                role: admin.role
+            },
+            process.env.JWT_SECRET || 'votre_secret_jwt',
+            { expiresIn: '1h' }
+        );
+
+        // Envoyer la réponse avec les informations de l'admin
+        res.status(200).json({
+            success: true,
+            message: '✅ Connexion réussie',
+            token,
+            admin: {
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                phone: admin.phone,
+                address: admin.address,
+                photo: admin.photo,
+                role: admin.role
+            }
+        });
+
     } catch (err) {
         console.error('❌ Erreur connexion admin:', err);
-        res.status(500).json({ success: false, message: '❌ Erreur serveur' });
+        res.status(500).json({ 
+            success: false, 
+            message: '❌ Erreur serveur' 
+        });
+    }
+});
+
+// Route de récupération des informations de l'admin
+app.get('/admin/profile', async (req, res) => {
+    try {
+        // Vérification de la présence du header Authorization
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            return res.status(401).json({
+                success: false,
+                message: '❌ Token manquant'
+            });
+        }
+
+        // Extraction et vérification du token
+        const token = authHeader.split(' ')[1];
+        console.log('🔑 Token reçu:', token);
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'votre_secret_jwt');
+        console.log('✅ Token décodé:', decoded);
+
+        // Recherche de l'admin
+        const admin = await Admin.findById(decoded.id);
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Admin non trouvé'
+            });
+        }
+
+        // Envoi de la réponse
+        res.status(200).json({
+            success: true,
+            admin: {
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                phone: admin.phone,
+                address: admin.address,
+                photo: admin.photo,
+                role: admin.role
+            }
+        });
+    } catch (err) {
+        console.error('❌ Erreur récupération admin:', err);
+        res.status(401).json({
+            success: false,
+            message: '❌ Token invalide'
+        });
+    }
+});
+
+// Route de suppression de l'admin
+app.delete('/admin/profile', async (req, res) => {
+    try {
+        const token = req.headers.authorization;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'votre_secret_jwt');
+        await Admin.findByIdAndDelete(decoded.id);
+        res.status(200).json({
+            success: true,
+            message: '✅ Profil supprimé avec succès'
+        });
+    } catch (err) {
+        console.error('❌ Erreur suppression admin:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+});
+
+// Route temporaire pour voir les données admin (À SUPPRIMER EN PRODUCTION)
+app.get('/admin/test-data', async (req, res) => {
+    try {
+        const admin = await Admin.findOne();
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Aucun admin trouvé'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            admin: {
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                phone: admin.phone,
+                address: admin.address,
+                photo: admin.photo,
+                role: admin.role
+            }
+        });
+    } catch (err) {
+        console.error('❌ Erreur récupération admin:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+});
+
+// Route pour mettre à jour la photo de profil
+app.post('/admin/update-photo', upload.single('photo'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Aucune image fournie'
+            });
+        }
+
+        // Récupérer l'admin
+        const admin = await Admin.findOne();
+        
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Admin non trouvé'
+            });
+        }
+
+        // Si une ancienne photo existe, la supprimer
+        if (admin.photo) {
+            const oldPhotoPath = path.join(__dirname, 'uploads', 'avatars', admin.photo);
+            try {
+                await fs.unlink(oldPhotoPath);
+                console.log('✅ Ancienne photo supprimée');
+            } catch (error) {
+                console.log('❌ Erreur suppression ancienne photo:', error);
+            }
+        }
+
+        // Mettre à jour la photo dans la base de données
+        admin.photo = req.file.filename;
+        await admin.save();
+        console.log('✅ Nouvelle photo enregistrée:', req.file.filename);
+
+        res.status(200).json({
+            success: true,
+            message: '✅ Photo mise à jour avec succès',
+            photo: req.file.filename
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur mise à jour photo:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
     }
 });
 

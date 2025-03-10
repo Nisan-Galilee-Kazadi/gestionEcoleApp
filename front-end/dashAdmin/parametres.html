@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Admin</title>
+  <title>Paramètres Admin</title>
   <!-- FontAwesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         
@@ -758,7 +758,7 @@
                               <label for="profile-upload" class="upload-icon">
                                   <i class="fa fa-camera"></i>
                               </label>
-                              <input type="file" id="profile-upload" hidden>
+                              <input type="file" id="profile-upload" accept="image/*" hidden>
                           </div>
                       </div>
                       <h3 id="adminName" class="profile-name">Chargement...</h3>
@@ -1086,8 +1086,8 @@
   document.getElementById('logoutBtn').addEventListener('click', function(e) {
     e.preventDefault();
     if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
-      // Redirection vers la page de connexion
-      window.location.href = 'public/index.html';
+      // Redirection vers la page dacceuil
+      window.location.href = '../public/index.html';
     }
   });
 </script>
