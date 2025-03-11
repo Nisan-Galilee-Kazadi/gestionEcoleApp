@@ -84,53 +84,145 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Fonction simplifiée pour charger les informations de l'admin
     async function loadAdminInfo() {
         try {
-            const response = await fetch('http://localhost:5002/admin/test-data', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            const response = await fetch('http://localhost:5002/admin/test-data');
             const result = await response.json();
             console.log('📥 Données admin reçues:', result);
 
             if (result.success) {
-                // Mise à jour des informations textuelles
+                // Mise à jour uniquement des informations affichées dans la carte de profil
                 document.getElementById('adminName').textContent = result.admin.fullname || 'Admin';
                 document.getElementById('adminPhone').textContent = result.admin.phone || 'Non renseigné';
                 document.getElementById('adminEmail').textContent = result.admin.email || 'Non renseigné';
                 document.getElementById('adminAddress').textContent = result.admin.address || 'Non renseigné';
 
-                // Mise à jour de la photo de profil
-                const profileImage = document.getElementById('profileImage');
+                // Mise à jour de la photo de profil si elle existe
                 if (result.admin.photo) {
                     profileImage.src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
-                    profileImage.onerror = function() {
-                        this.src = 'avatar/admin.jpg';
-                    };
-                }
-
-                // Pré-remplir le formulaire de profil
-                const profileForm = document.getElementById('profileForm');
-                if (profileForm) {
-                    profileForm.querySelector('input[name="fullname"]').value = result.admin.fullname || '';
-                    profileForm.querySelector('input[name="email"]').value = result.admin.email || '';
-                    profileForm.querySelector('input[name="phone"]').value = result.admin.phone || '';
-                    profileForm.querySelector('input[name="address"]').value = result.admin.address || '';
                 }
             }
         } catch (error) {
-            console.error('❌ Erreur chargement données admin:', error);
-            showNotification('Erreur lors du chargement des données', 'error');
+            console.error('❌ Erreur chargement données:', error);
         }
     }
 
     // Appel de la fonction au chargement
     await loadAdminInfo();
+
+    // Gestion du formulaire de profil
+    const profileForm = document.getElementById('profileForm');
+    profileForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const btn = profileForm.querySelector('.btn-save');
+        btn.style.pointerEvents = 'none';
+        btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sauvegarde...';
+
+        try {
+            const formData = new FormData(profileForm);
+            const data = Object.fromEntries(formData.entries());
+
+            const response = await fetch('http://localhost:5002/admin/update-profile', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showNotification('✅ Profil mis à jour avec succès', 'success');
+                // Mettre à jour l'affichage
+                document.getElementById('adminName').textContent = data.fullname;
+                document.getElementById('adminPhone').textContent = data.phone;
+                document.getElementById('adminEmail').textContent = data.email;
+                document.getElementById('adminAddress').textContent = data.address;
+            } else {
+                throw new Error(result.message);
+            }
+
+            btn.innerHTML = '<i class="bx bx-check"></i> Sauvegardé!';
+            btn.style.background = '#28a745';
+        } catch (error) {
+            console.error('❌ Erreur:', error);
+            showNotification('❌ Erreur lors de la mise à jour', 'error');
+            btn.innerHTML = '<i class="bx bx-x"></i> Erreur!';
+            btn.style.background = '#dc3545';
+        } finally {
+            setTimeout(() => {
+                btn.style.pointerEvents = 'auto';
+                btn.style.background = '#b88f1e';
+                btn.innerHTML = '<i class="bx bx-save"></i> Enregistrer les modifications';
+            }, 2000);
+        }
+    });
+
+    // Gestion du formulaire de sécurité
+    document.getElementById('securityForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const btn = e.target.querySelector('.btn-save');
+        btn.style.pointerEvents = 'none';
+        btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Mise à jour...';
+
+        try {
+            // Récupérer les valeurs des champs
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Vérification côté client
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                throw new Error('Tous les champs sont requis');
+            }
+
+            if (newPassword !== confirmPassword) {
+                throw new Error('Les nouveaux mots de passe ne correspondent pas');
+            }
+
+            const response = await fetch('http://localhost:5002/admin/update-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    currentPassword,
+                    newPassword,
+                    confirmPassword
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || 'Erreur serveur');
+            }
+
+            const result = await response.json();
+            
+            if (result.success) {
+                showNotification('✅ ' + result.message, 'success');
+                e.target.reset(); // Réinitialiser le formulaire
+            } else {
+                throw new Error(result.message);
+            }
+
+            btn.innerHTML = '<i class="bx bx-check"></i> Mis à jour!';
+            btn.style.background = '#28a745';
+
+        } catch (error) {
+            console.error('❌ Erreur:', error);
+            showNotification('❌ ' + error.message, 'error');
+            btn.innerHTML = '<i class="bx bx-x"></i> Erreur!';
+            btn.style.background = '#dc3545';
+        } finally {
+            setTimeout(() => {
+                btn.style.pointerEvents = 'auto';
+                btn.style.background = '#b88f1e';
+                btn.innerHTML = '<i class="bx bx-lock-alt"></i> Mettre à jour le mot de passe';
+            }, 2000);
+        }
+    });
 });
 
 function validatePassword() {

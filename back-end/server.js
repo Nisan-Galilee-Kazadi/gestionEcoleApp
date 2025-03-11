@@ -216,6 +216,103 @@ app.get('/admin/profile', async (req, res) => {
     }
 });
 
+// Route de mise à jour du profil admin
+app.put('/admin/update-profile', async (req, res) => {
+    try {
+        const { fullname, email, phone, address } = req.body;
+
+        // Trouver et mettre à jour l'admin
+        const admin = await Admin.findOneAndUpdate(
+            {}, // Premier admin trouvé
+            {
+                fullname,
+                email,
+                phone,
+                address
+            },
+            { new: true }
+        );
+
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Admin non trouvé'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: '✅ Profil mis à jour avec succès',
+            admin: {
+                username: admin.username,
+                fullname: admin.fullname,
+                email: admin.email,
+                phone: admin.phone,
+                address: admin.address,
+                photo: admin.photo,
+                role: admin.role
+            }
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur mise à jour profil:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+});
+
+// Route de mise à jour du mot de passe admin
+app.post('/admin/update-password', async (req, res) => {
+    try {
+        const { currentPassword, newPassword, confirmPassword } = req.body;
+
+        // Vérification des champs requis
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Tous les champs sont requis'
+            });
+        }
+
+        // Trouver l'admin
+        const admin = await Admin.findOne();
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Admin non trouvé'
+            });
+        }
+
+        // Vérifier l'ancien mot de passe
+        const isValidPassword = await bcrypt.compare(currentPassword, admin.password);
+        if (!isValidPassword) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Mot de passe actuel incorrect'
+            });
+        }
+
+        // Hasher et mettre à jour le nouveau mot de passe
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        admin.password = hashedPassword;
+        await admin.save();
+
+        res.status(200).json({
+            success: true,
+            message: '✅ Mot de passe mis à jour avec succès'
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur mise à jour mot de passe:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+});
+
 // Route de suppression de l'admin
 app.delete('/admin/profile', async (req, res) => {
     try {
@@ -267,56 +364,7 @@ app.get('/admin/test-data', async (req, res) => {
     }
 });
 
-// Route pour mettre à jour la photo de profil
-app.post('/admin/update-photo', upload.single('photo'), async (req, res) => {
-    try {
-        if (!req.file) {
-            return res.status(400).json({
-                success: false,
-                message: '❌ Aucune image fournie'
-            });
-        }
 
-        // Récupérer l'admin
-        const admin = await Admin.findOne();
-        
-        if (!admin) {
-            return res.status(404).json({
-                success: false,
-                message: '❌ Admin non trouvé'
-            });
-        }
-
-        // Si une ancienne photo existe, la supprimer
-        if (admin.photo) {
-            const oldPhotoPath = path.join(__dirname, 'uploads', 'avatars', admin.photo);
-            try {
-                await fs.unlink(oldPhotoPath);
-                console.log('✅ Ancienne photo supprimée');
-            } catch (error) {
-                console.log('❌ Erreur suppression ancienne photo:', error);
-            }
-        }
-
-        // Mettre à jour la photo dans la base de données
-        admin.photo = req.file.filename;
-        await admin.save();
-        console.log('✅ Nouvelle photo enregistrée:', req.file.filename);
-
-        res.status(200).json({
-            success: true,
-            message: '✅ Photo mise à jour avec succès',
-            photo: req.file.filename
-        });
-
-    } catch (err) {
-        console.error('❌ Erreur mise à jour photo:', err);
-        res.status(500).json({
-            success: false,
-            message: '❌ Erreur serveur'
-        });
-    }
-});
 
 // Démarrer le serveur
 app.listen(port, () => {
