@@ -732,7 +732,7 @@
                 </button>
                 <div class="topbar-profile">
                   <button title="Profil">
-                    <img src="https://via.placeholder.com/40" alt="Profile">
+                    <img style="height:70px; width: 70px;"  id="navbarProfileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
                   </button>
                 </div>
               </div>
@@ -781,14 +781,14 @@
                           </div>
                       </div>
                       <div class="info-item">
-                          <i class="fa fa-map-marker" style="color: #b88f1e;"></i>
+                          <i class="fa fa-map" style="color: #b88f1e;"></i>
                           <div class="info-content" data-type="address">
                               <label>Adresse</label>
                               <p id="adminAddress">Chargement...</p>
                           </div>
                       </div>
                       <div class="info-item">
-                          <i class="fa fa-user" style="color: #b88f1e;"></i>
+                          <i class="fas fa-user" style="color: #b88f1e;"></i>
                           <div class="info-content">
                               <label>Statut</label>
                               <p>Actif</p>
@@ -945,6 +945,27 @@
                                   console.error('Erreur:', error);
                               }
                           });
+
+                          // Dans la fonction qui gère le chargement des informations admin
+                          async function loadAdminInfo() {
+                              try {
+                                  const response = await fetch('http://localhost:5002/admin/test-data');
+                                  const result = await response.json();
+                                  console.log('📥 Données admin reçues:', result);
+
+                                  if (result.success) {
+                                      // Mise à jour de l'image de profil principale
+                                      if (result.admin.photo) {
+                                          document.getElementById('profileImage').src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
+                                          // Mise à jour de l'image dans la navbar
+                                          document.getElementById('navbarProfileImage').src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
+                                      }
+                                      // ... reste du code ...
+                                  }
+                              } catch (error) {
+                                  console.error('❌ Erreur chargement données:', error);
+                              }
+                          }
                       </script>
 
                       

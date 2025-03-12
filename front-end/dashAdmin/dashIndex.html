@@ -11,6 +11,17 @@
   <link rel="icon" href="../public/images/logocicaf.png" alt="logo" type="image/png">
   <!-- Votre CSS global -->
   <link rel="stylesheet" href="../style.css">
+  <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css' rel='stylesheet' />
+  <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css' rel='stylesheet' />
+  <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.js'></script>
+  <script src="js/calendar.js"></script>
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+
   <!-- Ajouter dans le head -->
   <style>
     /* ============================
@@ -347,6 +358,7 @@
       margin-top: 20px;
     }
   </style>
+ 
 </head>
 <body>
     <section class="dashboardSection">
@@ -440,7 +452,7 @@
                 </button>
                 <div class="topbar-profile">
                   <button title="Profil">
-                    <img src="https://via.placeholder.com/40" alt="Profile">
+                    <img style="height:60px; width: 60px;"  id="navbarProfileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
                   </button>
                 </div>
               </div>
@@ -534,6 +546,72 @@
         </div>
       </div>
     </section>
+
+    <!-- Modal pour les détails d'événement -->
+    <div id="eventModal" class="event-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <div class="modal-body">
+                <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                <p><strong>Heure:</strong> <span id="modalTime"></span></p>
+                <p><strong>Description:</strong> <span id="modalDescription"></span></p>
+                <p><strong>Catégorie:</strong> <span id="modalCategory"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="edit-btn" id="editEvent">
+                    <i class="fas fa-edit"></i> Modifier
+                </button>
+                <button class="delete-btn" id="deleteEvent">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour la modification d'événement -->
+    <div id="editEventModal" class="event-modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Modifier l'événement</h3>
+            <form id="editEventForm">
+                <input type="hidden" id="editEventId">
+                <div class="form-group">
+                    <label for="editEventTitle">Titre</label>
+                    <input type="text" id="editEventTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEventDate">Date</label>
+                    <input type="date" id="editEventDate" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEventTime">Heure</label>
+                    <input type="time" id="editEventTime" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEventDescription">Description</label>
+                    <textarea id="editEventDescription" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editEventColor">Couleur</label>
+                    <input type="color" id="editEventColor" value="#b88f1e">
+                </div>
+                
+                <div class="modal-buttons">
+                    <button type="submit" class="edit-btn">
+                        <i class="fas fa-save"></i> Enregistrer
+                    </button>
+                    <button type="button" class="delete-btn" id="cancelEdit">
+                        <i class="fas fa-times"></i> Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Inclure Chart.js depuis un CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -666,115 +744,88 @@
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        eventTimeFormat: {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
+        buttonText: {
+            today: 'Aujourd\'hui',
+            month: 'Mois',
+            week: 'Semaine',
+            day: 'Jour'
         },
-        eventDisplay: 'block',
-        displayEventTime: true,
-        eventClick: function(info) {
-            // Créer et afficher la modale
-            const modal = document.createElement('div');
-            modal.className = 'event-modal';
-            modal.innerHTML = `
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>${info.event.title}</h2>
-                    <p><strong>Date:</strong> ${new Date(info.event.start).toLocaleDateString('fr-FR')}</p>
-                    <p><strong>Heure:</strong> ${new Date(info.event.start).toLocaleTimeString('fr-FR')}</p>
-                    <p><strong>Description:</strong> ${info.event.extendedProps.description || 'Aucune description'}</p>
-                    <div class="modal-buttons">
-                        <button class="edit-btn">Modifier</button>
-                        <button class="delete-btn">Supprimer</button>
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-
-            // Gérer la fermeture de la modale
-            const closeBtn = modal.querySelector('.close');
-            closeBtn.onclick = function() {
-                modal.remove();
-            }
-
-            // Gérer le bouton modifier
-            const editBtn = modal.querySelector('.edit-btn');
-            editBtn.onclick = function() {
-                // Pré-remplir le formulaire
-                document.getElementById('eventTitle').value = info.event.title;
-                document.getElementById('eventDate').value = info.event.start.toISOString().split('T')[0];
-                document.getElementById('eventTime').value = new Date(info.event.start).toTimeString().slice(0,5);
-                document.getElementById('eventDescription').value = info.event.extendedProps.description || '';
-                
-                // Fermer la modale
-                modal.remove();
-                
-                // Afficher le formulaire
-                document.getElementById('eventForm').style.display = 'block';
-                // Ajouter l'ID de l'événement au formulaire pour la modification
-                document.getElementById('eventForm').dataset.eventId = info.event.id;
-            }
-
-            // Gérer le bouton supprimer
-            const deleteBtn = modal.querySelector('.delete-btn');
-            deleteBtn.onclick = async function() {
-                if (confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-                    try {
-                        const response = await fetch(`http://localhost:5002/api/events/${info.event.id}`, {
-                            method: 'DELETE'
-                        });
-
-                        if (response.ok) {
-                            info.event.remove();
-                            modal.remove();
-                            alert('Événement supprimé avec succès');
-                        } else {
-                            throw new Error('Erreur lors de la suppression');
-                        }
-                    } catch (error) {
-                        console.error('Erreur:', error);
-                        alert('Erreur lors de la suppression de l\'événement');
-                    }
-                }
+        titleFormat: {
+            year: 'numeric',
+            month: 'long'
+        },
+        events: async function(info, successCallback, failureCallback) {
+            try {
+                const response = await fetch('http://localhost:5002/api/events');
+                const events = await response.json();
+                successCallback(events.map(event => ({
+                    id: event._id,
+                    title: event.title,
+                    start: event.date + 'T' + event.time,
+                    color: event.color || '#b88f1e',
+                    description: event.description
+                })));
+            } catch (error) {
+                console.error('❌ Erreur chargement événements:', error);
+                failureCallback(error);
             }
         },
-        events: function(info, successCallback, failureCallback) {
-            fetch('http://localhost:5002/api/events')
-                .then(response => response.json())
-                .then(data => {
-                    const events = Array.isArray(data) ? data : [];
-                    const formattedEvents = events.map(event => ({
-                        id: event._id,
-                        title: event.title || 'Sans titre',
-                        start: event.date,
-                        time: event.time,
-                        description: event.description || '',
-                        color: '#b88f1e'
-                    }));
-                    successCallback(formattedEvents);
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    failureCallback(error);
-                });
-        },
-        eventContent: function(arg) {
-            return {
-                html: `
-                    <div class="custom-event">
-                        <div class="event-title">${arg.event.title}</div>
-                        <div class="event-time">${arg.event._def.extendedProps.time || ''}</div>
-                    </div>
-                `
-            };
+        eventDidMount: function(info) {
+            info.el.title = info.event.extendedProps.description || info.event.title;
         }
     });
 
     calendar.render();
-});
 
+    // Gestionnaire d'ajout d'événement
+    const eventForm = document.getElementById('eventForm');
+    eventForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        try {
+            const formData = {
+                title: document.getElementById('eventTitle').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                description: document.getElementById('eventDescription').value,
+                color: document.getElementById('eventColor').value
+            };
+
+            const response = await fetch('http://localhost:5002/api/events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de l\'ajout de l\'événement');
+            }
+
+            const result = await response.json();
+            console.log('✅ Événement ajouté:', result);
+            
+            // Ajouter l'événement au calendrier
+            calendar.addEvent({
+                id: result._id,
+                title: formData.title,
+                start: formData.date + 'T' + formData.time,
+                color: formData.color,
+                description: formData.description
+            });
+
+            // Réinitialiser le formulaire
+            eventForm.reset();
+            
+            alert('✅ Événement ajouté avec succès');
+
+        } catch (error) {
+            console.error('❌ Erreur:', error);
+            alert('❌ Erreur lors de l\'ajout de l\'événement');
+        }
+    });
+});
 </script>
 
 <!-- Ajout des styles pour le modal -->
@@ -1081,8 +1132,133 @@
         opacity: 0.7;
         transform: translateX(5px);
     }
+    /* Styles pour le modal */
+    .event-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    .modal-content {
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        min-width: 400px;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+        transition: color 0.3s ease;
+    }
+    
+    .close:hover {
+        color: #101041;
+    }
+    
+    .modal-buttons {
+        margin-top: 25px;
+        display: flex;
+        gap: 15px;
+        justify-content: flex-end;
+    }
+    
+    .edit-btn, .delete-btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .edit-btn {
+        background-color: #b88f1e;
+        color: white;
+        border: none;
+    }
+    
+    .edit-btn:hover {
+        background-color: #96741a;
+    }
+    
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+    }
+    
+    .delete-btn:hover {
+        background-color: #c82333;
+    }
+    
+    .modal-body {
+        margin: 20px 0;
+    }
+    
+    .modal-body p {
+        margin: 10px 0;
+        color: #444;
+    }
+    
+    .modal-body strong {
+        color: #101041;
+        margin-right: 10px;
+    }
   </style>
 
+  <!-- Styles pour l'affichage des événements dans le calendrier -->
+  <style>
+    .event-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
 
+    .event-title {
+        font-weight: 600;
+        color: #101041;
+    }
+
+    .event-time {
+        font-size: 11px;
+        color: #fff;
+    }
+
+    .fc-event {
+        background: rgb(19, 124, 180) !important;
+        border: 1px solid #eee !important;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .fc-daygrid-event {
+        white-space: normal !important;
+        overflow: hidden;
+    }
+
+    .fc-event:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+    }
+  </style>
+
+<script src="js/loadProfileImage.js"></script>
+<script src="js/calendar.js"></script>
 </body>
 </html>

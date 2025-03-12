@@ -33,6 +33,20 @@ app.use(cors({
     optionsSuccessStatus: 204
 }));
 
+// Configuration de multer pour les uploads
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/avatars')
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
+
+// Middleware pour servir les fichiers statiques
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api', enseignantRoutes);
@@ -50,19 +64,6 @@ mongoose.connect(process.env.MONGO_URI, {
     console.error('❌ Erreur de connexion à MongoDB:', err);
     process.exit(1);
 }); 
-
-// Configuration de multer pour le stockage des fichiers
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/avatars')
-    },
-    filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, uniqueSuffix + path.extname(file.originalname))
-    }
-});
-
-const upload = multer({ storage: storage });
 
 // Route d'inscription d'un élève
 app.post('/save', async (req, res) => {
@@ -265,10 +266,12 @@ app.put('/admin/update-profile', async (req, res) => {
 
 // Route de mise à jour du mot de passe admin
 app.post('/admin/update-password', async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    
     try {
         const { currentPassword, newPassword, confirmPassword } = req.body;
+        console.log('📤 Données reçues pour mise à jour mot de passe');
 
-        // Vérification des champs requis
         if (!currentPassword || !newPassword || !confirmPassword) {
             return res.status(400).json({
                 success: false,
@@ -276,7 +279,6 @@ app.post('/admin/update-password', async (req, res) => {
             });
         }
 
-        // Trouver l'admin
         const admin = await Admin.findOne();
         if (!admin) {
             return res.status(404).json({
@@ -285,7 +287,6 @@ app.post('/admin/update-password', async (req, res) => {
             });
         }
 
-        // Vérifier l'ancien mot de passe
         const isValidPassword = await bcrypt.compare(currentPassword, admin.password);
         if (!isValidPassword) {
             return res.status(400).json({
@@ -294,19 +295,18 @@ app.post('/admin/update-password', async (req, res) => {
             });
         }
 
-        // Hasher et mettre à jour le nouveau mot de passe
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         admin.password = hashedPassword;
         await admin.save();
 
-        res.status(200).json({
+        return res.status(200).json({
             success: true,
             message: '✅ Mot de passe mis à jour avec succès'
         });
 
     } catch (err) {
-        console.error('❌ Erreur mise à jour mot de passe:', err);
-        res.status(500).json({
+        console.error('❌ Erreur:', err);
+        return res.status(500).json({
             success: false,
             message: '❌ Erreur serveur'
         });
@@ -364,7 +364,55 @@ app.get('/admin/test-data', async (req, res) => {
     }
 });
 
+// Route pour l'upload de photo
+app.post('/admin/update-photo', upload.single('photo'), async (req, res) => {
+    try {
+        console.log('📥 Fichier reçu:', req.file);
 
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Aucune image fournie'
+            });
+        }
+
+        const admin = await Admin.findOne();
+        if (!admin) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Admin non trouvé'
+            });
+        }
+
+        // Supprimer l'ancienne photo si elle existe
+        if (admin.photo) {
+            const oldPhotoPath = path.join(__dirname, 'uploads', 'avatars', admin.photo);
+            try {
+                await fs.unlink(oldPhotoPath);
+                console.log('✅ Ancienne photo supprimée');
+            } catch (error) {
+                console.log('⚠️ Erreur suppression ancienne photo:', error);
+            }
+        }
+
+        // Mettre à jour la photo dans la base de données
+        admin.photo = req.file.filename;
+        await admin.save();
+
+        res.status(200).json({
+            success: true,
+            message: '✅ Photo mise à jour avec succès',
+            photo: req.file.filename
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur upload photo:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+});
 
 // Démarrer le serveur
 app.listen(port, () => {

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'élève | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <script src="./js/loadProfileImage.js"></script>
+    <style>
+        
+        /* ============================
+        Styles généraux pour le layout
+        ============================ */
+        * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        }
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f9;
+        color: #444;
+        }
+        a {
+        text-decoration: none;
+        color: inherit;
+        }
+        /* Wrapper en flex pour disposer la sidebar et le contenu */
+        .wrapper {
+        display: flex;
+        min-height: 100vh;
+        }
+
+    /* ============================
+        HEADER (Topbar)
+        ============================ */
+        header.topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #b88f1e;
+        padding: 20px 20px;
+        color: #fff;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        }
+        .topbar .navBar {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;      
+        gap: 2000px;
+        }
+        .topbar .top-left,
+        .topbar .top-right {
+        display: flex;
+        align-items: center;
+        }
+
+        .top-right {
+        right: 30px;
+        position: absolute;
+        }
+        .top-right i {
+        color: white;
+        }
+        .top-right i:hover {
+        color: #101041;
+        }
+
+        .admin-menu {
+        padding-top: 20px;
+        }
+
+        .admin-menu li span {
+        color: white;
+        }
+        .admin-menu li span:hover {
+        color: #b88f1e;
+        }
+        .menu-item:hover span {
+        color: #b88f1e;
+        font-weight: 500;
+        font-size: 14px;
+        }
+        .menu-item i {
+        color: white;
+        }
+        .menu-item:hover i {
+        color: #b88f1e;
+        }
+        .topbar .toggle-btn {
+        font-size: 1.5rem;
+        cursor: pointer;
+        margin-right: 20px;
+        color: #101041;
+        }
+        .topbar-logo-img {
+        height: 40px;
+        margin-right: 20px;
+        }
+        .topbar-search {
+        position: relative;
+        }
+        .topbar-search input[type="search"] {
+        padding: 15px 35px 10px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 11px;
+        }
+        
+        .topbar-search input[type="search"] {
+        padding: 10px 35px 10px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        }
+        .topbar-search input[type="search"]::placeholder {
+        color: #888;
+        font-style: italic;
+        font-size: 12px;
+        }
+        .topbar-search button {
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #101041;
+        }
+        .topbar button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        margin-left: 15px;
+        color: #fff;
+        font-size: 1.5rem;
+        }
+        .topbar-profile img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        }
+
+        .top-right #fullscreenBtn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 10px;
+        }
+
+        .top-right #fullscreenBtn i {
+        color: white;
+        font-size: 18px;
+        }
+
+        .top-right #fullscreenBtn:hover i {
+        color: #101041;
+        }
+
+        /* ============================
+        SIDEBAR
+        ============================ */
+        aside.sidebar {
+        background-color: #101041; /* Bleu foncé */
+        overflow: hidden;
+        transition: width 0.3s;
+        width: 70px; /* état réduit */
+        height: 100vh;
+        z-index: 900;
+        position: fixed;
+        }
+        aside.sidebar.expanded {
+        width: 190px;
+        }
+        
+        .menuContent {
+        padding-top: 60px;
+        }
+        .menuContent .logo {
+        text-align: center;
+        margin-bottom: 20px;
+        }
+        .menuContent .logo img {
+        max-width: 80%;
+        }
+        .app-menu {
+        overflow-y: auto;
+        }
+    
+        .admin-menu li {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+        .admin-menu li:hover {
+        background-color: #1e282c;
+        }
+        .admin-menu li i {
+        margin-right: 10px;
+        font-size: 30px;
+        }
+        /* Masquer le texte lorsque la sidebar est réduite */
+        aside.sidebar.collapsed .admin-menu li span {
+        display: none;
+        }
+
+        .sidebar-bottom {
+        position: fixed;
+        bottom: 0;
+        width: 70px; /* même largeur que la sidebar réduite */
+        background-color: #101041;
+        padding: 10px 0;
+        transition: width 0.3s;
+    }
+
+    .sidebar.expanded .sidebar-bottom {
+        width: 190px; /* même largeur que la sidebar étendue */
+    }
+
+    .sidebar-bottom .admin-menu li {
+        padding: 10px 20px;
+    }
+
+    .sidebar-bottom .admin-menu li:last-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+        /* ============================
+        PAGE CONTENT & MAIN
+        ============================ */
+        .page-content {
+        flex-grow: 1;
+        transition: margin-left 0.3s;
+        padding-top: 60px; /* Pour laisser la place du header fixe */
+        background-color: #f4f6f9;
+        margin-left: 70px;
+        }
+        @media (min-width: 768px) {
+        aside.sidebar.expanded + .page-content {
+            margin-left: 190px;
+        }
+        }
+        
+        /* ============================
+        FOOTER
+        ============================ */
+        footer.footer {
+        background-color: #fff;
+        padding: 15px 20px;
+        text-align: center;
+        border-top: 1px solid #ddd;
+        margin-top: 20px;
+        }
+
+
+
+        .welcome-banner {
+            background-color: #101041;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .details-container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            gap: 30px;
+            padding: 20px;
+            background-color:rgb(165, 12, 12)f;
+        }
+
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            width: 750px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #101041;
+            border-bottom: 2px solid #b88f1e;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 130px 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #101041;
+        }
+
+        .info-value {
+            color: #444;
+        }
+
+        .documents-section, .conduct-section, .fees-section {
+            flex: 1 1 100%;
+        }
+
+        .documents-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .document-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .document-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conduct-section, .fees-section {
+            margin-top: 30px;
+        }
+
+        .conduct-item, .fee-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .back-btn {
+            background-color: #b88f1e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .back-btn:hover {
+            background-color: #101041;
+        }
+
+        /* Style pour le breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+
+        .breadcrumb a {
+            color: #666;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .breadcrumb a:hover {
+            color: #b88f1e;
+        }
+
+        .breadcrumb-separator {
+            color: #666;
+        }
+
+        .breadcrumb .active {
+            color: #101041;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .info-section {
+                flex: 1 1 80%;
+            }
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .update-photo-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #b88f1e;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .update-photo-btn:hover {
+            background-color: #101041;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <section class="dashboardSection">
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar collapsed" id="sidebar">
+                <div class="menuContent">
+                  <div class="app-menu" data-simplebar>
+                    <ul class="admin-menu">
+                      <li class="menu-item" onclick="location.href='./dashIndex.html'">
+                        <i class="fas fa-home fa-2x" ></i>
+                        <span >Dashboard</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='gestionEleves.html'">
+                        <i class="fas fa-user-graduate fa-2x" style="color: #b88f1e;"></i>
+                        <span style="color: #b88f1e;">Élèves</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='gestionEnseignants.html'">
+                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
+                        <span>Enseignants</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='paiements.html'">
+                        <i class="fas fa-dollar-sign fa-2x"></i>
+                        <span>Paiements</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='rapports.html'">
+                        <i class="fas fa-chart-line fa-2x"></i>
+                        <span>Rapports</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='gestionInsertion.html'">
+                        <i class="fas fa-edit fa-2x"></i>
+                        <span>Inscriptions</span>
+                      </li>
+                      <li class="menu-item" onclick="location.href='cartes.html'">
+                        <i class="fas far fa-id-card fa-2x"></i>
+                        <span>cartes</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Ajout des icônes en bas -->
+                <div class="sidebar-bottom">
+                  <ul class="admin-menu">
+                    <li class="menu-item" >
+                      <a href="parametres.html" style="display: flex;
+                    align-items: center;">
+                        <i class="fas fa-cog" ></i>
+                        <span style=>Paramètres</span>
+                      </a>
+                    </li>
+                    <li class="menu-item">
+                      <a href="#" id="logoutBtn" style="display: flex;
+                    align-items: center;">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Déconnexion</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </aside>
+
+            <div class="page-content">
+                <!-- TOPBAR -->
+          <header class="topbar">
+            <div class="navBar">
+              <div class="top-left">
+              <div class="top-left">
+                <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
+                  <i class="fas fa-bars"></i>
+                </button>
+                <a href="#" class="topbar-logo">
+                  <!-- Remplacez "logo.png" par votre logo -->
+                </a>
+                <div class="topbar-search">
+                  <input type="search" placeholder="Search...">
+                  <button type="button">
+                    <i class="fas fa-search" style="color: #101041; font-size: 12px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="top-right">
+                <button title="Changer de langue">
+                  <i class="fas fa-globe"></i>
+                </button>
+                <button title="Notifications">
+                  <i class="fas fa-bell"></i>
+                </button>
+                <button id="fullscreenBtn" title="Plein écran">
+                  <i class="fas fa-expand"></i>
+                </button>
+                <div class="topbar-profile">
+                  <button title="Profil">
+                    <img style="height:60px; width: 60px;"  id="navbarProfileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
+                </button>
+                </div>
+              </div>
+            </div>
+          </header>
+
+                <main style="padding: 20px;">
+                    <!-- Breadcrumb -->
+                    <div class="breadcrumb">
+                        <a href="dashIndex.html">
+                            <i class="fas fa-home"></i> Accueil
+                        </a>
+                        <span class="breadcrumb-separator">/</span>
+                        <a href="gestionEleves.html">
+                            <i class="fas fa-user-graduate"></i> Gestion des élèves
+                        </a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="active">Détails de l'élève</span>
+                    </div>
+
+                    <!-- Contenu existant -->
+                    <div class="container">
+                        <button class="back-btn" onclick="window.location.href='gestionEleves.html'">
+                            <i class="fas fa-arrow-left"></i> Retour
+                        </button>
+
+                        <div class="welcome-banner">
+                            <h1>Dossier de l'élève <span id="studentName"></span></h1>
+                            <p>Consultation détaillée du dossier</p>
+                        </div>
+
+                        <div class="details-container">
+
+                            <!-- Informations personnelles avec photo -->
+                            <div class="info-section">
+                                <div class="info-header">
+                                    <h2 class="section-title">Informations personnelles</h2>
+                                    <div class="profile-image-container">
+                                        <img id="studentPhoto" src="https://picsum.photos/200" alt="Photo de l'élève">
+                                        <button class="update-photo-btn" onclick="updatePhoto('student')">
+                                            <i class="fas fa-camera"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="info-grid" id="personalInfo">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                            <!-- Informations tuteur avec photo -->
+                            <div class="info-section">
+                                <div class="info-header">
+                                    <h2 class="section-title">Informations tuteur</h2>
+                                    <div class="profile-image-container">
+                                        <img id="tutorPhoto" src="https://picsum.photos/200" alt="Photo du tuteur">
+                                        <button class="update-photo-btn" onclick="updatePhoto('tutor')">
+                                            <i class="fas fa-camera"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="info-grid" id="tutorInfo">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                            <!-- Informations scolaires -->
+                            <div class="info-section">
+                                <h2 class="section-title">Informations scolaires</h2>
+                                <div class="info-grid" id="schoolInfo"></div>
+                                    <!-- Rempli dynamiquement -->
+                            </div>
+
+                            <!-- École de provenance -->
+                            <div class="info-section">
+                                <h2 class="section-title">École de provenance</h2>
+                                <div class="info-grid" id="previousSchool">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                            <!-- Dossiers -->
+                            <div class="info-section documents-section">
+                                <h2 class="section-title">Dossiers</h2>
+                                <div class="document-list" id="documentsList">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                            <!-- Conduite -->
+                            <div class="info-section conduct-section">
+                                <h2 class="section-title">Conduite et comportement</h2>
+                                <div id="conductList">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                            <!-- Frais scolaires -->
+                            <div class="info-section fees-section">
+                                <h2 class="section-title">Situation financière</h2>
+                                <div id="feesList">
+                                    <!-- Rempli dynamiquement -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="js/sidebar.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Récupérer l'ID de l'élève depuis l'URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const eleveId = urlParams.get('id');
+
+            if (eleveId) {
+                fetchEleveDetails(eleveId);
+            }
+        });
+
+        function fetchEleveDetails(id) {
+            fetch(`http://localhost:5002/api/eleves/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayEleveDetails(data);
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors du chargement des données');
+                });
+        }
+
+        function displayEleveDetails(eleve) {
+            // Mettre à jour le nom dans la bannière
+            document.getElementById('studentName').textContent = `${eleve.nom} ${eleve.prenom}`;
+
+            // Informations personnelles
+            const personalInfo = {
+                'Nom': eleve.nom,
+                'Prénom': eleve.prenom,
+                'Post-nom': eleve.postnom,
+                'Date de naissance': new Date(eleve.date_naissance).toLocaleDateString(),
+                'Sexe': eleve.sexe,
+                'Nationalité': eleve.nationalite,
+                'Téléphone': eleve.telephone,
+                'Email': eleve.email_eleve
+            };
+
+            // Informations du tuteur
+            const tutorInfo = {
+                'Nom': eleve.nom_tuteur || 'Non renseigné',
+                'Prénom': eleve.prenom_tuteur || 'Non renseigné',
+                'Téléphone': eleve.telephone_tuteur || 'Non renseigné',
+                'Email': eleve.email_tuteur || 'Non renseigné',
+                'Lien de parenté': eleve.lien_eleve || 'Non renseigné',
+                'Adresse': eleve.adresse_tuteur || 'Non renseigné'
+            };
+
+            // Informations scolaires
+            const schoolInfo = {
+                'Niveau d\'études': eleve.niveau_etude,
+                'Section': eleve.section,
+                'Option': eleve.option_humanite || 'N/A'
+            };
+
+            // École de provenance
+            const previousSchool = {
+                'Nom de l\'école': eleve.denomination_ecole,
+                'Adresse': eleve.adresse_ecole,
+                'Contact': eleve.contact_ecole,
+                'Email': eleve.email_ecole
+            };
+
+            // Remplir les sections
+            fillInfoSection('personalInfo', personalInfo);
+            fillInfoSection('tutorInfo', tutorInfo);
+            fillInfoSection('schoolInfo', schoolInfo);
+            fillInfoSection('previousSchool', previousSchool);
+
+            // Exemple de documents
+            const documents = [
+                { name: 'Bulletin précédent', icon: 'fa-file-pdf' },
+                { name: 'Certificat de naissance', icon: 'fa-file-pdf' },
+                { name: 'Photo passport', icon: 'fa-file-image' }
+            ];
+
+            const documentsHTML = documents.map(doc => `
+                <div class="document-item">
+                    <i class="fas ${doc.icon}"></i>
+                    <span>${doc.name}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('documentsList').innerHTML = documentsHTML;
+        }
+
+        function fillInfoSection(sectionId, data) {
+            const section = document.getElementById(sectionId);
+            section.innerHTML = Object.entries(data).map(([key, value]) => `
+                <div class="info-label">${key}:</div>
+                <div class="info-value">${value}</div>
+            `).join('');
+        }
+    </script>
+        
+            // <!-- SCRIPT pour le toggle de la sidebar -->
+            <script>
+              const toggleBtn = document.getElementById('toggleBtn');
+              const sidebar = document.getElementById('sidebar');
+              
+              toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('expanded');
+                sidebar.classList.toggle('collapsed');
+              });
+        
+            </script>
+          // <!-- SCRIPT pour le mode plein écran !-->
+          <script src="js/fullscreen.js"></script>
+          <script src="js/loadProfileImage.js"></script>
+        
+        
+        <script>
+          document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+              // Redirection vers la page de connexion
+              window.location.href = 'public/index.html';
+            }
+          });
+        </script>
+</body>
+</html>
+
+
+
+
+

@@ -28,29 +28,31 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const formData = new FormData();
                 formData.append('photo', file);
 
+                console.log('📤 Envoi de l\'image...');
+
                 const response = await fetch('http://localhost:5002/admin/update-photo', {
                     method: 'POST',
                     body: formData
                 });
 
                 if (!response.ok) {
-                    throw new Error('Erreur lors de l\'upload');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
                 const result = await response.json();
-                
+                console.log('📥 Réponse serveur:', result);
+
                 if (result.success) {
-                    // Mettre à jour l'image affichée avec la nouvelle URL
                     profileImage.src = `http://localhost:5002/uploads/avatars/${result.photo}`;
+                    const navbarProfileImage = document.getElementById('navbarProfileImage');
+                    if (navbarProfileImage) {
+                        navbarProfileImage.src = `http://localhost:5002/uploads/avatars/${result.photo}`;
+                    }
                     showNotification('✅ Photo de profil mise à jour avec succès', 'success');
-                } else {
-                    throw new Error(result.message);
                 }
             } catch (error) {
                 console.error('❌ Erreur:', error);
                 showNotification('❌ Erreur lors de la mise à jour de la photo', 'error');
-                // En cas d'erreur, remettre l'ancienne photo
-                loadAdminInfo();
             }
         }
     });
@@ -98,6 +100,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Mise à jour de la photo de profil si elle existe
                 if (result.admin.photo) {
                     profileImage.src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
+                    // Mise à jour de l'image dans la navbar
+                    document.getElementById('navbarProfileImage').src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
                 }
             }
         } catch (error) {
@@ -167,12 +171,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Mise à jour...';
 
         try {
-            // Récupérer les valeurs des champs
+            // Get form values
             const currentPassword = document.getElementById('currentPassword').value;
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Vérification côté client
+            // Client-side validation
             if (!currentPassword || !newPassword || !confirmPassword) {
                 throw new Error('Tous les champs sont requis');
             }
@@ -181,9 +185,11 @@ document.addEventListener('DOMContentLoaded', async function() {
                 throw new Error('Les nouveaux mots de passe ne correspondent pas');
             }
 
+            // Send request to server
             const response = await fetch('http://localhost:5002/admin/update-password', {
                 method: 'POST',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -193,26 +199,21 @@ document.addEventListener('DOMContentLoaded', async function() {
                 })
             });
 
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Erreur serveur');
-            }
-
+            // Parse response
             const result = await response.json();
             
             if (result.success) {
                 showNotification('✅ ' + result.message, 'success');
-                e.target.reset(); // Réinitialiser le formulaire
+                e.target.reset();
+                btn.innerHTML = '<i class="bx bx-check"></i> Mis à jour!';
+                btn.style.background = '#28a745';
             } else {
-                throw new Error(result.message);
+                throw new Error(result.message || 'Erreur serveur');
             }
-
-            btn.innerHTML = '<i class="bx bx-check"></i> Mis à jour!';
-            btn.style.background = '#28a745';
 
         } catch (error) {
             console.error('❌ Erreur:', error);
-            showNotification('❌ ' + error.message, 'error');
+            showNotification('❌ ' + (error.message || 'Erreur serveur'), 'error');
             btn.innerHTML = '<i class="bx bx-x"></i> Erreur!';
             btn.style.background = '#dc3545';
         } finally {
@@ -239,10 +240,9 @@ function validatePassword() {
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
-    notification.innerHTML = message;
-    
+    notification.textContent = message;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.classList.add('show');
         setTimeout(() => {
