@@ -48,6 +48,7 @@ const upload = multer({ storage: storage });
 
 // Middleware pour servir les fichiers statiques
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static('uploads'));
 
 app.use('/api', enseignantRoutes);
 app.use('/api', eleveRoutes);

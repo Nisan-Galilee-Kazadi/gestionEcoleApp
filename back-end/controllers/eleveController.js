@@ -66,18 +66,41 @@ exports.deleteEleve = async (req, res) => {
     }
 };
 
+exports.uploadPhoto = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Aucune image fournie'
+            });
+        }
 
-exports.modifyEleve = async (req, res) => {
-  try {
-    const { id } = req.params; // Récupérer l'ID depuis l'URL
-    const updateData = req.body; // Les données de modification
-    const updatedEleve = await Eleve.findByIdAndUpdate(id, updateData, { new: true });
-    if (!updatedEleve) {
-      return res.status(404).json({ message: 'Élève non trouvé' });
+        const { id, type } = req.body;
+        const updateField = type === 'student' ? 'photo' : 'photo_tuteur';
+
+        const eleve = await Eleve.findByIdAndUpdate(
+            id,
+            { [updateField]: req.file.filename },
+            { new: true }
+        );
+
+        if (!eleve) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Élève non trouvé'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            filename: req.file.filename
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur upload photo:', err);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
     }
-    res.json(updatedEleve);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Erreur serveur' });
-  }
 };

@@ -17,4 +17,12 @@ router.put('/enseignants/:id', enseignantController.modifyEnseignant);
 // Supprimer un enseignant
 router.delete('/enseignants/:id', enseignantController.deleteEnseignant);
 
+// Routes pour le dashboard professeur
+router.get('/dashboard/:id', enseignantController.getDashboardData);
+router.get('/horaire/:id', enseignantController.getHoraire);
+router.post('/absences/:id', enseignantController.signlalerAbsence);
+router.post('/evaluations/:id', enseignantController.planifierEvaluation);
+router.get('/classes/:id', enseignantController.getClasses);
+router.put('/disponibilites/:id', enseignantController.updateDisponibilites);
+
 module.exports = router;

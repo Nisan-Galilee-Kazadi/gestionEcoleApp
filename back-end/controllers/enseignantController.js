@@ -65,3 +65,70 @@ exports.deleteEnseignant = async (req, res) => {
         res.status(500).json({ message: "Erreur serveur" });
     }
 };
+
+// Récupérer les données du dashboard
+exports.getDashboardData = async (req, res) => {
+    try {
+        const enseignantId = req.params.id;
+        const enseignant = await Enseignant.findById(enseignantId);
+        
+        if (!enseignant) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Enseignant non trouvé'
+            });
+        }
+
+        // Calculer les statistiques
+        const stats = {
+            totalClasses: enseignant.classes.length,
+            totalMatieres: enseignant.matieres.length,
+            evaluationsEnCours: enseignant.evaluations.filter(e => 
+                new Date(e.date) >= new Date()
+            ).length,
+            prochaineEvaluation: enseignant.evaluations
+                .filter(e => new Date(e.date) >= new Date())
+                .sort((a, b) => new Date(a.date) - new Date(b.date))[0]
+        };
+
+        res.status(200).json({
+            success: true,
+            enseignant,
+            stats
+        });
+
+    } catch (error) {
+        console.error('❌ Erreur dashboard:', error);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+};
+
+// Récupérer l'horaire
+exports.getHoraire = async (req, res) => {
+    try {
+        const enseignantId = req.params.id;
+        const enseignant = await Enseignant.findById(enseignantId);
+        
+        if (!enseignant) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Enseignant non trouvé'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            horaire: enseignant.horaire
+        });
+
+    } catch (error) {
+        console.error('❌ Erreur horaire:', error);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+};
