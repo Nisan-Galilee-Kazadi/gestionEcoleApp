@@ -284,7 +284,7 @@
         .info-section {
             display: flex;
             flex-direction: column;
-            width: 750px;
+            width: 650px;
             background: white;
             padding: 20px;
             border-radius: 8px;
@@ -575,7 +575,7 @@
                                 <div class="info-header">
                                     <h2 class="section-title">Informations personnelles</h2>
                                     <div class="profile-image-container">
-                                        <img id="studentPhoto" src="https://picsum.photos/200" alt="Photo de l'élève">
+                                        <img id="studentPhoto"  src="/front-end/public/images/téléchargement.jpeg" alt="Photo de l'élève">
                                         <button class="update-photo-btn" onclick="updatePhoto('student')">
                                             <i class="fas fa-camera"></i>
                                         </button>
@@ -591,7 +591,7 @@
                                 <div class="info-header">
                                     <h2 class="section-title">Informations tuteur</h2>
                                     <div class="profile-image-container">
-                                        <img id="tutorPhoto" src="https://picsum.photos/200" alt="Photo du tuteur">
+                                        <img id="tutorPhoto" src="/front-end/public/images/téléchargement.jpeg"alt="Photo du tuteur">
                                         <button class="update-photo-btn" onclick="updatePhoto('tutor')">
                                             <i class="fas fa-camera"></i>
                                         </button>
@@ -719,6 +719,19 @@
             fillInfoSection('tutorInfo', tutorInfo);
             fillInfoSection('schoolInfo', schoolInfo);
             fillInfoSection('previousSchool', previousSchool);
+
+            // Mettre à jour les photos si elles existent
+            if (eleve.photo) {
+                document.getElementById('studentPhoto').src = `http://localhost:5002/uploads/${eleve.photo}`;
+            } else {
+                document.getElementById('studentPhoto').src = '/front-end/public/images/avatar-default.jpg';
+            }
+
+            if (eleve.photo_tuteur) {
+                document.getElementById('tutorPhoto').src = `http://localhost:5002/uploads/${eleve.photo_tuteur}`;
+            } else {
+                document.getElementById('tutorPhoto').src = '/front-end/public/images/avatar-default.jpg';
+            }
 
             // Exemple de documents
             const documents = [

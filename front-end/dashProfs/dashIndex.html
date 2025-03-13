@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Professeur</title>
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Favicon -->
+  <link rel="icon" href="../public/images/logocicaf.png" alt="logo" type="image/png">
+  <!-- CSS global (réutilise ton style.css ou adapte-le) -->
+  <link rel="stylesheet" href="../style.css">
+  <!-- CSS pour FullCalendar (si besoin pour planning des cours) -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+  <style>
+    /* ===== Styles généraux ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background-color: #f4f6f9; color: #444; }
+    a { text-decoration: none; color: inherit; }
+    /* Wrapper pour la sidebar et le contenu */
+    .wrapper { display: flex; min-height: 100vh; }
+    /* Header (Topbar) */
+    header.topbar {
+      display: flex; justify-content: space-between; align-items: center;
+      background-color: #b88f1e; padding: 20px; color: #fff;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    }
+    .topbar .navBar { display: flex; width: 100%; justify-content: space-between; align-items: center; }
+    .topbar-search input[type="search"] {
+      padding: 10px 35px 10px 10px; border: none; border-radius: 5px; font-size: 12px;
+    }
+    .top-right { display: flex; align-items: center; gap: 15px; }
+    .top-right button { background: none; border: none; cursor: pointer; }
+    .topbar-profile img { width: 40px; height: 40px; border-radius: 50%; }
+    /* Sidebar */
+    aside.sidebar {
+      background-color: #101041; overflow: hidden; transition: width 0.3s;
+      width: 70px; height: 100vh; z-index: 900; position: fixed;
+    }
+    aside.sidebar.expanded { width: 190px; }
+    .menuContent { padding-top: 60px; }
+    .admin-menu { list-style: none; padding: 0; margin: 0; }
+    .admin-menu li {
+      padding: 15px; display: flex; align-items: center; cursor: pointer; transition: background-color 0.3s;
+    }
+    .admin-menu li:hover { background-color: #1e282c; }
+    aside.sidebar.collapsed .admin-menu li span { display: none; }
+    /* Contenu de la page */
+    .page-content {
+      flex-grow: 1; transition: margin-left 0.3s; padding-top: 60px; background-color: #f4f6f9; margin-left: 70px;
+    }
+    @media (min-width: 768px) {
+      aside.sidebar.expanded + .page-content { margin-left: 190px; }
+    }
+    main { padding: 40px; }
+    .dashboard-header h2 { font-size: 2rem; margin-bottom: 5px; color: #101041; }
+    .dashboard-header p { color: #666; margin-bottom: 20px; }
+    /* Statistiques et aperçus */
+    .stats { display: flex; flex-wrap: wrap; gap: 20px; }
+    .stat-box {
+      flex: 1 1 200px; background: #fff; padding: 20px; border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center;
+    }
+    .stat-box h3 { margin-bottom: 10px; font-size: 1.2rem; color: #101041; }
+    .stat-box p { font-size: 2rem; color: #b88f1e; }
+    /* Footer */
+    footer.footer {
+      background-color: #fff; padding: 15px 20px; text-align: center;
+      border-top: 1px solid #ddd; margin-top: 20px;
+    }
+
+    /* Ajustement pour la transition */
+.submenu {
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+}
+
+.has-submenu.active .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Styles pour la gestion des classes */
+.class-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.student-list-section,
+.course-section {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.student-table th,
+.student-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.course-tabs {
+    list-style: none;
+    padding: 0;
+}
+
+.course-tabs li {
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.course-tabs li:hover {
+    background: #b88f1e;
+    color: white;
+}
+
+.class-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #101041;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Styles pour l'accordéon des classes */
+.has-submenu {
+    position: relative;
+    display:flex
+}
+
+.submenu {
+    display: none;
+    list-style: none;
+    background-color: #1a1a5c;
+    padding: 0;
+    margin: 0;
+}
+
+.has-submenu.active .submenu {
+    display: block;
+}
+
+.submenu li {
+    padding: 12px 20px 12px 45px !important;
+    font-size: 0.9em;
+    cursor: pointer;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.submenu li i {
+    margin-right: 10px;
+    font-size: 0.8em;
+}
+
+.has-submenu > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.has-submenu > span::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.has-submenu.active > span::after {
+    transform: rotate(180deg);
+}
+  </style>
+</head>
+<body>
+  <section class="dashboardSection">
+    <div class="wrapper">
+      <!-- SIDEBAR -->
+      <aside class="sidebar collapsed" id="sidebar">
+        <div class="menuContent">
+          <div class="app-menu">
+            <ul class="admin-menu">
+              <li class="menu-item" onclick="location.href='./dashProf.html'">
+                <i class="fas fa-home fa-2x" style="color: #b88f1e;"></i>
+                <span style="color: #b88f1e;">Accueil</span>
+              </li>
+              <li class="menu-item has-submenu">
+                <div class="menu-header">
+                    <i class="fas fa-chalkboard fa-2x"></i>
+                    <span>Mes Classes</span>
+                </div>
+                <ul class="submenu">
+                    <li onclick="loadClassContent('Classe 1', event)">
+                        <i class="fas fa-angle-right"></i>
+                        <span>Classe 1</span>
+                    </li>
+                    <li onclick="loadClassContent('Classe 2', event)">
+                        <i class="fas fa-angle-right"></i>
+                        <span>Classe 2</span>
+                    </li>
+                    <li onclick="loadClassContent('Classe 3', event)">
+                        <i class="fas fa-angle-right"></i>
+                        <span>Classe 3</span>
+                    </li>
+                </ul>
+              </li>
+              <li class="menu-item" onclick="location.href='mesCours.html'">
+                <i class="fas fa-book-open fa-2x"></i>
+                <span>Mes Cours</span>
+              </li>
+              <li class="menu-item" onclick="location.href='evaluations.html'">
+                <i class="fas fa-clipboard-list fa-2x"></i>
+                <span>Évaluations</span>
+              </li>
+              <li class="menu-item" onclick="location.href='messagerie.html'">
+                <i class="fas fa-comments fa-2x"></i>
+                <span>Messagerie</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- Sidebar Bottom -->
+        <div class="sidebar-bottom">
+          <ul class="admin-menu">
+            <li class="menu-item">
+              <a href="parametresProf.html" style="display: flex; align-items: center;">
+                <i class="fas fa-cog" style="color: #b88f1e;"></i>
+                <span style="color: #b88f1e;">Paramètres</span>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="#" id="logoutBtn" style="display: flex; align-items: center;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Déconnexion</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+      
+      <!-- PAGE CONTENT -->
+      <div class="page-content">
+        <!-- TOPBAR -->
+        <header class="topbar">
+          <div class="navBar">
+            <div class="top-left">
+              <button class="toggle-btn" id="toggleBtn" title="Ouvrir / Fermer le menu">
+                <i class="fas fa-bars"></i>
+              </button>
+              <a href="#" class="topbar-logo">
+                <!-- Ton logo ici -->
+              </a>
+              <div class="topbar-search">
+                <input type="search" placeholder="Recherche...">
+              </div>
+            </div>
+            <div class="top-right">
+              <button id="fullscreenBtn" title="Plein écran">
+                <i class="fas fa-expand"></i>
+              </button>
+              <button title="Notifications">
+                <i class="fas fa-bell"></i>
+              </button>
+              <div class="topbar-profile">
+                <button title="Profil">
+                  <img id="navbarProfileImage" src="avatar/prof.jpg" alt="Professeur" class="profile-image">
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+        
+        <!-- MAIN CONTENT -->
+        <main>
+          <div class="dashboard-header">
+            <h2>Bienvenue, Professeur !</h2>
+            <p>Vue d'ensemble de vos classes et activités</p>
+          </div>
+          
+          <!-- Statistiques clés -->
+          <div class="stats">
+            <div class="stat-box">
+              <h3>Total Classes</h3>
+              <p>5</p>
+            </div>
+            <div class="stat-box">
+              <h3>Cours à corriger</h3>
+              <p>12</p>
+            </div>
+            <div class="stat-box">
+              <h3>Évaluations en attente</h3>
+              <p>3</p>
+            </div>
+            <div class="stat-box">
+              <h3>Notifications</h3>
+              <p>7</p>
+            </div>
+          </div>
+          
+          <!-- Section planning / calendrier -->
+          <div class="calendar-section" style="margin-top: 40px;">
+            <div id="calendar"></div>
+          </div>
+        </main>
+        
+        <!-- FOOTER -->
+        <footer class="footer">
+          <div class="footer-content">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> Votre Institution. Tous droits réservés.</p>
+          </div> 
+        </footer>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Scripts -->
+  <script>
+    // Toggle sidebar
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('expanded');
+      sidebar.classList.toggle('collapsed');
+    });
+    
+    // Fullscreen mode (exemple)
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    fullscreenBtn.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    });
+    
+    // Déconnexion
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')){
+        window.location.href = '../public/index.html';
+      }
+    });
+    
+    // Initialisation du calendrier FullCalendar
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        buttonText: {
+          today: 'Aujourd\'hui',
+          month: 'Mois',
+          week: 'Semaine',
+          day: 'Jour'
+        },
+        events: async function(info, successCallback, failureCallback) {
+          try {
+            // Route dédiée pour récupérer le planning d'un professeur (ex: /api/prof/:id/dashboard)
+            const response = await fetch('http://localhost:5002/api/prof/123/dashboard');
+            const events = await response.json();
+            successCallback(events);
+          } catch (error) {
+            console.error('Erreur chargement du calendrier:', error);
+            failureCallback(error);
+          }
+        }
+      });
+      calendar.render();
+    });
+
+    // Ajouter dans la section des scripts existants
+    document.addEventListener('DOMContentLoaded', function() {
+        // Gestion de l'accordéon des classes
+        const classMenuItem = document.querySelector('.has-submenu');
+        classMenuItem.addEventListener('click', function(e) {
+            // Vérifier si le clic est sur le menu principal et non sur un sous-menu
+            if (e.target.closest('.menu-header') || e.target === this) {
+                this.classList.toggle('active');
+                e.stopPropagation();
+            }
+        });
+
+        // Empêcher la fermeture du menu lors du clic sur un sous-menu
+        const submenuItems = document.querySelectorAll('.submenu li');
+        submenuItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
+    });
+
+    // Fonction pour charger le contenu d'une classe
+    function loadClassContent(className, event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        // Mettre à jour le contenu principal
+        const mainContent = document.querySelector('main');
+        mainContent.innerHTML = `
+            <div class="dashboard-header">
+                <h2>${className}</h2>
+                <p>Gestion de la ${className}</p>
+            </div>
+            <div class="class-content">
+                <!-- Liste des élèves -->
+                <div class="student-list-section">
+                    <h3>Liste des élèves</h3>
+                    <table class="student-table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Post-nom</th>
+                                <th>Note</th>
+                                <th>Observation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTableBody">
+                            <!-- Sera rempli dynamiquement -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Section des cours -->
+                <div class="course-section">
+                    <h3>Mes cours</h3>
+                    <div class="course-list">
+                        <!-- Liste des cours -->
+                    </div>
+                    <div class="class-actions">
+                        <button class="action-btn meet-btn" onclick="startMeet('${className}')">
+                            <i class="fas fa-video"></i> Démarrer un Meet
+                        </button>
+                        <button class="action-btn homework-btn" onclick="assignHomework('${className}')">
+                            <i class="fas fa-book"></i> Envoyer un devoir
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Charger les données des élèves
+        fetchClassData(className);
+    }
+
+    // Fonction pour récupérer les données de la classe
+    async function fetchClassData(className) {
+        try {
+            const response = await fetch(`http://localhost:5002/api/classes/${className}/eleves`);
+            const data = await response.json();
+            
+            if (data.success) {
+                displayStudents(data.eleves);
+            } else {
+                throw new Error('Erreur lors de la récupération des données');
+            }
+        } catch (error) {
+            console.error('❌ Erreur:', error);
+            alert('Erreur lors du chargement des données de la classe');
+        }
+    }
+
+    // Fonction pour afficher les élèves
+    function displayStudents(eleves) {
+        const tbody = document.getElementById('studentTableBody');
+        tbody.innerHTML = eleves.map(eleve => `
+            <tr>
+                <td>${eleve.nom}</td>
+                <td>${eleve.postnom}</td>
+                <td>
+                    <input type="number" 
+                           min="0" 
+                           max="20" 
+                           value="${eleve.note || ''}"
+                           onchange="updateNote('${eleve._id}', this.value)">
+                </td>
+                <td>
+                    <input type="text" 
+                           value="${eleve.observation || ''}"
+                           onchange="updateObservation('${eleve._id}', this.value)">
+                </td>
+                <td>
+                    <button class="action-btn" onclick="excludeStudent('${eleve._id}')">
+                        <i class="fas fa-user-slash"></i>
+                    </button>
+                    <button class="action-btn" onclick="punishStudent('${eleve._id}')">
+                        <i class="fas fa-gavel"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+  </script>
+</body>
+</html>

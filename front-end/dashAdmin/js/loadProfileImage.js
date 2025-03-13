@@ -29,30 +29,27 @@ async function updatePhoto(type) {
         if (file) {
             const formData = new FormData();
             formData.append('photo', file);
-            formData.append('type', type); // 'student' ou 'tutor'
+            formData.append('type', type);
             formData.append('id', new URLSearchParams(window.location.search).get('id'));
 
             try {
-                console.log('📤 Envoi de la photo...');
                 const response = await fetch('http://localhost:5002/api/eleves/upload-photo', {
                     method: 'POST',
                     body: formData
                 });
 
-                if (!response.ok) {
-                    throw new Error('Erreur lors de l\'upload');
-                }
+                if (!response.ok) throw new Error('Erreur lors de l\'upload');
 
                 const result = await response.json();
                 
-                // Mettre à jour l'image affichée
+                // Mettre à jour l'image dans l'interface
                 const imgElement = document.getElementById(type === 'student' ? 'studentPhoto' : 'tutorPhoto');
                 imgElement.src = `http://localhost:5002/uploads/${result.filename}`;
-
-                showNotification('✅ Photo mise à jour avec succès', 'success');
+                
+                alert('✅ Photo mise à jour avec succès');
             } catch (error) {
                 console.error('❌ Erreur:', error);
-                showNotification('❌ Erreur lors de la mise à jour de la photo', 'error');
+                alert('❌ Erreur lors de la mise à jour de la photo');
             }
         }
     };
