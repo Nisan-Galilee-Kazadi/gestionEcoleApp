@@ -130,6 +130,7 @@
     /* Mettre à jour les styles de l'accordéon */
 .has-submenu {
     position: relative;
+    
 }
 
 .submenu {
@@ -194,6 +195,110 @@
     visibility: visible;
     transform: translateY(0);
 }
+
+/* Ajouter dans la section style */
+.loading-text {
+    text-align: center;
+    font-size: 24px;
+    color: #101041;
+    margin-top: 100px;
+}
+
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60% { content: '...'; }
+    80%, 100% { content: ''; }
+}
+
+.welcome-message {
+    text-align: center;
+    padding: 50px 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+/* Styles pour l'accordéon des classes */
+.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    list-style: none;
+    padding: 0;
+    background-color: #1a1a5c;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden; /* Enlever le défilement */
+}
+
+.has-submenu.active .submenu {
+    display: block;
+    animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.submenu li {
+    padding: 12px 20px;
+    font-size: 0.9em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.submenu li:hover {
+    background-color: #b88f1e;
+}
+
+.has-submenu > span {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.has-submenu > span::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+.has-submenu.active > span::after {
+    transform: rotate(180deg);
+}
   </style>
 </head>
 <body>
@@ -205,13 +310,15 @@
           <div class="app-menu">
             <ul class="admin-menu">
               <li class="menu-item" onclick="location.href='dashIndex.html'">
-                <i class="fas fa-home fa-2x" style="color: #b88f1e;"></i>
-                <span style="color: #b88f1e;">Accueil</span>
+                <i class="fas fa-home fa-2x"></i>
+                <span>Accueil</span>
               </li>
               <!-- Ici, le menu "Mes Classes" redirige vers notre module gestion classes -->
               <li class="menu-item has-submenu">
-                <i class="fas fa-chalkboard fa-2x"></i>
-                <span>Mes Classes</span>
+                <div class="menu-header">
+                    <i class="fas fa-chalkboard fa-2x" style="color: #b88f1e;"></i>
+                    <span style="color: #b88f1e;">Mes Classes</span>
+                </div>
                 <ul class="submenu">
                     <li onclick="loadClassContent('Classe 1')">
                         <i class="fas fa-angle-right"></i>
@@ -227,7 +334,7 @@
                     </li>
                 </ul>
               </li>
-              <li class="menu-item" onclick="location.href='mesCours.html'">
+              <li class="menu-item" onclick="location.href='gestionCours.html'">
                 <i class="fas fa-book-open fa-2x"></i>
                 <span>Mes Cours</span>
               </li>
@@ -246,9 +353,9 @@
         <div class="sidebar-bottom">
           <ul class="admin-menu">
             <li class="menu-item">
-              <a href="parametresProf.html" style="display: flex; align-items: center;">
-                <i class="fas fa-cog" style="color: #b88f1e;"></i>
-                <span style="color: #b88f1e;">Paramètres</span>
+              <a href="parametres.html" style="display: flex; align-items: center;">
+                <i class="fas fa-cog" ></i>
+                <span >Paramètres</span>
               </a>
             </li>
             <li class="menu-item">
@@ -295,8 +402,14 @@
         
         <!-- CONTENU PRINCIPAL (sera remplacé dynamiquement) -->
         <main id="mainContent">
-          
-        </main>
+    <div class="welcome-message">
+        <h2>Bienvenue dans la gestion des classes</h2>
+        <p class="loading-text">
+            Veuillez sélectionner une classe dans le menu
+            <span class="loading-dots"></span>
+        </p>
+    </div>
+</main>
         
         <!-- FOOTER -->
         <footer class="footer">
@@ -521,62 +634,409 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Fonction pour charger le contenu d'une classe
+// Modifier la fonction loadClassContent pour ajouter une animation de chargement
 function loadClassContent(className) {
+    // Afficher d'abord l'animation de chargement
     document.getElementById("mainContent").innerHTML = `
-        <div class="dashboard-header">
-            <h2>${className}</h2>
-            <p>Gestion de ${className}</p>
-        </div>
-        <div class="class-container">
-            <div class="students-table">
-                <h3>Liste des Élèves</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Post-nom</th>
-                            <th>Note</th>
-                            <th>Observation</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Durand </td>
-                            <td>Paul </td>
-                            <td><input type="number" min="0" max="20" placeholder="Note"></td>
-                            <td><input type="text" placeholder="Observation"></td>
-                            <td>
-                                <button class="action-btn" onclick="alert('Exclure élève')">
-                                    <i class="fas fa-user-slash"></i>
-                                </button>
-                                <button class="action-btn" onclick="alert('Punir élève')">
-                                    <i class="fas fa-gavel"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="courses-block">
-                <h3>Actions de classe</h3>
-                <div class="buttons-group">
-                    <button onclick="alert('Lancer Meet')">
-                        <i class="fas fa-video"></i> Lancer un Meet
-                    </button>
-                    <button onclick="alert('Envoyer devoir')">
-                        <i class="fas fa-book"></i> Envoyer un devoir
-                    </button>
-                    <button onclick="alert('Faire l\'appel')">
-                        <i class="fas fa-clipboard-list"></i> Faire l'appel
-                    </button>
-                </div>
-            </div>
+        <div class="welcome-message">
+            <h2>Chargement de ${className}</h2>
+            <p class="loading-text">
+                Récupération des données
+                <span class="loading-dots"></span>
+            </p>
         </div>
     `;
-  }
+
+    // Simuler un délai de chargement (à remplacer par votre vraie requête API)
+    setTimeout(() => {
+        document.getElementById("mainContent").innerHTML = `
+            <div class="dashboard-header">
+                <h2>${className}</h2>
+                <p>Gestion de ${className}</p>
+            </div>
+            <div class="class-container">
+                <div class="students-table">
+                    <h3>Liste des Élèves</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Post-nom</th>
+                                <th>Note</th>
+                                <th>Observation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Durand </td>
+                                <td>Paul </td>
+                                <td><input type="number" min="0" max="20" placeholder="Note"></td>
+                                <td><input type="text" placeholder="Observation"></td>
+                                <td>
+                                    <button class="action-btn" onclick="alert('Exclure élève')">
+                                        <i class="fas fa-user-slash"></i>
+                                    </button>
+                                    <button class="action-btn" onclick="alert('Punir élève')">
+                                        <i class="fas fa-gavel"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="courses-block">
+                    <h3>Actions de classe</h3>
+                    <div class="buttons-group">
+                        <button onclick="alert('Lancer Meet')">
+                            <i class="fas fa-video"></i> Lancer un Meet
+                        </button>
+                        <button onclick="alert('Envoyer devoir')">
+                            <i class="fas fa-book"></i> Envoyer un devoir
+                        </button>
+                        <button onclick="alert('Faire l\'appel')">
+                            <i class="fas fa-clipboard-list"></i> Faire l'appel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }, 1000); // Délai d'une seconde pour la démo
+}
   </script>
+   <style>
+    /* ============================
+       Styles généraux pour le layout
+    ============================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      outline:none;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #444;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    /* Wrapper en flex pour disposer la sidebar et le contenu */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+   /* ============================
+       HEADER (Topbar)
+    ============================ */
+    header.topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #b88f1e;
+      padding: 20px 20px;
+      color: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+    .topbar .navBar {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;      gap: 2000px;
+    }
+    .topbar .top-left,
+    .topbar .top-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .top-right {
+      right: 30px;
+      position:absolute;
+    }
+    .top-right i {
+      color: white;
+    }
+    .top-right i:hover {
+      color: #101041;
+    }
+
+    .admin-menu {
+      padding-top: 20px;
+    }
+
+    .admin-menu li span {
+      color: white;
+    }
+    .admin-menu li span:hover {
+      color: #b88f1e;
+    }
+    .menu-item:hover span {
+      color: #b88f1e;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .menu-item i {
+      color: white;
+    }
+    .menu-item:hover i {
+      color: #b88f1e;
+    }
+    .topbar .toggle-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      margin-right: 20px;
+      color: #101041;
+    }
+    .topbar-logo-img {
+      height: 40px;
+      margin-right: 20px;
+    }
+    .topbar-search {
+      position: relative;
+    }
+    .topbar-search input[type="search"] {
+      padding: 15px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 11px;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 750px;
+      font-size:14px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .modal-content h1.section-title {
+      color: #101041;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .modal-content .form-group {
+      margin-bottom: 15px;
+    }
+    .modal-content .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    .modal-content .form-group input,
+    .modal-content .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content .form-group input:focus,
+    .modal-content .form-group select:focus {
+      border-color: #b88f1e;
+      outline: none;
+    }
+    .modal-content button[type="submit"] {
+      background-color: #b88f1e;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    .modal-content button[type="submit"]:hover {
+      opacity: 0.9;
+    }
+    .topbar-search input[type="search"] {
+      padding: 10px 35px 10px 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+    .topbar-search input[type="search"]::placeholder {
+      color: #888;
+      font-style: italic;
+      font-size: 12px;
+    }
+    .topbar-search button {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #101041;
+    }
+    .topbar button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-left: 15px;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+    .topbar-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+        
+    .top-right #fullscreenBtn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      margin-left: 10px;
+    }
+
+    .top-right #fullscreenBtn i {
+      color: white;
+      font-size: 18px;
+    }
+
+    .top-right #fullscreenBtn:hover i {
+      color: #101041;
+    }
+
+    /* ============================
+       SIDEBAR
+    ============================ */
+    aside.sidebar {
+      background-color: #101041; /* Bleu foncé */
+      overflow: hidden;
+      transition: width 0.3s;
+      width: 70px; /* état réduit */
+      height: 100vh;
+      z-index: 900;
+      position: fixed;
+    }
+    aside.sidebar.expanded {
+      width: 190px;
+    }
+    .menuContent {
+      padding-top: 60px;
+    }
+    .menuContent .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .menuContent .logo img {
+      max-width: 80%;
+    }
+  
+    .admin-menu li {
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .admin-menu li:hover {
+      background-color: #1e282c;
+    }
+    .admin-menu li i {
+      margin-right: 10px;
+      font-size: 30px;
+    }
+    /* Masquer le texte lorsque la sidebar est réduite */
+    aside.sidebar.collapsed .admin-menu li span {
+      display: none;
+    }
+
+    .sidebar-bottom {
+    position: fixed;
+    bottom: 0;
+    width: 70px; /* même largeur que la sidebar réduite */
+    background-color: #101041;
+    padding: 10px 0;
+    transition: width 0.3s;
+  }
+
+  .sidebar.expanded .sidebar-bottom {
+    width: 190px; /* même largeur que la sidebar étendue */
+  }
+
+  .sidebar-bottom .admin-menu li {
+    padding: 10px 20px;
+  }
+
+  .sidebar-bottom .admin-menu li:last-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+    /* ============================
+       PAGE CONTENT & MAIN
+    ============================ */
+    .page-content {
+      flex-grow: 1;
+      transition: margin-left 0.3s;
+      padding-top: 60px; /* Pour laisser la place du header fixe */
+      background-color: #f4f6f9;
+      margin-left: 70px;
+    }
+    @media (min-width: 768px) {
+      aside.sidebar.expanded + .page-content {
+        margin-left: 190px;
+      }
+    }
+    main {
+      padding: 40px;
+    }
+    .dashboard-header h2 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      color: #101041;
+    }
+    .dashboard-header p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .stat-box {
+      flex: 1 1 200px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .stat-box h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: #101041;
+    }
+    .stat-box p {
+      font-size: 2rem;
+      color: #b88f1e;
+    }
+    /* ============================
+       FOOTER
+    ============================ */
+    footer.footer {
+      background-color: #fff;
+      padding: 15px 20px;
+      text-align: center;
+      border-top: 1px solid #ddd;
+      margin-top: 20px;
+    }
+  </style>
+ 
 
 </body>
 </html>

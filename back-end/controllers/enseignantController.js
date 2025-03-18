@@ -79,22 +79,9 @@ exports.getDashboardData = async (req, res) => {
             });
         }
 
-        // Calculer les statistiques
-        const stats = {
-            totalClasses: enseignant.classes.length,
-            totalMatieres: enseignant.matieres.length,
-            evaluationsEnCours: enseignant.evaluations.filter(e => 
-                new Date(e.date) >= new Date()
-            ).length,
-            prochaineEvaluation: enseignant.evaluations
-                .filter(e => new Date(e.date) >= new Date())
-                .sort((a, b) => new Date(a.date) - new Date(b.date))[0]
-        };
-
         res.status(200).json({
             success: true,
-            enseignant,
-            stats
+            enseignant
         });
 
     } catch (error) {
@@ -126,6 +113,43 @@ exports.getHoraire = async (req, res) => {
 
     } catch (error) {
         console.error('❌ Erreur horaire:', error);
+        res.status(500).json({
+            success: false,
+            message: '❌ Erreur serveur'
+        });
+    }
+};
+
+exports.uploadPhoto = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: '❌ Aucune image fournie'
+            });
+        }
+
+        const { id } = req.body;
+        const enseignant = await Enseignant.findByIdAndUpdate(
+            id,
+            { photo: req.file.filename },
+            { new: true }
+        );
+
+        if (!enseignant) {
+            return res.status(404).json({
+                success: false,
+                message: '❌ Enseignant non trouvé'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            filename: req.file.filename
+        });
+
+    } catch (err) {
+        console.error('❌ Erreur upload photo:', err);
         res.status(500).json({
             success: false,
             message: '❌ Erreur serveur'

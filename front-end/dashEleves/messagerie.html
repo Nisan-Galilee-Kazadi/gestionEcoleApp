@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Professeur</title>
+  <title>Dashboard Eleves</title>
   <!-- FontAwesome pour les icônes -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- Favicon -->
@@ -336,132 +336,301 @@
 
 .dashboard-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .card-header {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
 }
 
 .card-header h3 {
     color: #101041;
     font-size: 1.2rem;
-    margin: 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .card-header i {
     color: #b88f1e;
-    margin-right: 10px;
+    font-size: 1.4rem;
 }
 
-/* Styles pour les prochains cours */
+/* Style des éléments timeline */
 .timeline-item {
     display: flex;
-    padding: 15px 0;
-    border-left: 3px solid #b88f1e;
-    margin-left: 10px;
-    padding-left: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border-left: 4px solid #b88f1e;
 }
 
 .time {
+    min-width: 140px;
     font-weight: bold;
     color: #101041;
-    min-width: 120px;
+    padding-right: 15px;
+    border-right: 2px solid #eee;
 }
 
 .class-info h4 {
-    margin: 0;
     color: #101041;
+    margin-bottom: 8px;
 }
 
-.status {
-    display: inline-block;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin-top: 5px;
+.class-info p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 5px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.status.prepared {
-    background: #e3fcef;
-    color: #00875a;
+.class-info p i {
+    color: #b88f1e;
 }
 
-.status.pending {
-    background: #fff1e6;
-    color: #b65d0e;
-}
-
-/* Styles pour les activités récentes */
+/* Style des activités */
 .activity-item {
     display: flex;
     align-items: start;
-    padding: 12px 0;
+    padding: 15px;
     border-bottom: 1px solid #eee;
+}
+
+.activity-item:last-child {
+    border-bottom: none;
 }
 
 .activity-item i {
     color: #b88f1e;
     font-size: 1.2rem;
     margin-right: 15px;
-    margin-top: 3px;
-}
-
-.activity-content {
-    flex: 1;
+    padding: 10px;
+    background: #fff8e8;
+    border-radius: 8px;
 }
 
 .activity-content p {
-    margin: 0;
     color: #101041;
+    margin-bottom: 5px;
+    font-weight: 500;
 }
 
 .activity-content small {
     color: #666;
+    display: block;
+}
+
+.time {
+    color: #b88f1e;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+/* Style des notes */
+.grade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.score {
+    background: #e3fcef;
+    color: #00875a;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.date {
+    color: #666;
     font-size: 0.9rem;
 }
 
-/* Styles pour les tâches */
-.task-item {
+/* Style des devoirs */
+.homework-item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid #eee;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
-.task-item input[type="checkbox"] {
-    margin-right: 15px;
-    accent-color: #b88f1e;
-    width: 18px;
-    height: 18px;
-}
-
-.task-item label {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.task-title {
+.homework-item .subject {
     color: #101041;
     font-weight: 500;
 }
 
-.task-details {
-    color: #666;
-    font-size: 0.9rem;
-    margin: 3px 0;
+.homework-item .details {
+    flex: 1;
+    padding: 0 20px;
 }
 
-.due-date {
+.homework-item .due-date {
     color: #b88f1e;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+}
+
+.submit-btn {
+    background: #101041;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #b88f1e;
+    transform: translateY(-2px);
+}
+
+/* Style des cours aujourd'hui */
+.today-schedule .schedule-item {
+    display: flex;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.today-schedule .time {
+    min-width: 120px;
+    font-weight: bold;
+    color: #101041;
+}
+
+/* Style des notes */
+.grades-list .grade-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.grades-list .subject {
+    color: #101041;
     font-weight: 500;
 }
+
+.grades-list .score {
+    background: #e3fcef;
+    color: #00875a;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Style des devoirs */
+.homework-list .homework-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.submit-btn {
+    background: #101041;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #b88f1e;
+}
+
+/* Style des ressources */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.resource-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.download-btn {
+    background: none;
+    border: none;
+    color: #101041;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.download-btn:hover {
+    color: #b88f1e;
+}
+
+      .exam-timeline {
+        margin-top: 15px;
+      }
+
+      .exam-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border-left: 4px solid #b88f1e;
+      }
+
+      .exam-item .date {
+        min-width: 100px;
+        font-weight: bold;
+        color: #101041;
+        padding-right: 15px;
+        border-right: 2px solid #eee;
+      }
+
+      .exam-info h4 {
+        color: #101041;
+        margin-bottom: 5px;
+      }
+
+      .exam-info p {
+        color: #666;
+        font-size: 0.9rem;
+      }
   </style>
 </head>
 <body>
@@ -476,17 +645,13 @@
                 <i class="fas fa-home fa-2x" style="color: #b88f1e;"></i>
                 <span style="color: #b88f1e;">Accueil</span>
               </li>
-              <li class="menu-item" onclick="redirectToClasses()">
-                <i class="fas fa-chalkboard fa-2x"></i>
-                <span>Mes Classes</span>
-              </li>
-              <li class="menu-item" onclick="location.href='gestionCours.html'">
+              <li class="menu-item" onclick="location.href='coursEleves.html'">
                 <i class="fas fa-book-open fa-2x"></i>
                 <span>Mes Cours</span>
               </li>
-              <li class="menu-item" onclick="location.href='evaluations.html'">
-                <i class="fas fa-clipboard-list fa-2x"></i>
-                <span>Évaluations</span>
+              <li class="menu-item" onclick="location.href='note&bulletinEleves.html'">
+                <i class="fas fa-clipboard-list fa-4x"></i>
+                <span>Note & Bulletins</span>
               </li>
               <li class="menu-item" onclick="location.href='messagerie.html'">
                 <i class="fas fa-comments fa-2x"></i>
@@ -539,7 +704,7 @@
               </button>
               <div class="topbar-profile">
                 <button title="Profil">
-                  <img id="navbarProfileImage" src="avatar/prof.jpg" alt="Professeur" class="profile-image">
+                  <img id="navbarProfileImage" src="avatar/prof.jpg" alt="eleve" class="profile-image">
                 </button>
               </div>
             </div>
@@ -548,164 +713,113 @@
         
         <!-- MAIN CONTENT -->
         <main>
-          <div class="dashboard-header">
-            <h2>Bienvenue, Professeur !</h2>
-            <p>Vue d'ensemble de vos classes et activités</p>
-          </div>
-          
-          <!-- Statistiques clés -->
-          <div class="stats">
-            <div class="stat-box">
-              <h3>Total Classes</h3>
-              <p>5</p>
+    <div class="email-container">
+        <!-- Sidebar Messages -->
+        <div class="email-sidebar">
+            <button class="compose-btn">
+                <i class="fas fa-plus"></i> Nouveau Message
+            </button>
+
+            <div class="email-nav">
+                <a href="#" class="email-nav-item active">
+                    <i class="fas fa-inbox"></i>
+                    <span>Boîte de réception</span>
+                    <span class="badge">3</span>
+                </a>
+                <a href="#" class="email-nav-item">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Messages envoyés</span>
+                </a>
+                <a href="#" class="email-nav-item">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Brouillons</span>
+                    <span class="badge">2</span>
+                </a>
+                <a href="#" class="email-nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>Important</span>
+                </a>
+                <a href="#" class="email-nav-item">
+                    <i class="fas fa-trash"></i>
+                    <span>Corbeille</span>
+                </a>
             </div>
-            <div class="stat-box">
-              <h3>Cours à corriger</h3>
-              <p>12</p>
+
+            <!-- Contacts -->
+            <div class="contacts-section">
+                <h3><i class="fas fa-users"></i> Contacts</h3>
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <img src="avatar/prof.jpg" alt="Contact">
+                        <div class="contact-info">
+                            <h4>M. Martin</h4>
+                            <p>Professeur de Maths</p>
+                        </div>
+                        <span class="online-status"></span>
+                    </div>
+                    <div class="contact-item">
+                        <img src="avatar/prof.jpg" alt="Contact">
+                        <div class="contact-info">
+                            <h4>Mme. Bernard</h4>
+                            <p>Professeur de Français</p>
+                        </div>
+                    </div>
+                    <!-- Autres contacts... -->
+                </div>
             </div>
-            <div class="stat-box">
-              <h3>Évaluations en attente</h3>
-              <p>3</p>
-            </div>
-            <div class="stat-box">
-              <h3>Notifications</h3>
-              <p>7</p>
-            </div>
-          </div>
-          
-          <div class="dashboard-grid">
-    <!-- Prochains Cours -->
-    <div class="dashboard-card">
-        <div class="card-header">
-            <h3><i class="fas fa-clock"></i> Mes Prochains Cours</h3>
         </div>
-        <div class="upcoming-classes">
-            <div class="timeline-item">
-                <div class="time">08:15 - 09:00</div>
-                <div class="class-info">
-                    <h4>Mathématiques</h4>
-                    <p><i class="fas fa-users"></i> Classe 2A</p>
-                    <p><i class="fas fa-location-dot"></i> Salle 103</p>
-                    <span class="status prepared">Préparé</span>
+
+        <!-- Liste des messages -->
+        <div class="email-list">
+            <div class="email-list-header">
+                <div class="email-actions">
+                    <input type="checkbox" id="selectAll">
+                    <button title="Actualiser"><i class="fas fa-sync"></i></button>
+                    <button title="Archiver"><i class="fas fa-archive"></i></button>
+                    <button title="Signaler"><i class="fas fa-exclamation-circle"></i></button>
+                    <button title="Supprimer"><i class="fas fa-trash"></i></button>
+                </div>
+                <div class="email-filter">
+                    <select>
+                        <option>Tous les messages</option>
+                        <option>Non lus</option>
+                        <option>Importants</option>
+                    </select>
                 </div>
             </div>
-            <div class="timeline-item">
-                <div class="time">10:15 - 11:00</div>
-                <div class="class-info">
-                    <h4>Physique</h4>
-                    <p><i class="fas fa-users"></i> Classe 4B</p>
-                    <p><i class="fas fa-location-dot"></i> Labo 2</p>
-                    <span class="status pending">À préparer</span>
+
+            <div class="email-items">
+                <div class="email-item unread">
+                    <input type="checkbox">
+                    <div class="email-star"><i class="far fa-star"></i></div>
+                    <div class="email-sender">M. Martin</div>
+                    <div class="email-subject">
+                        <strong>Devoir de mathématiques</strong>
+                        <span class="email-preview">- Les exercices pour la semaine prochaine...</span>
+                    </div>
+                    <div class="email-date">10:30</div>
                 </div>
+
+                <div class="email-item">
+                    <input type="checkbox">
+                    <div class="email-star"><i class="fas fa-star"></i></div>
+                    <div class="email-sender">Mme. Bernard</div>
+                    <div class="email-subject">
+                        Compte rendu du cours
+                        <span class="email-preview">- Suite à notre dernière séance...</span>
+                    </div>
+                    <div class="email-date">Hier</div>
+                </div>
+                <!-- Autres messages... -->
             </div>
         </div>
     </div>
-
-    <!-- Activités Récentes -->
-    <div class="dashboard-card">
-        <div class="card-header">
-            <h3><i class="fas fa-history"></i> Activités Récentes</h3>
-        </div>
-        <div class="activities-list">
-            <div class="activity-item">
-                <i class="fas fa-file-alt"></i>
-                <div class="activity-content">
-                    <p>Devoir de mathématiques remis</p>
-                    <small>Classe 2A - 15 élèves</small>
-                    <span class="time">Il y a 2 heures</span>
-                </div>
-            </div>
-            <div class="activity-item">
-                <i class="fas fa-star"></i>
-                <div class="activity-content">
-                    <p>Notes attribuées</p>
-                    <small>Classe 4B - Évaluation mensuelle</small>
-                    <span class="time">Il y a 3 heures</span>
-                </div>
-            </div>
-            <div class="activity-item">
-                <i class="fas fa-envelope"></i>
-                <div class="activity-content">
-                    <p>Message reçu des parents</p>
-                    <small>Élève: Jean Dupont</small>
-                    <span class="time">Il y a 5 heures</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tâches en Attente -->
-    <div class="dashboard-card">
-        <div class="card-header">
-            <h3><i class="fas fa-tasks"></i> Tâches en Attente</h3>
-        </div>
-        <div class="tasks-list">
-            <div class="task-item">
-                <input type="checkbox" id="task1">
-                <label for="task1">
-                    <span class="task-title">Corriger les devoirs</span>
-                    <span class="task-details">Classe 3A - 25 copies</span>
-                    <span class="due-date">Pour demain</span>
-                </label>
-            </div>
-            <div class="task-item">
-                <input type="checkbox" id="task2">
-                <label for="task2">
-                    <span class="task-title">Préparer l'évaluation</span>
-                    <span class="task-details">Classe 2A - Chapitre 5</span>
-                    <span class="due-date">Dans 2 jours</span>
-                </label>
-            </div>
-            <div class="task-item">
-                <input type="checkbox" id="task3">
-                <label for="task3">
-                    <span class="task-title">Réunion pédagogique</span>
-                    <span class="task-details">Salle des professeurs</span>
-                    <span class="due-date">Vendredi 14h00</span>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
-
-          <!-- Section planning / calendrier -->
-          <div class="timetable-section">
-            <div class="timetable-header">
-                <h3>Emploi du temps</h3>
-                <div class="class-navigation">
-                    <button id="prevClass" class="nav-btn">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                    <span id="currentClass">Classe 1</span>
-                    <button id="nextClass" class="nav-btn">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="timetable-container">
-                <table class="timetable">
-                    <thead>
-                        <tr>
-                            <th>Heures</th>
-                            <th>Lundi</th>
-                            <th>Mardi</th>
-                            <th>Mercredi</th>
-                            <th>Jeudi</th>
-                            <th>Vendredi</th>
-                            <th>Samedi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timetableBody"></tbody>
-                </table>
-            </div>
-          </div>
         </main>
         
         <!-- FOOTER -->
         <footer class="footer">
           <div class="footer-content">
-            <p>&copy; <script>document.write(new Date().getFullYear())</script> Votre Institution. Tous droits réservés.</p>
+            <p>&copy; <script>document.write(new Date().getFullYear())</script>Nisan-Galilée Kazadi_Gestion d'Ecole. Tous droits réservés.</p>
           </div> 
         </footer>
       </div>
@@ -742,276 +856,8 @@
       }
     });
     
-    // Initialisation du calendrier FullCalendar
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        locale: 'fr',
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
-        },
-        buttonText: {
-          today: 'Aujourd\'hui',
-          month: 'Mois',
-          week: 'Semaine',
-          day: 'Jour'
-        },
-        events: async function(info, successCallback, failureCallback) {
-          try {
-            // Route dédiée pour récupérer le planning d'un professeur (ex: /api/prof/:id/dashboard)
-            const response = await fetch('http://localhost:5002/api/prof/123/dashboard');
-            const events = await response.json();
-            successCallback(events);
-          } catch (error) {
-            console.error('Erreur chargement du calendrier:', error);
-            failureCallback(error);
-          }
-        }
-      });
-      calendar.render();
-    });
-
-    // Ajouter dans la section des scripts existants
-    document.addEventListener('DOMContentLoaded', function() {
-        // Gestion de l'accordéon des classes
-        const classMenuItem = document.querySelector('.has-submenu');
-        classMenuItem.addEventListener('click', function(e) {
-            // Vérifier si le clic est sur le menu principal et non sur un sous-menu
-            if (e.target.closest('.menu-header') || e.target === this) {
-                this.classList.toggle('active');
-                e.stopPropagation();
-            }
-        });
-
-        // Empêcher la fermeture du menu lors du clic sur un sous-menu
-        const submenuItems = document.querySelectorAll('.submenu li');
-        submenuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.stopPropagation();
-            });
-        });
-    });
-
-    // Fonction pour charger le contenu d'une classe
-    function loadClassContent(className, event) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        // Mettre à jour le contenu principal
-        const mainContent = document.querySelector('main');
-        mainContent.innerHTML = `
-            <div class="dashboard-header">
-                <h2>${className}</h2>
-                <p>Gestion de la ${className}</p>
-            </div>
-            <div class="class-content">
-                <!-- Liste des élèves -->
-                <div class="student-list-section">
-                    <h3>Liste des élèves</h3>
-                    <table class="student-table">
-                        <thead>
-                            <tr>
-                                <th>Nom</th>
-                                <th>Post-nom</th>
-                                <th>Note</th>
-                                <th>Observation</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentTableBody">
-                            <!-- Sera rempli dynamiquement -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Section des cours -->
-                <div class="course-section">
-                    <h3>Mes cours</h3>
-                    <div class="course-list">
-                        <!-- Liste des cours -->
-                    </div>
-                    <div class="class-actions">
-                        <button class="action-btn meet-btn" onclick="startMeet('${className}')">
-                            <i class="fas fa-video"></i> Démarrer un Meet
-                        </button>
-                        <button class="action-btn homework-btn" onclick="assignHomework('${className}')">
-                            <i class="fas fa-book"></i> Envoyer un devoir
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        // Charger les données des élèves
-        fetchClassData(className);
-    }
-
-    // Fonction pour récupérer les données de la classe
-    async function fetchClassData(className) {
-        try {
-            const response = await fetch(`http://localhost:5002/api/classes/${className}/eleves`);
-            const data = await response.json();
-            
-            if (data.success) {
-                displayStudents(data.eleves);
-            } else {
-                throw new Error('Erreur lors de la récupération des données');
-            }
-        } catch (error) {
-            console.error('❌ Erreur:', error);
-            alert('Erreur lors du chargement des données de la classe');
-        }
-    }
-
-    // Fonction pour afficher les élèves
-    function displayStudents(eleves) {
-        const tbody = document.getElementById('studentTableBody');
-        tbody.innerHTML = eleves.map(eleve => `
-            <tr>
-                <td>${eleve.nom}</td>
-                <td>${eleve.postnom}</td>
-                <td>
-                    <input type="number" 
-                           min="0" 
-                           max="20" 
-                           value="${eleve.note || ''}"
-                           onchange="updateNote('${eleve._id}', this.value)">
-                </td>
-                <td>
-                    <input type="text" 
-                           value="${eleve.observation || ''}"
-                           onchange="updateObservation('${eleve._id}', this.value)">
-                </td>
-                <td>
-                    <button class="action-btn" onclick="excludeStudent('${eleve._id}')">
-                        <i class="fas fa-user-slash"></i>
-                    </button>
-                    <button class="action-btn" onclick="punishStudent('${eleve._id}')">
-                        <i class="fas fa-gavel"></i>
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-    }
-
-    function redirectToClasses() {
-        // Créer et afficher l'animation de chargement
-        const loader = document.createElement('div');
-        loader.innerHTML = `
-            <div class="loading-overlay">
-                <svg class="loading-spinner" viewBox="0 0 50 50">
-                    <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
-                </svg>
-            </div>
-        `;
-        document.body.appendChild(loader);
-
-        // Rediriger après une courte animation
-        setTimeout(() => {
-            window.location.href = 'gestionClasses.html';
-        }, 800);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-    const classes = ['Classe 1', 'Classe 2', 'Classe 3', 'Classe 4'];
-    let currentClassIndex = 0;
-
-    // Générer l'emploi du temps vide
-    function generateEmptyTimetable() {
-        const timeSlots = [
-            "1ère Heure (7h30-8h15)",
-            "2ème Heure (8h15-9h00)",
-            "3ème Heure (9h00-9h45)",
-            "RÉCRÉATION (9h45-10h15)",
-            "4ème Heure (10h15-11h00)",
-            "5ème Heure (11h00-11h45)",
-            "6ème Heure (11h45-12h30)"
-        ];
-
-        const tbody = document.getElementById('timetableBody');
-        const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
-        
-        tbody.innerHTML = timeSlots.map((time, index) => `
-            <tr>
-                <td class="time-slot">${time}</td>
-                ${index === 3 ? 
-                    `<td colspan="6" class="recreation">RÉCRÉATION</td>` :
-                    days.map(day => `
-                        <td onclick="addCourse('${day}', '${time}', '${classes[currentClassIndex]}')"
-                            data-day="${day}" 
-                            data-time="${time}">
-                        </td>
-                    `).join('')
-                }
-            </tr>
-        `).join('');
-    }
-
-    // Navigation entre les classes
-    document.getElementById('prevClass').addEventListener('click', () => {
-        currentClassIndex = (currentClassIndex - 1 + classes.length) % classes.length;
-        document.getElementById('currentClass').textContent = classes[currentClassIndex];
-        generateEmptyTimetable();
-        loadTimetableData(classes[currentClassIndex]);
-    });
-
-    document.getElementById('nextClass').addEventListener('click', () => {
-        currentClassIndex = (currentClassIndex + 1) % classes.length;
-        document.getElementById('currentClass').textContent = classes[currentClassIndex];
-        generateEmptyTimetable();
-        loadTimetableData(classes[currentClassIndex]);
-    });
-
-    // Initialisation
-    generateEmptyTimetable();
-});
-
-// Fonction pour ajouter un cours (à appeler lors du clic sur une cellule)
-function addCourse(day, time, className) {
-    const course = prompt(`Ajouter un cours pour ${className}\nJour: ${day}\nHeure: ${time}\n\nEntrez le nom du cours:`);
-    
-    if (course) {
-        const cell = document.querySelector(`td[data-day="${day}"][data-time="${time}"]`);
-        cell.innerHTML = `
-            <div class="course-slot">
-                <div class="subject">${course}</div>
-            </div>
-        `;
-        
-        // Sauvegarder dans la base de données
-        saveCourseToDb(className, day, time, course);
-    }
-}
-
-// Fonction pour sauvegarder le cours dans la base de données
-async function saveCourseToDb(className, day, time, course) {
-    try {
-        const response = await fetch('http://localhost:5002/api/timetable/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                class: className,
-                day: day,
-                time: time,
-                subject: course
-            })
-        });
-        
-        if (!response.ok) {
-            throw new Error('Erreur lors de la sauvegarde');
-        }
-        
-    } catch (error) {
-        console.error('Erreur:', error);
-        alert('Erreur lors de la sauvegarde du cours');
-    }
-}
   </script>
+
    <style>
     /* ============================
        Styles généraux pour le layout
@@ -1346,7 +1192,446 @@ async function saveCourseToDb(className, day, time, course) {
       border-top: 1px solid #ddd;
       margin-top: 20px;
     }
+
+    /* Styles pour la messagerie */
+.email-container {
+    display: flex;
+    height: calc(100vh - 140px);
+    background: white;
+    margin: -20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.email-sidebar {
+    width: 280px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+}
+
+.compose-btn {
+    background: #101041;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+}
+
+.compose-btn:hover {
+    background: #b88f1e;
+    transform: translateY(-2px);
+}
+
+.email-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.email-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 25px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.email-nav-item:hover {
+    background: #eee;
+}
+
+.email-nav-item.active {
+    background: #e3e9ff;
+    color: #101041;
+    font-weight: 500;
+}
+
+.email-nav-item i {
+    margin-right: 12px;
+    width: 20px;
+    color: inherit;
+}
+
+.badge {
+    margin-left: auto;
+    background: #b88f1e;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+/* Liste des messages */
+.email-list {
+    flex: 1;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-list-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.email-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.email-actions button {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.email-actions button:hover {
+    background: #f0f0f0;
+    color: #101041;
+}
+
+.email-items {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.email-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.email-item:hover {
+    background: #f8f9fa;
+}
+
+.email-item.unread {
+    background: #f8f9fa;
+    font-weight: 500;
+}
+
+.email-star {
+    color: #b88f1e;
+    margin: 0 15px;
+}
+
+.email-sender {
+    width: 200px;
+}
+
+.email-subject {
+    flex: 1;
+}
+
+.email-preview {
+    color: #666;
+    font-weight: normal;
+}
+
+.email-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-left: 15px;
+}
+
+/* Contacts */
+.contacts-section {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.contacts-section h3 {
+    color: #101041;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.contact-item:hover {
+    background: #eee;
+}
+
+.contact-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.contact-info h4 {
+    color: #101041;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.contact-info p {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.online-status {
+    width: 8px;
+    height: 8px;
+    background: #00875a;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+}
   </style>
  
+<script>
+// Gestion des événements de la messagerie
+document.addEventListener('DOMContentLoaded', function() {
+    // Nouveau message
+    const composeBtn = document.querySelector('.compose-btn');
+    composeBtn.addEventListener('click', openComposeModal);
+
+    // Sélection des messages
+    const selectAllCheckbox = document.getElementById('selectAll');
+    selectAllCheckbox.addEventListener('change', toggleSelectAll);
+
+    // Navigation entre les dossiers
+    const emailNavItems = document.querySelectorAll('.email-nav-item');
+    emailNavItems.forEach(item => {
+        item.addEventListener('click', switchFolder);
+    });
+
+    // Ajout des listeners pour les messages
+    const emailItems = document.querySelectorAll('.email-item');
+    emailItems.forEach(item => {
+        item.addEventListener('click', openEmail);
+    });
+});
+
+// Fonction pour ouvrir le modal de nouveau message
+function openComposeModal() {
+    const modalHtml = `
+        <div class="compose-modal" id="composeModal">
+            <div class="compose-content">
+                <div class="compose-header">
+                    <h3>Nouveau Message</h3>
+                    <button class="close-btn" onclick="closeComposeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <form id="composeForm" onsubmit="sendEmail(event)">
+                    <div class="compose-field">
+                        <label>À:</label>
+                        <input type="text" id="recipient" required>
+                    </div>
+                    <div class="compose-field">
+                        <label>Objet:</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    <div class="compose-field">
+                        <textarea id="messageBody" rows="12" required></textarea>
+                    </div>
+                    <div class="compose-actions">
+                        <button type="submit" class="send-btn">
+                            <i class="fas fa-paper-plane"></i> Envoyer
+                        </button>
+                        <button type="button" class="save-draft-btn">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+    // Ajout des styles pour le modal
+    const modalStyles = `
+        <style>
+            .compose-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+
+            .compose-content {
+                background: white;
+                width: 90%;
+                max-width: 700px;
+                border-radius: 12px;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .compose-header {
+                padding: 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .compose-header h3 {
+                color: #101041;
+                margin: 0;
+            }
+
+            .close-btn {
+                background: none;
+                border: none;
+                color: #666;
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+
+            .compose-field {
+                padding: 15px 20px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+                align-items: center;
+            }
+
+            .compose-field label {
+                width: 60px;
+                color: #101041;
+            }
+
+            .compose-field input,
+            .compose-field textarea {
+                flex: 1;
+                border: none;
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .compose-field textarea {
+                resize: none;
+            }
+
+            .compose-actions {
+                padding: 20px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .send-btn,
+            .save-draft-btn {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .send-btn {
+                background: #101041;
+                color: white;
+            }
+
+            .send-btn:hover {
+                background: #b88f1e;
+            }
+
+            .save-draft-btn {
+                background: #f0f0f0;
+                color: #666;
+            }
+        </style>
+    `;
+    document.head.insertAdjacentHTML('beforeend', modalStyles);
+}
+
+// Fermer le modal de composition
+function closeComposeModal() {
+    const modal = document.getElementById('composeModal');
+    modal.remove();
+}
+
+// Gérer la sélection de tous les messages
+function toggleSelectAll(e) {
+    const checkboxes = document.querySelectorAll('.email-item input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = e.target.checked);
+}
+
+// Changer de dossier
+function switchFolder(e) {
+    e.preventDefault();
+    const navItems = document.querySelectorAll('.email-nav-item');
+    navItems.forEach(item => item.classList.remove('active'));
+    e.currentTarget.classList.add('active');
+    // Ici, vous pouvez ajouter la logique pour charger les messages du dossier
+}
+
+// Ouvrir un email
+function openEmail(e) {
+    if (e.target.type !== 'checkbox') {
+        // Logique pour ouvrir le message
+        console.log('Opening email:', e.currentTarget);
+    }
+}
+
+// Envoyer un email
+async function sendEmail(e) {
+    e.preventDefault();
+    const recipient = document.getElementById('recipient').value;
+    const subject = document.getElementById('subject').value;
+    const body = document.getElementById('messageBody').value;
+
+    try {
+        // Simule l'envoi d'un email
+        console.log('Sending email to:', recipient);
+        console.log('Subject:', subject);
+        console.log('Body:', body);
+
+        // Ici, vous pouvez ajouter l'appel à votre API
+
+        closeComposeModal();
+        alert('Message envoyé avec succès !');
+    } catch (error) {
+        console.error('Error sending email:', error);
+        alert('Erreur lors de l\'envoi du message');
+    }
+}
+</script>
 </body>
 </html>
