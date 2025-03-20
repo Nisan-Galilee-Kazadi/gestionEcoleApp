@@ -5,6 +5,8 @@ const enseignantSchema = new mongoose.Schema({
   subject: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String, required: true },
+  userId: { type: String, required: true },
+  password: { type: String, required: true },
   
   // Ajout de nouveaux champs
   matieres: [{

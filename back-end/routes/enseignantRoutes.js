@@ -36,14 +36,14 @@ router.delete('/enseignants/:id', enseignantController.deleteEnseignant);
 router.post('/upload-photo', upload.single('photo'), enseignantController.uploadPhoto);
 
 // Routes pour le dashboard professeur
-router.get('/dashboard/:id', enseignantController.getDashboardData);
-router.get('/horaire/:id', enseignantController.getHoraire);
-router.post('/absences/:id', enseignantController.signlalerAbsence);
-router.post('/evaluations/:id', enseignantController.planifierEvaluation);
-router.get('/classes/:id', enseignantController.getClasses);
-router.put('/disponibilites/:id', enseignantController.updateDisponibilites);
+// router.get('/dashboard/:id', enseignantController.getDashboardData);
+// router.get('/horaire/:id', enseignantController.getHoraire);
+// router.post('/absences/:id', enseignantController.signlalerAbsence);
+// router.post('/evaluations/:id', enseignantController.planifierEvaluation);
+// router.get('/classes/:id', enseignantController.getClasses);
+// router.put('/disponibilites/:id', enseignantController.updateDisponibilites);
 
-// Corriger la route POST qui cause l'erreur
-router.post('/api/documents/upload', upload.array('documents', 5), enseignantController.uploadDocument);
+// // Corriger la route POST qui cause l'erreur
+// router.post('/api/documents/upload', upload.array('documents', 5), enseignantController.uploadDocument);
 
 module.exports = router;
