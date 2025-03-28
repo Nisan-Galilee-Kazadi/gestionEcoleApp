@@ -11,6 +11,10 @@
   <link rel="icon" href="../public/images/logocicaf.png" alt="logo" type="image/png">
   <!-- Votre CSS global -->
   <link rel="stylesheet" href="../style.css">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Ajouter dans le head -->
   <style>
     /* ============================
@@ -315,320 +319,21 @@
       margin-top: 20px;
     }
 
-    /* Styles pour la page paramètres */
-.profile-container {
-    padding: 0px;
-    gap: 20px;
-}
-
-/* Carte de profil */
-.profile-card {
-    background: var(--light);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 20px;
-    width: 370px;
-    height: 550px;
-}
-
-.profile-header {
-    padding: 30px;
-    text-align: center;
-    position: relative;
-    height: 270px;
-}
-
-.profile-image-container {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 0 auto 20px;
-}
-
-.profile-image {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #b88f1e;
-}
-
-.image-overlay {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background: #b88f1e;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.image-overlay:hover {
-    background: #101041;
-}
-
-.upload-icon {
-    color: var(--light);
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.profile-name {
-    color: white;
-    margin: 10px 0;
-    font-size: 1.8rem;
-}
-
-.profile-role {
-    color: #b88f1e;
-    font-size: 1.2rem;
-}
-
-/* Informations du profil */
-.profile-info {
-    padding: 20px;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid var(--grey);
-}
-
-.info-item:last-child {
-    border-bottom: none;
-}
-
-.info-item i {
-    font-size: 24px;
-    margin-right: 15px;
-}
-
-.info-content {
-    flex: 1;
-    color: #101041;
-    font-size: 14px;
-}
-
-.info-content label {
-    display: block;
-    color: var(--dark);
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.info-content p {
-    color: var(--dark);
-    margin: 0;
-}
-
-/* Carte des paramètres */
-.settings-card {
-    background: var(--light);
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 400px;
-    height: 550px;
-    padding: 30px 20px;
-}
-
-.settings-nav {
-    display: flex;
-    background: #f5f5f5;
-    padding: 10px;
-    gap: 10px;
-}
-
-.nav-btn {
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    color: var(--dark);
-    cursor: pointer;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.3s;
-    font-size: 1.1rem;
-}
-
-.nav-btn.active {
-    background: #b88f1e;
-    color: white;
-    font-weight: 600;
-}
-
-.nav-btn:hover {
-    background: #101041;
-    color: white;
-}
-
-/* Contenu des paramètres */
-.settings-content {
-    padding: 10px;
-    width: 100%;
-
-}
-
-.settings-tab {
-    display: none;
-}
-
-.settings-tab.active {
-    display: block;
-}
-
-.settings-tab h3 {
-    color: var(--dark);
-    font-size: 20px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #b88f1e;
-}
-
-/* Formulaire */
-.settings-form {
-    max-width: 600px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group2 {
-    margin-bottom: 20px;
-    padding: 15px 00px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    font-size: 14px;
-}
-
-.password-input {
-    position: relative;
-    display: flex ;
-    align-items: center;
-    gap: 10px;
-    font-size: 12px;
-}
-
-.password-input i{
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;  
-}
-
-.form-group input {
-    width: 100%;
-    padding: 14px 10px;
-    background-color: #f3dfa968;
-    border: 2px solid var(--grey);
-    border-radius: 5px;
-    transition: 0.3s;   
-    font-size: 11px;
-}
-
-.form-group2 input {
-    width: 100%;
-    padding: 14px 10px;
-    background-color: #f3dfa968;
-    border: 2px solid var(--grey);
-    border-radius: 5px;
-    transition: 0.3s;   
-    font-size: 11px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--dark);
-    font-weight: 500;
-    font-size: 14px;
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid var(--grey);
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.form-control:focus {
-    border-color: #b88f1e;
-    outline: none;
-}
-
-.form-check {
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: var(--dark);
-    padding: 30px 10px;
-}
-
-.form-check input[type="checkbox"] {
-    margin-right: 10px;
-    accent-color: #b88f1e;
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.form-check input[type="checkbox"]:checked {
-    background-color: #b88f1e;
-    border-color: #101041;
-}
-
-/* Bouton de sauvegarde */
-.btn-save {
-    background: #b88f1e;
-    color: #fff;
-    font-size: 14px;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.3s;
-}
-
-.btn-save:hover {
-    background: #101041;
-    transform: translateY(-2px);
-}
-
-/* Animations */
-.profile-card, .settings-card {
-    animation: fadeIn 0.5s ease;
-}
 
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
-    }
-    to {
+      }
+      to {
         opacity: 1;
         transform: translateY(0);
-    }
+      }
 }
 
 /* Responsive */
 @media screen and (max-width: 768px) {
-    .profile-container {
+  .profile-container {
         flex-direction: column;
     }
 
@@ -640,6 +345,246 @@
         width: 100%;
         justify-content: center;
     }
+}
+
+/* Styles pour le main content */
+main {
+    padding: 2rem 4rem;
+    margin-top: 0rem;
+}
+
+h1{
+  color:#101041;
+  padding: 30px 5px;
+  font-size: 2.0rem;
+}
+/* Styles pour les tableaux */
+.data-tables {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.table-container {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-container h2 {
+    color: #101041;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: #f8f9fa;
+    color: #101041;
+    font-weight: 600;
+}
+
+/* Boutons d'action */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-edit, .btn-delete {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-edit {
+    background-color: #b88f1e;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #96741a;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Animation pour les boutons */
+.btn-edit, .btn-delete {
+    transform: scale(1);
+    transition: transform 0.2s ease;
+}
+
+.btn-edit:hover, .btn-delete:hover {
+    transform: scale(1.05);
+}
+
+/* Cards d'insertion */
+.insertion-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.modal-content:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Formulaires */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #101041;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #b88f1e;
+    outline: none;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 1rem;
+    background-color: #b88f1e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #101041;
+}
+
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-group select:focus {
+    border-color: #b88f1e;
+    outline: none;
+}
+.empty-message {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+#classesTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#classesTable th,
+#classesTable td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#classesTable th {
+    background-color: #f8f9fa;
+    color: #101041;
+    font-weight: 600;
+}
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-save {
+    background-color: #b88f1e;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
 }
   </style>
 </head>
@@ -672,8 +617,8 @@
                   <span>Rapports</span>
                 </li>
                 <li class="menu-item" onclick="location.href='gestionInsertion.html'">
-                  <i class="fas far fa-edit fa-2x"></i>
-                  <span>Inscriptions</span>
+                  <i class="fas far fa-edit fa-2x"  style="color: #b88f1e;" ></i>
+                  <span  style="color: #b88f1e;">Insertion</span>
                 </li>
                 <li class="menu-item" onclick="location.href='cartes.html'">
                   <i class="fas far fa-id-card fa-2x"></i>
@@ -688,8 +633,8 @@
               <li class="menu-item" >
                 <a href="parametres.html" style="display: flex;
               align-items: center;">
-                  <i class="fas fa-cog" style="color: #b88f1e;"></i>
-                  <span style="color: #b88f1e;">Paramètres</span>
+                  <i class="fas fa-cog"></i>
+                  <span>Paramètres</span>
                 </a>
               </li>
               <li class="menu-item">
@@ -702,9 +647,9 @@
             </ul>
           </div>
         </aside>
-
+        
         <!-- PAGE CONTENT -->
-        <div class="page-content">
+        <section class="page-content">
           <!-- TOPBAR -->
           <header class="topbar">
             <div class="navBar">
@@ -735,77 +680,176 @@
                 </button>
                 <div class="topbar-profile">
                   <button title="Profil">
-                    <img src="https://via.placeholder.com/40" alt="Profile">
+                    <img style="height:60px; width: 60px; border: solid 4px #101041;"  id="navbarProfileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
                   </button>
                 </div>
               </div>
             </div>
           </header>
-
+          
           <!-- MAIN CONTENT -->
-    <main style="padding: 20px;">
-        <h1 class="section-title">Insertion</h1>
-        <div class="modal-content"></div>
-            <h1 class="section-title">Ajouter / Modifier Classe</h1>
-            <form id="classForm">
-                <div class="form-group">
+          <main>
+            <h1>Bienvenue dans le menu des insertions</h1>
+          
+            <!-- Tables pour afficher les données déjà enregistrées -->
+            <div class="data-tables">
+              <!-- Table des classes -->
+              <div class="table-container">
+                <h2>Classes Enregistrées</h2>
+                <table border="1" id="classesTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom de la Classe</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Les données seront chargées dynamiquement -->
+                  </tbody>
+                </table>
+              </div>
+          
+              <!-- Table des options -->
+              <div class="table-container">
+                <h2>Options Enregistrées</h2>
+                <table border="1" id="optionsTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom de l'Option</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Les données seront chargées dynamiquement -->
+                  </tbody>
+                </table>
+              </div>
+          
+              <!-- Table des cours -->
+              <div class="table-container">
+                <h2>Cours Enregistrés</h2>
+                <table border="1" id="coursesTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom du Cours</th>
+                      <th>Classe</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Les données seront chargées dynamiquement -->
+                  </tbody>
+                </table>
+              </div>
+          
+              <!-- Table des frais -->
+              <div class="table-container">
+                <h2>Frais Enregistrés</h2>
+                <table border="1" id="feesTable">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nom des Frais</th>
+                      <th>Classe</th>
+                      <th>Montant</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Les données seront chargées dynamiquement -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="insertion-cards">
+              <!-- Card for inserting a class -->
+              <div class="modal-content">
+                <h1 class="section-title">Insérer une Classe</h1>
+                <form id="classForm">
+                  <div class="form-group">
                     <label for="className">Nom de la Classe</label>
-                    <input type="text" id="className" name="className" placeholder="Entrez le nom de la classe" required>
-                </div>
-                <div class="form-group">
-                    <label for="classSection">Section</label>
-                    <select id="classSection" name="classSection" required>
-                        <option value="">Sélectionnez une section</option>
-                        <option value="primaire">Primaire</option>
-                        <option value="secondaire">Secondaire</option>
-                        <option value="lycée">Lycée</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="classTeacher">Enseignant Principal</label>
-                    <input type="text" id="classTeacher" name="classTeacher" placeholder="Entrez le nom de l'enseignant principal" required>
-                </div>
-                <button type="submit">Enregistrer</button>
-            </form>
-        </div>
+                    <input type="text" id="className" placeholder="Entrez le nom de la classe" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="classId">ID de la Classe</label>
+                    <input type="text" id="classId" placeholder="Entrez l'ID de la classe" required>
+                  </div>
+                  <button type="submit">Ajouter</button>
+                </form>
+              </div>
 
-        <div class="modal-content">
-            <h1 class="section-title">Ajouter / Modifier Options</h1>
-            <form id="optionForm">
-                <div class="form-group">
+              <!-- Card for inserting an option -->
+              <div class="modal-content">
+                <h1 class="section-title">Insérer une Option</h1>
+                <form id="optionForm">
+                  <div class="form-group">
                     <label for="optionName">Nom de l'Option</label>
-                    <input type="text" id="optionName" name="optionName" placeholder="Entrez le nom de l'option" required>
-                </div>
-                <div class="form-group">
-                    <label for="optionDescription">Description</label>
-                    <textarea id="optionDescription" name="optionDescription" placeholder="Entrez la description de l'option" required></textarea>
-                </div>
-                <button type="submit">Enregistrer</button>
-            </form>
-        </div>
-    </main>   
-           
+                    <input type="text" id="optionName" placeholder="Entrez le nom de l'option" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="optionId">ID de l'Option</label>
+                    <input type="text" id="optionId" placeholder="Entrez l'ID de l'option" required>
+                  </div>
+                  <button type="submit">Ajouter</button>
+                </form>
+              </div>
+
+              <!-- Card for inserting a course -->
+              <div class="modal-content">
+                <h1 class="section-title">Insérer un Cours</h1>
+                <form id="courseForm">
+                  <div class="form-group">
+                    <label for="courseName">Nom du Cours</label>
+                    <input type="text" id="courseName" placeholder="Entrez le nom du cours" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="courseId">ID du Cours</label>
+                    <input type="text" id="courseId" placeholder="Entrez l'ID du cours" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="courseClass">Classe</label>
+                    <select id="courseClass" required>
+                        <option value="">Sélectionnez une classe</option>
+                        <!-- Les classes seront chargées dynamiquement -->
+                    </select>
+                  </div>
+                  <button type="submit">Ajouter</button>
+                </form>
+              </div>
+
+              <!-- Card for inserting fees -->
+              <div class="modal-content">
+                <h1 class="section-title">Insérer des Frais</h1>
+                <form id="feeForm">
+                  <div class="form-group">
+                    <label for="feeName">Nom des Frais</label>
+                    <input type="text" id="feeName" placeholder="Entrez le nom des frais" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="feeId">ID des Frais</label>
+                    <input type="text" id="feeId" placeholder="Entrez l'ID des frais" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="feeClass">Classe</label>
+                    <select id="feeClass" required>
+                        <option value="">Sélectionnez une classe</option>
+                        <!-- Les classes seront chargées dynamiquement -->
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="feeAmount">Montant</label>
+                    <input type="number" id="feeAmount" placeholder="Entrez le montant" required>
+                  </div>
+                  <button type="submit">Ajouter</button>
+                </form>
+              </div>
+            </div>
+          </main>   
   </section>
-<!-- SCRIPT pour le formulaire de classe -->
-<script>
-    document.getElementById('classForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Classe enregistrée avec succès!');
-        // Ajoutez ici le code pour enregistrer les données du formulaire
-    });
-</script>
-
-<!-- SCRIPT pour le formulaire d'option -->
-<script>
-    document.getElementById('optionForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Option enregistrée avec succès!');
-        // Ajoutez ici le code pour enregistrer les données du formulaire
-    });
-</script>
-    
-    
-
+  
     // <!-- SCRIPT pour le toggle de la sidebar -->
     <script>
       const toggleBtn = document.getElementById('toggleBtn');
@@ -834,6 +878,21 @@
     color: #b88f1e; /* Même couleur que le header */
   }
 
+  .insertion-cards {
+    display: flex;
+    width: 100%;
+    padding-top: 20px;
+    gap: 10px; /* Espacement entre les cartes */
+    justify-content: space-between; /* Espacement entre les cartes */
+  }
+
+  .insertion-cards .modal-content {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px; /* Largeur maximale des cartes */
+    max-height: 400px ;
+    box-sizing: border-box;
+  }
  
   </style>
 <script>
@@ -846,6 +905,374 @@
   });
 </script>
 
+<script>
+class InsertionManager {
+    constructor() {
+        this.initializeEventListeners();
+        this.loadAllData();
+        this.loadClasses();
+    }
+
+    initializeEventListeners() {
+        const forms = {
+            'class': document.getElementById('classForm'),
+            'option': document.getElementById('optionForm'),
+            'course': document.getElementById('courseForm'),
+            'fee': document.getElementById('feeForm')
+        };
+
+        for (const [type, form] of Object.entries(forms)) {
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const formData = this.getFormData(type);
+                    if (formData) await this.handleInsert(type, formData);
+                });
+            }
+        }
+    }
+
+    async handleInsert(type, data) {
+        try {
+            let endpoint;
+            switch(type) {
+                case 'class':
+                    endpoint = 'http://localhost:5002/api/classe/add';
+                    break;
+                case 'option':
+                    endpoint = 'http://localhost:5002/api/insertion/options';
+                    break;
+                case 'course':
+                    endpoint = 'http://localhost:5002/api/insertion/courses';
+                    break;
+                case 'fee':
+                    endpoint = 'http://localhost:5002/api/insertion/fees';
+                    break;
+                default:
+                    throw new Error('Type non reconnu');
+            }
+
+            console.log('Envoi vers:', endpoint, 'Données:', data);
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('Réponse du serveur:', result);
+
+            if (result.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: result.message,
+                    confirmButtonColor: '#b88f1e'
+                });
+                this.resetForm(type);
+                this.loadAllData();
+            } else {
+                throw new Error(result.message);
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.message,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    getFormData(type) {
+        const formData = {};
+        switch(type) {
+            case 'class':
+                formData.name = document.getElementById('className').value;
+                formData.classId = document.getElementById('classId').value;
+                return formData;
+            // ...autres cas...
+            default:
+                return null;
+        }
+    }
+
+    resetForm(type) {
+        const form = document.getElementById(`${type}Form`);
+        if (form) form.reset();
+    }
+
+    async loadAllData() {
+        try {
+            // Charger les classes
+            const response = await fetch('http://localhost:5002/api/classe/all');
+            const result = await response.json();
+            console.log('Données classes reçues:', result);
+
+            if (result.success) {
+                const tbody = document.querySelector('#classesTable tbody');
+                tbody.innerHTML = ''; // Vider le tableau
+
+                if (result.data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="3" class="empty-message">Aucune classe enregistrée</td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                result.data.forEach(classe => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${classe.classId}</td>
+                            <td>${classe.name}</td>
+                            <td class="action-buttons">
+                                <button class="btn-edit" onclick="InsertionManager.handleClassAction('edit', '${classe._id}')">
+                                    <i class="fas fa-edit"></i> Modifier
+                                </button>
+                                <button class="btn-delete" onclick="InsertionManager.handleClassAction('delete', '${classe._id}')">
+                                    <i class="fas fa-trash"></i> Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement des données:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Impossible de charger les données',
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    async deleteClass(id) {
+        try {
+            const result = await Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Cette suppression est irréversible !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#b88f1e',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler'
+            });
+
+            if (result.isConfirmed) {
+                const response = await fetch(`http://localhost:5002/api/classe/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Supprimé !',
+                        text: 'La classe a été supprimée.',
+                        confirmButtonColor: '#b88f1e'
+                    });
+                    
+                    // Recharger uniquement le tableau des classes
+                    const classTableBody = document.querySelector('#classesTable tbody');
+                    const classesResponse = await fetch('http://localhost:5002/api/classe/all');
+                    const classesData = await classesResponse.json();
+                    
+                    this.updateClassesTable(classesData.data, classTableBody);
+                } else {
+                    throw new Error(data.message);
+                }
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.message || 'Erreur lors de la suppression',
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    async editClass(id) {
+        try {
+            const response = await fetch(`http://localhost:5002/api/classe/${id}`);
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('editClassId').value = id;
+                document.getElementById('editClassName').value = data.data.name;
+                document.getElementById('editClassIdentifier').value = data.data.classId;
+                document.getElementById('editClassModal').style.display = 'flex';
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Impossible de charger les données de la classe',
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    async updateClass(id, formData) {
+        try {
+            const response = await fetch(`http://localhost:5002/api/classe/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                closeEditModal();
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Modifié !',
+                    text: 'La classe a été modifiée avec succès.',
+                    confirmButtonColor: '#b88f1e'
+                });
+
+                // Recharger uniquement le tableau des classes
+                const classTableBody = document.querySelector('#classesTable tbody');
+                const classesResponse = await fetch('http://localhost:5002/api/classe/all');
+                const classesData = await classesResponse.json();
+                
+                this.updateClassesTable(classesData.data, classTableBody);
+            } else {
+                throw new Error(data.message);
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.message || 'Erreur lors de la modification',
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    static async handleClassAction(action, id) {
+        if (!window.insertionManager) return;
+        
+        if (action === 'edit') {
+            await window.insertionManager.editClass(id);
+        } else if (action === 'delete') {
+            await window.insertionManager.deleteClass(id);
+        }
+    }
+
+    updateClassesTable(classes, tbody) {
+        tbody.innerHTML = '';
+        
+        if (classes.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="empty-message">Aucune classe enregistrée</td>
+                </tr>
+            `;
+            return;
+        }
+
+        classes.forEach(classe => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${classe.classId}</td>
+                    <td>${classe.name}</td>
+                    <td class="action-buttons">
+                        <button class="btn-edit" onclick="InsertionManager.handleClassAction('edit', '${classe._id}')">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="btn-delete" onclick="InsertionManager.handleClassAction('delete', '${classe._id}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+}
+
+// Initialisation immédiate
+window.insertionManager = new InsertionManager();
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Événements pour le modal d'édition
+    document.getElementById('editClassForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('editClassId').value;
+        const formData = {
+            name: document.getElementById('editClassName').value,
+            classId: document.getElementById('editClassIdentifier').value
+        };
+        await window.insertionManager.updateClass(id, formData);
+    });
+});
+
+// Fonction globale pour fermer le modal
+window.closeEditModal = function() {
+    document.getElementById('editClassModal').style.display = 'none';
+};
+</script>
+
+<div id="editClassModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h2>Modifier la Classe</h2>
+        <form id="editClassForm">
+            <input type="hidden" id="editClassId">
+            <div class="form-group">
+                <label for="editClassName">Nom de la Classe</label>
+                <input type="text" id="editClassName" required>
+            </div>
+            <div class="form-group">
+                <label for="editClassIdentifier">ID de la Classe</label>
+                <input type="text" id="editClassIdentifier" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn-save">Enregistrer</button>
+                <button type="button" class="btn-cancel" onclick="closeEditModal()">Annuler</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function closeEditModal() {
+    document.getElementById('editClassModal').style.display = 'none';
+}
+
+// Event listeners
+document.getElementById('editClassForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('editClassId').value;
+    const formData = {
+        name: document.getElementById('editClassName').value,
+        classId: document.getElementById('editClassIdentifier').value
+    };
+    await window.insertionManager.updateClass(id, formData);
+});
+</script>
+<script src="js/loadProfileImage.js"></script>
 
 </body>
 </html>

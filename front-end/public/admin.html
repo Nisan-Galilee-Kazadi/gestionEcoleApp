@@ -156,13 +156,12 @@
                     data[key] = value;
                 });
     
-                fetch('http://localhost:5002/admin/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
+                fetch('http://localhost:5002/api/admin/login', { 
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: "admin", password: "test123" })
+})
+
                 .then(response => {
                     if (!response.ok) {
                     }
