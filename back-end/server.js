@@ -22,9 +22,23 @@ const app = express();
 const port = process.env.PORT || 5002;
 
 // Middleware
+app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
+
+// Log pour déboguer
+app.use((req, res, next) => {
+    console.log(`${req.method} ${req.url}`);
+    next();
+});
+
+// Routes
+app.use('/api/insertion', insertionRoutes);
+
+// Route de test
+app.get('/test', (req, res) => {
+    res.json({ message: 'API is working' });
+});
 
 // Configuration CORS
 app.use(
@@ -432,6 +446,15 @@ app.post("/admin/update-photo", upload.single("photo"), async (req, res) => {
       message: "❌ Erreur serveur",
     });
   }
+});
+
+// Gestion des erreurs
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        message: 'Erreur serveur'
+    });
 });
 
 // Démarrer le serveur

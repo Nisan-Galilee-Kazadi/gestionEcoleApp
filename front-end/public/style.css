@@ -1,184 +1,902 @@
 /* Base styles */
-*{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #f9fafb;
+}
+
+/* Header styles */
+#navBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 40px;
+  background-color: #f9fafb;
+  color: #101041;
+  text-align: center;
+  box-shadow: 1px 2px 2px #101041;
+}
+
+.logo img {
+  height: 60px;
+}
+
+/* Navigation styles */
+.nav-menu {
+  float: left;
+  display: block;
+  color: #101041;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  border: none;
+  border-radius: 100%;
+}
+
+#closeBtn {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #101041;
+  border-radius: 100%;
+  background-color: #b88f1e;
+}
+
+#closeBtn i {
+  color: #101041;
+  font-size: 20px;
+}
+
+#openBtn {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: none;
+  border: solid 1px #101041;
+  border-radius: 100%;
+  background-color: #b88f1e;
+  padding: 15px;
+  width: 25px;
+  height: 25px;
+}
+
+#openBtn i {
+  color: #101041;
+  font-size: 20px;
+}
+
+#menu-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 400px;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#menu-list a {
+  display: flex;
+  color: #101041;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#menu-list a:hover {
+  display: flex;
+  color: #b88f1e;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+#navButton {
+  background-color: #b88f1e;
+  color: #101041;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
+}
+
+#navButton:hover {
+  padding: 8px 17px;
+  background-color: #101041;
+  border-radius: 30px;
+  color: #b88f1e;
+  border: solid 3px #b88f1e;
+  box-shadow: none;
+}
+
+#navButton:hover a {
+  text-decoration: none;
+  color: #b88f1e;
+}
+
+#navButton a {
+  text-decoration: none;
+  color: #101041;
+}
+#accueil {
+  display: flex;
+  flex-direction: column;
+}
+
+.acceuilDetail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+
+.acceuilDetail .left {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.acceuilDetail .left h1 {
+  font-size: 37px;
+  color: #101041;
+}
+
+.acceuilDetail .left p {
+  font-size: 12px;
+  color: #0a0a27;
+}
+
+.acceuilDetail .left h1 span {
+  font-size: 35px;
+  color: #b88f1e;
+}
+
+#parcourBtn {
+  background-color: #b88f1e;
+  color: #101041;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
+}
+
+#inscriptBtn {
+  background-color: #b88f1e;
+  color: #101041;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
+}
+
+#inscriptBtn a {
+  background-color: #b88f1e;
+  color: #101041;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.acceuilDetail .right img {
+  height: 450px;
+}
+
+.a-proposDetail {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 40px;
+}
+
+.a-proposDetail .left img {
+  height: 450px;
+}
+
+.a-proposDetail .right {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  width: 50%;
+  gap: 5px;
+}
+
+.a-proposDetail .right h2 {
+  font-size: 37px;
+  color: #101041;
+}
+
+.a-proposDetail .right p {
+  font-size: 12px;
+  color: #0a0a27;
+}
+
+.a-proposDetail .right p span {
+  font-size: 12px;
+  font-weight: 500;
+  color: #b88f1e;
+}
+
+.a-proposDetail .right h3 {
+  font-size: 20px;
+  color: #b88f1e;
+}
+
+.contactDetail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 60px;
+}
+
+.contactDetail .left {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0px 40px;
+}
+
+.contactDetail .left h2 {
+  font-size: 37px;
+  color: #101041;
+}
+
+.contactDetail .left p {
+  font-size: 12px;
+  color: #0a0a27;
+}
+
+.contactDetail .left h3 {
+  font-size: 20px;
+  color: #b88f1e;
+}
+
+.contactDetail .right img {
+  height: 400px;
+  width: 550px;
+  border-radius: 20px;
+  box-shadow: 0px 3px 10px rgb(41, 41, 77);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  transition: ease-in-out 0.5s;
+}
+
+.contactDetail .right img:hover {
+  cursor: pointer;
+  margin-top: -100px;
+}
+
+/* Form styles */
+form {
+  max-width: 600px;
+  color: #101041;
+  font-weight: 500;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.submit {
+  width: 100%;
+  background-color: #b88f1e;
+  font-weight: 500;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  background-color: #101041;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 40px;
+  background-color: #101041;
+  color: #f9fafb;
+  text-align: center;
+  box-shadow: 1px 2px 2px #101041;
+}
+
+.bottom p {
+  text-align: center;
+  padding: 20px 40px;
+}
+
+.backTop a {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  background-color: #b88f1e;
+  color: #f9fafb;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px 0 rgb(165, 156, 77);
+  scroll-behavior: smooth;
+}
+
+.dialog-box {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  text-align: center;
+}
+
+.dialog-box h3 {
+  color: #b88f1e;
+}
+
+.dialog-box a {
+  display: block;
+  margin: 10px 0;
+  text-decoration: none;
+  color: #101041;
+  font-weight: bold;
+}
+
+.dialog-box a:hover {
+  text-decoration: underline;
+}
+
+.close-btn {
+  background: #0a0a27;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.dialogBox {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000; /* Assure que la boîte de dialogue est au-dessus du contenu */
+  display: none; /* Initialement caché */
+}
+
+#mainContainer {
+  transition: filter 0.3s ease-in-out;
+  /*Transitionfluidepourleflou*/
+  z-index: 1;
+  -webkit-transition: filter 0.3s ease-in-out;
+  -moz-transition: filter 0.3s ease-in-out;
+  -ms-transition: filter 0.3s ease-in-out;
+  -o-transition: filter 0.3s ease-in-out;
+}
+
+.connectProf {
+  padding: 1% 20%;
+}
+/* Styles pour le formulaire de connexion professeur */
+
+/* Styles pour centrer le logo et la phrase de bienvenue */
+.site-logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px; /* Ajustez la taille du logo si nécessaire */
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 1.5em;
+  color: #101041;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.login-form {
+  width: 400px;
+  width: 414px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#connectProfForm h2 {
+  text-align: center;
+  color: #101041;
+  margin-bottom: 20px;
+}
+
+#connectProfForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #101041;
+}
+
+#connectProfForm input[type="email"],
+#connectProfForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#connectProfForm .submit {
+  width: 100%;
+  background-color: #b88f1e;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#connectProfForm .submit:hover {
+  background-color: #101041;
+}
+
+/* Styles pour le formulaire de connexion élève */
+
+/* Styles pour centrer le logo et la phrase de bienvenue */
+.site-logo {
+  display: block;
+  margin: 0 auto;
+  width: 150px; /* Ajustez la taille du logo si nécessaire */
+}
+
+.welcome-message {
+  text-align: center;
+  font-size: 1.5em;
+  color: #101041;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 0;
+}
+
+.login-form {
+  width: 414px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#connectEleveForm h2 {
+  text-align: center;
+  color: #101041;
+  margin-bottom: 20px;
+}
+
+#connectEleveForm label {
+  display: block;
+  margin-bottom: 8px;
+  color: #101041;
+}
+
+#connectEleveForm input[type="email"],
+#connectEleveForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#connectEleveForm .submit {
+  width: 100%;
+  background-color: #b88f1e;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+#connectEleveForm .submit:hover {
+  background-color: #101041;
+}
+
+/* Styles pour le formulaire d'inscription des élèves */
+.inscriptEleve {
+  max-width: 100%;
+  margin: 10px auto;
+  padding: 20px;
+  gap: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.inscriptEleve h2 {
+  color: #b88f1e;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.inscriptEleve form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  gap: 1px;
+}
+
+.contenair {
+  display: flex;
+}
+
+.inscriptEleve label {
+  margin-bottom: 8px;
+  color: #101041;
+  font-weight: 500;
+}
+
+.inscriptEleve input[type="text"],
+.inscriptEleve input[type="date"],
+.inscriptEleve input[type="tel"],
+.inscriptEleve select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+.inscriptEleve button[type="submit"] {
+  width: 100%;
+  background-color: #b88f1e;
+  color: white;
+  padding: 14px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.inscriptEleve button[type="submit"]:hover {
+  background-color: #101041;
+}
+
+#optionField {
+  display: none;
+}
+
+@media screen and (max-width: 414px) {
+  /* Base styles */
+  * {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
     scroll-behavior: smooth;
+  }
 
-}
+  body {
+    background-color: #f9fafb;
+  }
 
-body{
-    background-color:#f9fafb;
-
-}
-
-/* Header styles */
-#navBar{
+  /* Header styles */
+  #navBar {
+    position: fixed;
+    width: 100%;
+    max-width: 414px;
+    padding: 10px 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 5px 40px;
-    background-color:#f9fafb;
+    background-color: #f9fafb;
     color: #101041;
     text-align: center;
     box-shadow: 1px 2px 2px #101041;
-}
+    z-index: 3;
+  }
 
-.logo img{
-    height: 60px;
-}
+  .logo img {
+    height: 65px;
+    image-rendering: auto;
+  }
 
-/* Navigation styles */
-.nav-menu {
+  /* Navigation styles */
+  .nav-menu {
     float: left;
     display: block;
     color: #101041;
     text-align: center;
     padding: 14px 16px;
-    text-decoration:none;
-    border: none;
-    border-radius: 100%;
-}
-
-#closeBtn {
-    display:none;
-    justify-content: center;
-    align-items: center;
-    border: solid 1px #101041;
-    border-radius: 100%;
-    background-color: #b88f1e;
-    
- }
- 
- #closeBtn i{
-     color: #101041;
-     font-size: 20px;
+    text-decoration: none;
   }
 
-#openBtn {
-    display:none;
+  #openBtn {
+    position: relative;
+    display: flex;
     justify-content: center;
     align-items: center;
     background-color: none;
-    border: solid 1px #101041;
-    border-radius: 100%;
-    background-color: #b88f1e;
     padding: 15px;
-    width: 25px;
-    height: 25px;
- }
+    border: solid 2px #b88f1e;
+    border-radius: 100%;
+  }
 
- #openBtn i{
+  #openBtn:hover {
+    position: relative;
+    background-color: none;
+    border: solid 2px #101041;
+  }
+
+  #openBtn:hover i {
+    color: #fff;
+    font-size: 20px;
+  }
+  #closeBtn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 20px;
+    top: 30px;
+    background-color: none;
+    border: solid 2px #101041;
+    border-radius: 100%;
+    padding: 15px;
+  }
+
+  #closeBtn:hover {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 30;
+    top: 20;
+    background-color: none;
+    border-radius: 100%;
+    padding: 15px;
+  }
+
+  #closeBtn:hover i {
     color: #101041;
     font-size: 20px;
- }
+  }
 
-
-
-#menu-list{
+  #navBar #menu-list {
     display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 430px;
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    padding: 180px 20px;
+    background-color: #b88f1e;
     justify-content: space-between;
-    align-items: center;
-    margin-left: 400px;
-    list-style: none;
-    font-size: 16px;
+    z-index: 50;
+    font-size: 22px;
     font-weight: 500;
+    top: 0;
+    left: 414px;
+    transition: ease-in-out 0.3s;
+    list-style: none;
+    -webkit-transition: ease-in-out 0.3s;
+    -moz-transition: ease-in-out 0.3s;
+    -ms-transition: ease-in-out 0.3s;
+    -o-transition: ease-in-out 0.3s;
+  }
 
-}
-
-#menu-list a{
+  #menu-list a {
     display: flex;
     color: #101041;
     text-align: center;
-    padding: 14px 16px;
+    padding: 14px 26px;
     text-decoration: none;
-}
+  }
 
-#menu-list a:hover{
+  #menu-list a:hover {
     display: flex;
-    color: #b88f1e;
+    color: #fff;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-}
+  }
 
-#navButton{
+  #navBar #menu-list.open {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 430px;
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    padding: 20px 20px;
+    background-color: #b88f1e;
+    justify-content: space-between;
+    z-index: 50;
+    font-size: 22px;
+    font-weight: 500;
+    top: 0;
+    list-style: none;
+    transition: ease-in-out 0.8s;
+    -webkit-transition: ease-in-out 0.8s;
+    -moz-transition: ease-in-out 0.8s;
+    -ms-transition: ease-in-out 0.8s;
+    -o-transition: ease-in-out 0.8s;
+  }
+
+  #navBar #menu-list.close {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 430px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 270px 20px;
+    background-color: #b88f1e;
+    justify-content: space-between;
+    z-index: 50;
+    font-size: 22px;
+    font-weight: 500;
+    top: 0;
+    left: -414px;
+    list-style: none;
+    transition: ease-in-out 0.8s;
+    -webkit-transition: ease-in-out 0.8s;
+    -moz-transition: ease-in-out 0.8s;
+    -ms-transition: ease-in-out 0.8s;
+    -o-transition: ease-in-out 0.8s;
+  }
+
+  #navButton {
     background-color: #b88f1e;
     color: #101041;
     border: none;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 30px;
     box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-    
-}
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    -ms-border-radius: 30px;
+    -o-border-radius: 30px;
+  }
 
-#navButton:hover{
+  #navButton:hover {
     padding: 8px 17px;
     background-color: #101041;
     border-radius: 30px;
     color: #b88f1e;
     border: solid 3px #b88f1e;
     box-shadow: none;
+  }
 
-    
-}
-
-#navButton:hover a{
+  #navButton:hover a {
     text-decoration: none;
     color: #b88f1e;
+  }
 
-}
-
-#navButton a{
+  #navButton a {
     text-decoration: none;
     color: #101041;
-}
-#accueil{
+  }
+  #accueil {
     display: flex;
     flex-direction: column;
-}
+  }
 
-.acceuilDetail{
+  .acceuilDetail {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 40px;
-}
+    padding: 150px 20px 10px;
+  }
 
-.acceuilDetail .left{
+  .acceuilDetail .left {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
     gap: 20px;
-}
+  }
 
-.acceuilDetail .left h1{
-    font-size: 37px;
+  .acceuilDetail .left h1 {
+    font-size: 35px;
     color: #101041;
-}  
+  }
 
-.acceuilDetail .left p{
-    font-size: 12px;
+  .acceuilDetail .left p {
+    font-size: 16px;
     color: #0a0a27;
-}  
+  }
 
-.acceuilDetail .left h1 span{
+  .acceuilDetail .left h1 span {
     font-size: 35px;
     color: #b88f1e;
-}  
+  }
 
-#parcourBtn{
+  #parcourBtn {
     background-color: #b88f1e;
     color: #101041;
     border: none;
@@ -191,10 +909,9 @@ body{
     cursor: pointer;
     border-radius: 20px;
     box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-    
-}
+  }
 
-#inscriptBtn {
+  #inscriptBtn {
     background-color: #b88f1e;
     color: #101041;
     border: none;
@@ -207,128 +924,134 @@ body{
     cursor: pointer;
     border-radius: 20px;
     box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-    
-}
+  }
 
-#inscriptBtn a{
+  #inscriptBtn a {
     background-color: #b88f1e;
     color: #101041;
     text-decoration: none;
     cursor: pointer;
-}
+  }
 
+  .acceuilDetail .right img {
+    height: 414px;
+  }
 
-.acceuilDetail .right img{
-    height: 450px;
-}
-
-
-.a-proposDetail{
+  .a-proposDetail {
     display: flex;
-    flex-direction: row;
+    flex-direction: column-reverse;
     align-items: center;
     justify-content: space-between;
-    padding: 0px 40px;
-}
+    padding: 90px 20px 40px;
+  }
 
-.a-proposDetail .left img{
+  .a-proposDetail .left img {
     height: 450px;
-}
+  }
 
-.a-proposDetail .right{
+  .a-proposDetail .right {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
-    width: 50%;
+    width: 100%;
     gap: 5px;
-}
+  }
 
-.a-proposDetail .right h2{
+  .a-proposDetail .right h2 {
     font-size: 37px;
     color: #101041;
-}
+  }
 
-.a-proposDetail .right p{
-    font-size: 12px;
+  .a-proposDetail .right p {
+    font-size: 16px;
     color: #0a0a27;
-}
+  }
 
-.a-proposDetail .right p span{
-    font-size: 12px;
+  .a-proposDetail .right p span {
+    font-size: 16px;
     font-weight: 500;
     color: #b88f1e;
-}
+  }
 
-.a-proposDetail .right h3{
+  .a-proposDetail .right h3 {
     font-size: 20px;
     color: #b88f1e;
-}
+  }
 
-.contactDetail{
+  .contactDetail {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 40px 60px;
-}
+    padding: 40px 20px;
+  }
 
-.contactDetail .left{
+  .contactDetail .left {
     display: flex;
     flex-direction: column;
     align-items: start;
     justify-content: space-between;
     gap: 20px;
-    padding: 0px 40px;
-}
+    padding: 70px 40px;
+  }
 
-.contactDetail .left h2{
+  .contactDetail .left h2 {
     font-size: 37px;
     color: #101041;
-}
+  }
 
-.contactDetail .left p{
-    font-size: 12px;
+  .contactDetail .left p {
+    font-size: 16px;
     color: #0a0a27;
-}
+  }
 
-.contactDetail .left h3{
+  .contactDetail .left h3 {
     font-size: 20px;
     color: #b88f1e;
-}
+  }
 
-
-.contactDetail .right img{
-    height:400px;
-    width: 550px;
+  .contactDetail .right img {
+    margin-top: -70px;
+    height: 380px;
+    width: 380px;
     border-radius: 20px;
-    box-shadow: 0px 3px 10px rgb(41, 41, 77);
+    z-index: 1;
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     -ms-border-radius: 20px;
     -o-border-radius: 20px;
-    transition:ease-in-out 0.5s;
-}   
+  }
 
-.contactDetail .right img:hover{
+  .contactDetail .right img:hover {
     cursor: pointer;
-    margin-top: -100px;
-}   
+    margin-top: -90px;
+  }
 
-
-
-/* Form styles */
-form {
-    max-width: 600px;
+  /* Form styles */
+  form {
+    width: 340px;
     color: #101041;
     font-weight: 500;
     margin: 0 auto;
+    margin-bottom: -20px;
     padding: 1rem;
     background-color: white;
-    border-radius: 5px;
+    border-radius: 20px;
+    z-index: 2;
+    font-size: 16px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+  }
 
-input[type="text"], input[type="email"],input[type="tel"], input[type="password"], textarea {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  textarea {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -336,26 +1059,34 @@ input[type="text"], input[type="email"],input[type="tel"], input[type="password"
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-}
+    font-size: 16px;
+  }
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  input[type="password"],
+  textarea:focus {
+    border: 1px solid #b88f1e;
+  }
 
-.submit{
+  .submit {
     width: 100%;
     background-color: #b88f1e;
     font-weight: 500;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
+    font-size: 14px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
+  }
 
-.submit:hover {
+  .submit:hover {
     background-color: #101041;
+  }
 
-}
-
-.bottom{
+  .bottom {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -365,17 +1096,17 @@ input[type="text"], input[type="email"],input[type="tel"], input[type="password"
     color: #f9fafb;
     text-align: center;
     box-shadow: 1px 2px 2px #101041;
-}
+  }
 
-.bottom p{
+  .bottom p {
     text-align: center;
     padding: 20px 40px;
-}
+  }
 
-.backTop a{
+  .backTop a {
     position: fixed;
-    bottom: 30px;
-    right: 20px;
+    bottom: 20px;
+    right: 10px;
     background-color: #b88f1e;
     color: #f9fafb;
     border: none;
@@ -389,9 +1120,10 @@ input[type="text"], input[type="email"],input[type="tel"], input[type="password"
     border-radius: 2px;
     box-shadow: 1px 1px 1px 0 rgb(165, 156, 77);
     scroll-behavior: smooth;
-}
+    z-index: 3;
+  }
 
-.dialog-box {
+  .dialog-box {
     display: none;
     position: fixed;
     top: 50%;
@@ -403,109 +1135,119 @@ input[type="text"], input[type="email"],input[type="tel"], input[type="password"
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     width: 300px;
     text-align: center;
-}
+  }
 
-.dialog-box h3{
+  .dialog-box h3 {
     color: #b88f1e;
-}
+  }
 
-.dialog-box a {
+  .dialog-box a {
     display: block;
     margin: 10px 0;
     text-decoration: none;
     color: #101041;
     font-weight: bold;
-}
+  }
 
-.dialog-box a:hover {
+  .dialog-box a:hover {
     text-decoration: underline;
-}
+  }
 
-.close-btn {
-    background:#0a0a27;
+  .close-btn {
+    background: #0a0a27;
     color: white;
     border: none;
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
-}
+  }
 
-.dialogBox {
+  .dialogBox {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
+    font-size: 14px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 1000; /* Assure que la boîte de dialogue est au-dessus du contenu */
     display: none; /* Initialement caché */
-}
+  }
 
-#mainContainer {
+  #mainContainer {
     transition: filter 0.3s ease-in-out;
-    /*Transitionfluidepourleflou*/z-index:1;
+    /*Transitionfluidepourleflou*/
+    z-index: 1;
     -webkit-transition: filter 0.3s ease-in-out;
     -moz-transition: filter 0.3s ease-in-out;
     -ms-transition: filter 0.3s ease-in-out;
     -o-transition: filter 0.3s ease-in-out;
-}
+  }
 
-.connectProf{
-    padding: 1% 20%;
-}
-/* Styles pour le formulaire de connexion professeur */
+  .connectProf {
+    padding: 1% 10%;
+  }
+  /* Styles pour le formulaire de connexion professeur */
 
-/* Styles pour centrer le logo et la phrase de bienvenue */
-.site-logo {
+  /* Styles pour centrer le logo et la phrase de bienvenue */
+  .site-logo {
     display: block;
     margin: 0 auto;
     width: 150px; /* Ajustez la taille du logo si nécessaire */
-}
+  }
 
-.welcome-message {
+  .welcome-message {
     text-align: center;
     font-size: 1.5em;
     color: #101041;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 0;
-}
+  }
 
-.login-form {
-width: 400px;
+  .login-form {
+    width: 400px;
     width: 414px;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+  }
 
-#connectProfForm h2 {
+  .conEleve {
+    margin-top: 100px;
+  }
+
+  .conProf {
+    margin-top: 100px;
+  }
+
+  #connectProfForm h2 {
     text-align: center;
     color: #101041;
     margin-bottom: 20px;
-}
+  }
 
-#connectProfForm label {
+  #connectProfForm label {
     display: block;
     margin-bottom: 8px;
     color: #101041;
-}
+  }
 
-#connectProfForm input[type="email"],
-#connectProfForm input[type="password"] {
+  #connectProfForm input[type="email"],
+  #connectProfForm input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-}
+  }
 
-#connectProfForm .submit {
+  #connectProfForm .submit {
     width: 100%;
     background-color: #b88f1e;
     color: white;
@@ -514,62 +1256,63 @@ width: 400px;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
-}
+  }
 
-#connectProfForm .submit:hover {
+  #connectProfForm .submit:hover {
     background-color: #101041;
-}
+  }
 
-/* Styles pour le formulaire de connexion élève */
+  /* Styles pour le formulaire de connexion élève */
 
-/* Styles pour centrer le logo et la phrase de bienvenue */
-.site-logo {
+  /* Styles pour centrer le logo et la phrase de bienvenue */
+  .site-logo {
     display: block;
     margin: 0 auto;
     width: 150px; /* Ajustez la taille du logo si nécessaire */
-}
+  }
 
-.welcome-message {
+  .welcome-message {
     text-align: center;
     font-size: 1.5em;
     color: #101041;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 0;
-}
+  }
 
-.login-form {
+  .login-form {
     width: 414px;
-    margin: 50px auto;
+    top: 50%;
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+  }
 
-#connectEleveForm h2 {
+  #connectEleveForm h2 {
     text-align: center;
     color: #101041;
     margin-bottom: 20px;
-}
+  }
 
-#connectEleveForm label {
+  #connectEleveForm label {
     display: block;
     margin-bottom: 8px;
     color: #101041;
-}
+  }
 
-#connectEleveForm input[type="email"],
-#connectEleveForm input[type="password"] {
+  #connectEleveForm input[type="email"],
+  #connectEleveForm input[type="password"] {
     width: 100%;
     padding: 10px;
+    margin-bottom: 20px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
-}
+  }
 
-#connectEleveForm .submit {
+  #connectEleveForm .submit {
     width: 100%;
     background-color: #b88f1e;
     color: white;
@@ -578,864 +1321,83 @@ width: 400px;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
-}
+  }
 
-#connectEleveForm .submit:hover {
+  #connectEleveForm .submit:hover {
     background-color: #101041;
-}
+  }
 
-
-/* Styles pour le formulaire d'inscription des élèves */
-.inscriptEleve {
-    max-width: 100%;
-    margin: 10px auto;
-    padding: 20px;
-    gap: 40px;
+  /* Styles pour le formulaire d'inscription des élèves */
+  .inscriptEleve {
+    position: absolute;
+    width: 514px;
     background-color: #fff;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+  }
 
-.inscriptEleve h2 {
+  .inscriptEleve h2 {
     color: #b88f1e;
     text-align: center;
-    padding-bottom: 20px;
-}
+    padding-bottom: 10px;
+    width: auto;
+  }
 
-
-.inscriptEleve form {
+  .inscriptEleve form {
     display: flex;
     flex-direction: column;
-    width: 500px;
-    gap: 1px;
-}
+    width: 380px;
+    padding-bottom: 40px;
+    margin-bottom: 80px;
+  }
 
-.contenair{
+  .contenair {
+    width: 414px;
     display: flex;
-}
+  }
 
-.inscriptEleve label {
+  .inscriptEleve label {
     margin-bottom: 8px;
     color: #101041;
     font-weight: 500;
-}
+    width: auto;
+  }
 
-.inscriptEleve input[type="text"],
-.inscriptEleve input[type="date"],
-.inscriptEleve input[type="tel"],
-.inscriptEleve select {
-    width: 100%;
+  .inscriptEleve input[type="text"],
+  .inscriptEleve input[type="date"],
+  .inscriptEleve input[type="tel"],
+  .inscriptEleve input[type="email"],
+  .inscriptEleve select {
+    width: 320px;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box;
     font-size: 10px;
-}
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+  }
 
-.inscriptEleve button[type="submit"] {
-    width: 100%;
+  .inscriptEleve button[type="submit"] {
+    width: 320px;
     background-color: #b88f1e;
     color: white;
+    margin-left: 20px;
     padding: 14px 20px;
     font-size: 14px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
-}
+  }
 
-.inscriptEleve button[type="submit"]:hover {
+  .inscriptEleve button[type="submit"]:hover {
     background-color: #101041;
-}
+  }
 
-#optionField {
+  #optionField {
     display: none;
-}
-
-
-@media screen and (max-width : 414px) {
-    /* Base styles */
-    *{
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        outline: none;
-        scroll-behavior: smooth;
-
-    }
-
-    body{
-        background-color:#f9fafb;
-
-    }
-
-    /* Header styles */
-    #navBar{
-        position: fixed;
-        width: 100%;
-        max-width: 414px;
-        padding: 10px 20px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        background-color:#f9fafb;
-        color: #101041;
-        text-align: center;
-        box-shadow: 1px 2px 2px #101041;
-        z-index: 3;
-    }
-
-    .logo img{
-        height: 65px;
-        image-rendering: auto;
-    }
-
-    /* Navigation styles */
-    .nav-menu {
-        float: left;
-        display: block;
-        color: #101041;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none
-    }
-        
-        #openBtn{ 
-            position: relative;
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            background-color: none;
-            padding: 15px;
-            border: solid 2px #b88f1e;
-            border-radius: 100%;
-        }
-
-        #openBtn:hover{
-            position: relative;
-            background-color: none;
-            border: solid 2px #101041;
-            
-        }
-
-        
-        #openBtn:hover i{    
-           color: #fff;
-           font-size: 20px;
-        }
-        #closeBtn{ 
-            position: absolute;
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            right: 20px;
-            top: 30px;
-            background-color: none;
-            border: solid 2px #101041;
-            border-radius: 100%;
-            padding: 15px;
-        }
-
-        #closeBtn:hover{
-            position: absolute;
-            display:flex;
-            justify-content: center;
-            align-items: center;
-            right: 30;
-            top: 20;
-            background-color: none;
-            border-radius: 100%;
-            padding: 15px;
-        }
-        
-
-        #closeBtn:hover i{    
-            color: #101041;
-            font-size: 20px;
-        }
-
-
-         #navBar #menu-list {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            width: 430px;
-            position: absolute;
-            top: 100px;
-            right: 20px;
-            padding: 180px 20px;
-            background-color: #b88f1e;
-            justify-content: space-between;
-            z-index: 50;
-            font-size: 22px;
-            font-weight: 500;
-            top: 0;
-            left: 414px;
-            transition:ease-in-out 0.3s;
-            list-style: none;
-            -webkit-transition:ease-in-out 0.3s;
-            -moz-transition:ease-in-out 0.3s;
-            -ms-transition:ease-in-out 0.3s;
-            -o-transition:ease-in-out 0.3s;
-}
-
-
-        #menu-list a{
-            display: flex;
-            color: #101041;
-            text-align: center;
-            padding: 14px 26px;
-            text-decoration: none;
-        }
-
-        #menu-list a:hover{
-            display: flex;
-            color: #fff;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-        
-        
-        #navBar #menu-list.open {
-           display: flex;
-           flex-direction: column;
-           height: 100vh;
-           width: 430px;
-           position: absolute;
-           top: 100px;
-           right: 20px;
-           padding: 20px 20px;
-           background-color: #b88f1e;
-           justify-content: space-between;
-           z-index: 50;
-           font-size: 22px;
-           font-weight: 500;
-           top: 0;
-           list-style: none;
-           transition:ease-in-out 0.8s;
-           -webkit-transition:ease-in-out 0.8s;
-           -moz-transition:ease-in-out 0.8s;
-           -ms-transition:ease-in-out 0.8s;
-           -o-transition:ease-in-out 0.8s;
-}
-       
-       
-           #navBar #menu-list.close {
-              display: flex;
-              flex-direction: column;
-              height: 100vh;
-              width: 430px;
-              position: absolute;
-              top: 20px;
-              right: 20px;
-              padding: 270px 20px;
-              background-color: #b88f1e;
-              justify-content: space-between;
-              z-index: 50;
-              font-size: 22px;
-              font-weight: 500;
-              top: 0;
-              left:-414px;
-              list-style: none;
-              transition:ease-in-out 0.8s;
-              -webkit-transition:ease-in-out 0.8s;
-              -moz-transition:ease-in-out 0.8s;
-              -ms-transition:ease-in-out 0.8s;
-              -o-transition:ease-in-out 0.8s;
-} 
-        
-        
-         
-    
-
-    #navButton{
-        background-color: #b88f1e;
-        color: #101041;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 20px;
-        font-weight: 500;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 30px;
-        box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-        -webkit-border-radius: 30px;
-        -moz-border-radius: 30px;
-        -ms-border-radius: 30px;
-        -o-border-radius: 30px;
-}
-
-    #navButton:hover{
-        padding: 8px 17px;
-        background-color: #101041;
-        border-radius: 30px;
-        color: #b88f1e;
-        border: solid 3px #b88f1e;
-        box-shadow: none;
-
-        
-    }
-
-    #navButton:hover a{
-        text-decoration: none;
-        color: #b88f1e;
-
-    }
-
-    #navButton a{
-        text-decoration: none;
-        color: #101041;
-    }
-    #accueil{
-        display: flex;
-        flex-direction: column;
-    }
-
-    .acceuilDetail{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 150px 20px 10px;
-    }
-
-    .acceuilDetail .left{
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: space-between;
-        gap: 20px;
-    }
-
-    .acceuilDetail .left h1{
-        font-size: 35px;
-        color: #101041;
-    }  
-
-    .acceuilDetail .left p{
-        font-size: 16px;
-        color: #0a0a27;
-    }  
-
-    .acceuilDetail .left h1 span{
-        font-size: 35px;
-        color: #b88f1e;
-    }  
-
-    #parcourBtn{
-        background-color: #b88f1e;
-        color: #101041;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 20px;
-        box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-        
-    }
-
-    #inscriptBtn {
-        background-color: #b88f1e;
-        color: #101041;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 20px;
-        box-shadow: 1px 2px 1px 0 rgb(90, 79, 122);
-        
-    }
-
-    #inscriptBtn a{
-        background-color: #b88f1e;
-        color: #101041;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-
-    .acceuilDetail .right img{
-        height: 414px;
-    }
-
-
-    .a-proposDetail{
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: center;
-        justify-content: space-between;
-        padding: 90px 20px 40px;
-    }
-
-    .a-proposDetail .left img{
-        height: 450px;
-    }
-
-    .a-proposDetail .right{
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: space-between;
-        width: 100%;
-        gap: 5px;
-    }
-
-    .a-proposDetail .right h2{
-        font-size: 37px;
-        color: #101041;
-    }
-
-    .a-proposDetail .right p{
-        font-size: 16px;
-        color: #0a0a27;
-    }
-
-    .a-proposDetail .right p span{
-        font-size: 16px;
-        font-weight: 500;
-        color: #b88f1e;
-    }
-
-    .a-proposDetail .right h3{
-        font-size: 20px;
-        color: #b88f1e;
-    }
-
-    .contactDetail{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        padding: 40px 20px;
-    }
-
-    .contactDetail .left{
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        justify-content: space-between;
-        gap: 20px;
-        padding: 70px 40px;
-    }
-
-    .contactDetail .left h2{
-        font-size: 37px;
-        color: #101041;
-    }
-
-    .contactDetail .left p{
-        font-size: 16px;
-        color: #0a0a27;
-    }
-
-    .contactDetail .left h3{
-        font-size: 20px;
-        color: #b88f1e;
-    }
-
-
-    .contactDetail .right img{
-        margin-top: -70px;
-        height:380px;
-        width: 380px;
-        border-radius: 20px;
-        z-index: 1;
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        -ms-border-radius: 20px;
-        -o-border-radius: 20px;
-}   
-
-.contactDetail .right img:hover{
-    cursor: pointer;
-    margin-top: -90px;
-}   
-
-
-
-
-    /* Form styles */
-    form {
-        width: 340px;
-        color: #101041;
-        font-weight: 500;
-        margin: 0 auto;
-        margin-bottom: -20px;
-        padding: 1rem;
-        background-color: white;
-        border-radius: 20px;
-        z-index: 2;
-        font-size: 16px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        -webkit-border-radius: 20px;
-        -moz-border-radius: 20px;
-        -ms-border-radius: 20px;
-        -o-border-radius: 20px;
-}
-
-    input[type="text"], input[type="email"],input[type="tel"], input[type="password"], textarea {
-        width: 100%;
-        padding: 12px;
-        margin: 8px 0;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 16px;
-    }
-    input[type="text"]:focus, input[type="email"]:focus,input[type="tel"]:focus, input[type="password"], textarea:focus{
-               border: 1px solid #b88f1e;
-        
-    }
-
-    .submit{
-        width: 100%;
-        background-color: #b88f1e;
-        font-weight: 500;
-        color: white;
-        padding: 14px 20px;
-        margin: 8px 0;
-        font-size: 14px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .submit:hover {
-        background-color: #101041;
-
-    }
-
-    .bottom{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 0px 40px;
-        background-color: #101041;
-        color: #f9fafb;
-        text-align: center;
-        box-shadow: 1px 2px 2px #101041;
-    }
-
-    .bottom p{
-        text-align: center;
-        padding: 20px 40px;
-    }
-
-    .backTop a{
-        position: fixed;
-        bottom: 30px;
-        right: 20px;
-        background-color: #b88f1e;
-        color: #f9fafb;
-        border: none;
-        padding: 5px 10px;
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        font-weight: 500;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 2px;
-        box-shadow: 1px 1px 1px 0 rgb(165, 156, 77);
-        scroll-behavior: smooth;
-        z-index: 3;
-    }
-
-    .dialog-box {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-        width: 300px;
-        text-align: center;
-    }
-
-    .dialog-box h3{
-        color: #b88f1e;
-    }
-
-    .dialog-box a {
-        display: block;
-        margin: 10px 0;
-        text-decoration: none;
-        color: #101041;
-        font-weight: bold;
-    }
-
-    .dialog-box a:hover {
-        text-decoration: underline;
-    }
-
-    .close-btn {
-        background:#0a0a27;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-
-    .dialogBox {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: white;
-        font-size: 14px;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        z-index: 1000; /* Assure que la boîte de dialogue est au-dessus du contenu */
-        display: none; /* Initialement caché */
-    }
-
-    #mainContainer {
-        transition: filter 0.3s ease-in-out;
-        /*Transitionfluidepourleflou*/z-index:1;
-        -webkit-transition: filter 0.3s ease-in-out;
-        -moz-transition: filter 0.3s ease-in-out;
-        -ms-transition: filter 0.3s ease-in-out;
-        -o-transition: filter 0.3s ease-in-out;
-    }
-
-    .connectProf{
-        padding: 1% 10%;
-    }
-    /* Styles pour le formulaire de connexion professeur */
-
-    /* Styles pour centrer le logo et la phrase de bienvenue */
-    .site-logo {
-        display: block;
-        margin: 0 auto;
-        width: 150px; /* Ajustez la taille du logo si nécessaire */
-    }
-
-    .welcome-message {
-        text-align: center;
-        font-size: 1.5em;
-        color: #101041;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 0;
-    }
-
-    .login-form {
-    width: 400px;
-        width: 414px;
-        margin: 50px auto;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .conEleve{
-        margin-top: 100px;
-    }
-
-    .conProf{
-        margin-top: 100px;
-    }
-
-
-    #connectProfForm h2 {
-        text-align: center;
-        color: #101041;
-        margin-bottom: 20px;
-    }
-
-    #connectProfForm label {
-        display: block;
-        margin-bottom: 8px;
-        color: #101041;
-    }
-
-    #connectProfForm input[type="email"],
-    #connectProfForm input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-    }
-
-    #connectProfForm .submit {
-        width: 100%;
-        background-color: #b88f1e;
-        color: white;
-        padding: 14px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 500;
-    }
-
-    #connectProfForm .submit:hover {
-        background-color: #101041;
-    }
-
-    /* Styles pour le formulaire de connexion élève */
-
-    /* Styles pour centrer le logo et la phrase de bienvenue */
-    .site-logo {
-        display: block;
-        margin: 0 auto;
-        width: 150px; /* Ajustez la taille du logo si nécessaire */
-    }
-
-    .welcome-message {
-        text-align: center;
-        font-size: 1.5em;
-        color: #101041;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 0;
-    }
-
-    .login-form {
-        width: 414px;
-        top: 50%;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
-
-    #connectEleveForm h2 {
-        text-align: center;
-        color: #101041;
-        margin-bottom: 20px;
-    }
-
-    #connectEleveForm label {
-        display: block;
-        margin-bottom: 8px;
-        color: #101041;
-    }
-
-    #connectEleveForm input[type="email"],
-    #connectEleveForm input[type="password"] {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-    }
-
-    #connectEleveForm .submit {
-        width: 100%;
-        background-color: #b88f1e;
-        color: white;
-        padding: 14px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 500;
-    }
-
-    #connectEleveForm .submit:hover {
-        background-color: #101041;
-    }
-
-
-    /* Styles pour le formulaire d'inscription des élèves */
-    .inscriptEleve {
-        position: absolute;
-        width: 514px;
-        background-color: #fff;
-        border-radius: 10px;
-    }
-
-    .inscriptEleve h2 {
-        color: #b88f1e;
-        text-align: center;
-        padding-bottom: 10px;
-        width: auto;
-    }
-
-
-    .inscriptEleve form {
-        display: flex;
-        flex-direction: column;
-        width: 380px;
-        padding-bottom: 40px;
-        margin-bottom: 80px;
-    }
-
-    .contenair{
-        width: 414px;
-        display: flex;
-    }
-
-    .inscriptEleve label {
-        margin-bottom: 8px;
-        color: #101041;
-        font-weight: 500;
-        width: auto;
-    }
-
-    .inscriptEleve input[type="text"],
-    .inscriptEleve input[type="date"],
-    .inscriptEleve input[type="tel"],
-    .inscriptEleve input[type="email"],
-    .inscriptEleve select {
-        width: 320px;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-        font-size: 10px;
-        -webkit-border-radius: 5px;
-        -moz-border-radius: 5px;
-        -ms-border-radius: 5px;
-        -o-border-radius: 5px;
-}
-
-    .inscriptEleve button[type="submit"] {
-        width: 320px;
-        background-color: #b88f1e;
-        color: white;
-        margin-left: 20px;
-        padding: 14px 20px;
-        font-size: 14px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: 500;
-    }
-
-    .inscriptEleve button[type="submit"]:hover {
-        background-color: #101041;
-    }
-
-    #optionField {
-        display: none;
-    }
-
-    
+  }
 }

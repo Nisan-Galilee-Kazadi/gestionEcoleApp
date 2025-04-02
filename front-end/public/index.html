@@ -1,113 +1,182 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestion d'école</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="./images/logocicaf.png" alt="logo" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="config.js" defer ></script>
-</head>
-<body id="body">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      href="./images/logocicaf.png"
+      alt="logo"
+      type="image/png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="config.js" defer></script>
+  </head>
+  <body id="body">
     <header id="navBar">
-        <div class="logo">
-            <img src="images/logocicaf.png" alt="">
-        </div>
-        <nav id="nav-menu">
-            <ul id="menu-list">
-                <button id="closeBtn">
-                    <i class="fas fa-times"></i>
-                </button>
-                <li class="item"><a href="#accueil">Accueil</a></li>
-                <li id="item" class="item"><a href="#a-propos">À propos</a></li> <!-- Added link to À propos section -->
-                <li id="items" class="item"><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <div style=" display:flex; align-items:center; justify-content:center; gap: 20px;" >
-            <button id="navButton" title="avez-vous un comptes?"><a href="#">se connecter</a></button>
-            <button id="openBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
+      <div class="logo">
+        <img src="images/logocicaf.png" alt="" />
+      </div>
+      <nav id="nav-menu">
+        <ul id="menu-list">
+          <button id="closeBtn">
+            <i class="fas fa-times"></i>
+          </button>
+          <li class="item"><a href="#accueil">Accueil</a></li>
+          <li id="item" class="item"><a href="#a-propos">À propos</a></li>
+          <!-- Added link to À propos section -->
+          <li id="items" class="item"><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+        "
+      >
+        <button id="navButton" title="avez-vous un comptes?">
+          <a href="#">se connecter</a>
+        </button>
+        <button id="openBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </header>
-    
+
     <main id="mainContenair">
-        <section id="accueil">
-            <div class="acceuilDetail">
-                <div class="left">
-                    <h1>"Soyez le Bienvenu(e) à l'Etablissement scolaire <span>Cicaf</span>"</h1>
-                    <p>Un lieu où chaque élève grandit, explore et réussit !<br>
-                     Rejoignez-nous pour une aventure éducative unique, alliant excellence, créativité et épanouissement..."</p>
-                     <div class="buttons">
-                        <button id="parcourBtn"><a href="" ></a>Voir une Video de l'ecole</button>
-                        <button id="inscriptBtn"><a href="inscriptEleve.html" >S'inscrire</a></button>
-                     </div>
-                </div>
-                <div class="right">
-                    <img src="images/image4.png" alt="">
-                </div>
+      <section id="accueil">
+        <div class="acceuilDetail">
+          <div class="left">
+            <h1>
+              "Soyez le Bienvenu(e) à l'Etablissement scolaire
+              <span>Cicaf</span>"
+            </h1>
+            <p>
+              Un lieu où chaque élève grandit, explore et réussit !<br />
+              Rejoignez-nous pour une aventure éducative unique, alliant
+              excellence, créativité et épanouissement..."
+            </p>
+            <div class="buttons">
+              <button id="parcourBtn">
+                <a href=""></a>Voir une Video de l'ecole
+              </button>
+              <button id="inscriptBtn">
+                <a href="inscriptEleve.html">S'inscrire</a>
+              </button>
             </div>
-        </section>
-        <section id="a-propos">
-            <div class="a-proposDetail">
-                <div class="left">
-                    <img src="images/image5.png" alt="">
-                </div>
-                <div class="right">
-                    <h2>À propos</h2>
-                    <p>Depuis 1998, l'École <SPan>Cicaf</SPan> de Kinshasa s'engage à offrir une éducation de qualité, alliant rigueur académique et épanouissement personnel. Grâce à une équipe pédagogique expérimentée et des infrastructures modernes, nous accompagnons chaque élève vers l'excellence et l'innovation. </p>
+          </div>
+          <div class="right">
+            <img src="images/image4.png" alt="" />
+          </div>
+        </div>
+      </section>
+      <section id="a-propos">
+        <div class="a-proposDetail">
+          <div class="left">
+            <img src="images/image5.png" alt="" />
+          </div>
+          <div class="right">
+            <h2>À propos</h2>
+            <p>
+              Depuis 1998, l'École <span>Cicaf</span> de Kinshasa s'engage à
+              offrir une éducation de qualité, alliant rigueur académique et
+              épanouissement personnel. Grâce à une équipe pédagogique
+              expérimentée et des infrastructures modernes, nous accompagnons
+              chaque élève vers l'excellence et l'innovation.
+            </p>
 
-                    <p>Avec des programmes adaptés aux standards internationaux et une approche pédagogique centrée sur l'élève, nous favorisons la réussite de chacun dans un environnement propice à l'apprentissage.</p>
-                        
-                    <p>Rejoignez-nous et faites partie d'une communauté éducative engagée pour l'avenir !.</p>
+            <p>
+              Avec des programmes adaptés aux standards internationaux et une
+              approche pédagogique centrée sur l'élève, nous favorisons la
+              réussite de chacun dans un environnement propice à
+              l'apprentissage.
+            </p>
 
-                    <h3>Contact</h3>
-                    <p>Numéro de téléphone:   + 243 992 746 456 <br>
-                      _________________________+ 243 831 410 295</p>
-                    <h3>Address</h3>
-                    <p>N° 2 , Avenue de l'école, Quartier Mososo,Commune de Limete, Kinshasa-RDC, Route Universitaire Réf: Eglise Catholique Orthodoxe.</p>
-                    <h3>Objectif de l'école</h3>
-                    <p>Notre objectif est de fournir une éducation de qualité, de promouvoir la créativité et de favoriser l'épanouissement de chaque élève.</p>
-                </div>
-            </div>
-        </section>
-        <section id="contact">
-            <div class="contactDetail">
-                <div class="left">
-                    <h2>Contact</h2>
-                    <p>Contactez-nous pour plus d'informations.</p>
-                    <h3>Formulaire de contact</h3>
-                    <form action="#" method="post">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
-                        <br>
-                        <label for="tel">Téléphone:</label>
-                        <input type="tel" id="tel" name="tel" placeholder="Entrez votre numéro de téléphone" required>
-                        <br>
-                        <label for="message">Message:</label>
-                        <textarea id="message" name="message" rows="4" placeholder="Entrez votre message" required></textarea>
-                        <br>
-                        <button class="submit" type="submit">Envoyer</button>
-                    </form> 
-                </div>
-                <div class="right">
-                    <img src="images/contact.jpg" alt="">
-                </div>
-                
-            </div>
-            
-        </section>
-        
+            <p>
+              Rejoignez-nous et faites partie d'une communauté éducative engagée
+              pour l'avenir !.
+            </p>
+
+            <h3>Contact</h3>
+            <p>
+              Numéro de téléphone: + 243 992 746 456 <br />
+              _________________________+ 243 831 410 295
+            </p>
+            <h3>Address</h3>
+            <p>
+              N° 2 , Avenue de l'école, Quartier Mososo,Commune de Limete,
+              Kinshasa-RDC, Route Universitaire Réf: Eglise Catholique
+              Orthodoxe.
+            </p>
+            <h3>Objectif de l'école</h3>
+            <p>
+              Notre objectif est de fournir une éducation de qualité, de
+              promouvoir la créativité et de favoriser l'épanouissement de
+              chaque élève.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="contact">
+        <div class="contactDetail">
+          <div class="left">
+            <h2>Contact</h2>
+            <p>Contactez-nous pour plus d'informations.</p>
+            <h3>Formulaire de contact</h3>
+            <form action="#" method="post">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Entrez votre email"
+                required
+              />
+              <br />
+              <label for="tel">Téléphone:</label>
+              <input
+                type="tel"
+                id="tel"
+                name="tel"
+                placeholder="Entrez votre numéro de téléphone"
+                required
+              />
+              <br />
+              <label for="message">Message:</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="Entrez votre message"
+                required
+              ></textarea>
+              <br />
+              <button class="submit" type="submit">Envoyer</button>
+            </form>
+          </div>
+          <div class="right">
+            <img src="images/contact.jpg" alt="" />
+          </div>
+        </div>
+      </section>
     </main>
     <footer>
-        <div class="bottom">
-
-         <p>&copy; 2025 Nisan-Galilée Kazadi_Gestion d'école. Tous droits réservés.</p>
-        </div>
+      <div class="bottom">
+        <p>
+          &copy; 2025 Nisan-Galilée Kazadi_Gestion d'école. Tous droits
+          réservés.
+        </p>
+      </div>
     </footer>
     <button class="backTop"><a href="#navBar">^</a></button>
-    
+
     <!-- Boîte de dialogue pour l'inscription -->
     <!-- <div class="dialog-box" id="inscriptionDialog">
         <h3>S'inscrire en tant que :</h3>
@@ -118,14 +187,15 @@
 
     <!-- Boîte de dialogue pour la connexion -->
     <div class="dialog-box" id="connexionDialog">
-        <h3>Se connecter en tant que :</h3>
-        <a href="admin.html">💻 Administrateur</a>
-        <a href="connectProf.html">👨‍🏫 Personnel de l'etablissemnt</a>
-        <a href="connectEleve.html">🎓 Élève</a>
-        <button class="close-btn" onclick="closeDialog('connexionDialog')">Fermer</button>
+      <h3>Se connecter en tant que :</h3>
+      <a href="admin.html">💻 Administrateur</a>
+      <a href="connectProf.html">👨‍🏫 Personnel de l'etablissemnt</a>
+      <a href="connectEleve.html">🎓 Élève</a>
+      <button class="close-btn" onclick="closeDialog('connexionDialog')">
+        Fermer
+      </button>
     </div>
-    
-    <script src="app.js"></script>
 
-</body>
+    <script src="app.js"></script>
+  </body>
 </html>

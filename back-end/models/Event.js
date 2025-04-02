@@ -46,6 +46,17 @@ const eventSchema = new mongoose.Schema({
     type: String,
     enum: ['active', 'cancelled', 'completed'],
     default: 'active'
+  },
+  cost: {
+    amount: {
+      type: Number,
+      default: 0
+    },
+    currency: {
+      type: String,
+      enum: ['USD', 'CDF'],
+      default: 'USD'
+    }
   }
 }, { 
   timestamps: true 

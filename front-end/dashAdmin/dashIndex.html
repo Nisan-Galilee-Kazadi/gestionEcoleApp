@@ -496,6 +496,11 @@
                 <h3>Graphique Progression</h3>
                 <canvas id="progressChart" width="300" height="200"></canvas>
               </div>
+              <div class="stat-box">
+                <h3>Options Progression</h3>
+                <canvas id="optionsChart" width="300" height="200"></canvas>
+                <div class="legend-container" id="chart-legend"></div>
+              </div>
             </div>
 
             <div class="calendar-section">
@@ -621,7 +626,7 @@
       // Vérifier que l'élément canvas existe
       const ctx = document.getElementById('progressChart').getContext('2d');
       const progressChart = new Chart(ctx, {
-        type: 'line', // Type de graphique (line, bar, etc.)
+        type: 'bar', // Type de graphique (line, bar, etc.)
         data: {
           labels: ['Jan', 'Feb', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil'],
           datasets: [{
@@ -645,6 +650,41 @@
       });
     </script>
 
+    <!-- SCRIPT pour initialiser le graphique -->
+    <script>
+      // Vérifier que l'élément canvas existe
+      const cts = document.getElementById('optionsChart').getContext('2d');
+      const optionsChart = new Chart(cts, {
+        type: 'polarArea', // Transformation en graphique camembert
+        data: {
+          labels: ['Commercial', 'Littéraire', 'couture','mécanique', 'Latin-philo', 'Electricité'],
+          datasets: [{
+            label: 'Répartition des options',
+            data: [20, 10, 25, 10, 20, 36], // Valeurs fictives
+            backgroundColor: ['green', 'yellow', '#ffce56', '#101041', 'blue', '#b88f1e'],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '40%',
+          plugins: {
+            legend: {
+              display: false // Désactiver la légende intégrée
+            }
+          }
+        }
+      });
+      
+      // Générer une légende personnalisée
+      const legendContainer = document.getElementById('chart-legend');
+      optionsChart.data.labels.forEach((label, index) => {
+        const legendItem = document.createElement('div');
+        legendItem.innerHTML = `<span style="display:inline-block;width:12px;height:12px;background:${optionsChart.data.datasets[0].backgroundColor[index]};margin-right:5px;"></span>${label}`;
+        legendContainer.appendChild(legendItem);
+      });
+    </script>
+
     <!-- SCRIPT pour le toggle de la sidebar -->
     <script>
       const toggleBtn = document.getElementById('toggleBtn');
@@ -660,6 +700,18 @@
 
 <style>
 
+#optionsChart {
+    max-height: 400px; /* Ajuste la hauteur du canvas */
+}
+
+.legend-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 15px;
+            padding-top: 20px;
+            flex-wrap: wrap;
+        }
   /* Change the title "Menu" to be bold and white */
   .menu-title {
     font-weight: bold;
@@ -727,7 +779,7 @@
     e.preventDefault();
     if(confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
       // Redirection vers la page de connexion
-      window.location.href = 'public/index.html';
+      window.location.href = '../public/index.html';
     }
   });
 </script>

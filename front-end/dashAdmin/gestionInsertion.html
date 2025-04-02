@@ -736,6 +736,7 @@ button[type="submit"]:hover {
                       <th>ID</th>
                       <th>Nom du Cours</th>
                       <th>Classe</th>
+                      <th>Options</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -753,8 +754,9 @@ button[type="submit"]:hover {
                     <tr>
                       <th>ID</th>
                       <th>Nom des Frais</th>
-                      <th>Classe</th>
                       <th>Montant</th>
+                      <th>Classe</th>
+                      <th>Option</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -803,47 +805,72 @@ button[type="submit"]:hover {
                 <form id="courseForm">
                   <div class="form-group">
                     <label for="courseName">Nom du Cours</label>
-                    <input type="text" id="courseName" placeholder="Entrez le nom du cours" required>
+                    <input type="text" id="courseName" required>
                   </div>
                   <div class="form-group">
                     <label for="courseId">ID du Cours</label>
-                    <input type="text" id="courseId" placeholder="Entrez l'ID du cours" required>
+                    <input type="text" id="courseId" required>
                   </div>
                   <div class="form-group">
                     <label for="courseClass">Classe</label>
                     <select id="courseClass" required>
                         <option value="">Sélectionnez une classe</option>
-                        <!-- Les classes seront chargées dynamiquement -->
                     </select>
                   </div>
-                  <button type="submit">Ajouter</button>
+                  <div class="form-group">
+                    <label for="courseOption">Option</label>
+                    <select id="courseOption">
+                        <option value="pas_necessaire">Pas nécessaire</option>
+                    </select>
+                  </div>
+                  <button type="submit">Ajouter le cours</button>
                 </form>
               </div>
 
               <!-- Card for inserting fees -->
               <div class="modal-content">
                 <h1 class="section-title">Insérer des Frais</h1>
-                <form id="feeForm">
+                <form id="feeForm" onsubmit="event.preventDefault(); window.insertionManager.handleInsert('fee', window.insertionManager.getFormData('fee'))">
                   <div class="form-group">
-                    <label for="feeName">Nom des Frais</label>
-                    <input type="text" id="feeName" placeholder="Entrez le nom des frais" required>
+                    <label for="feeName">Nom du Frais</label>
+                    <input type="text" id="feeName" required minlength="2" maxlength="50" 
+                           placeholder="Ex: Frais de scolarité">
                   </div>
                   <div class="form-group">
-                    <label for="feeId">ID des Frais</label>
-                    <input type="text" id="feeId" placeholder="Entrez l'ID des frais" required>
+                    <label for="feeId">ID du Frais</label>
+                    <input type="text" id="feeId" required pattern="[A-Z0-9_-]{2,10}" 
+                           placeholder="Ex: SCOL_01" title="2 à 10 caractères (majuscules, chiffres, - ou _)">
+                  </div>
+                  <div class="form-group">
+                    <label for="feeAmount">Montant</label>
+                    <div class="amount-container" style="display: flex; gap: 10px;">
+                        <input type="number" 
+                               id="feeAmount" 
+                               required 
+                               min="0.01" 
+                               step="0.01" 
+                               placeholder="Ex: 100.00"
+                               style="flex: 2;">
+                        <select id="feeCurrency" 
+                                style="flex: 1;">
+                            <option value="USD">USD ($)</option>
+                            <option value="CDF">CDF (FC)</option>
+                        </select>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="feeClass">Classe</label>
                     <select id="feeClass" required>
                         <option value="">Sélectionnez une classe</option>
-                        <!-- Les classes seront chargées dynamiquement -->
                     </select>
                   </div>
                   <div class="form-group">
-                    <label for="feeAmount">Montant</label>
-                    <input type="number" id="feeAmount" placeholder="Entrez le montant" required>
+                    <label for="feeOption">Option</label>
+                    <select id="feeOption">
+                        <option value="pas_necessaire">Pas nécessaire</option>
+                    </select>
                   </div>
-                  <button type="submit">Ajouter</button>
+                  <button type="submit">Ajouter le frais</button>
                 </form>
               </div>
             </div>
@@ -908,9 +935,9 @@ button[type="submit"]:hover {
 <script>
 class InsertionManager {
     constructor() {
+        this.apiBaseUrl = 'http://localhost:5002/api';
         this.initializeEventListeners();
         this.loadAllData();
-        this.loadClasses();
     }
 
     initializeEventListeners() {
@@ -934,62 +961,79 @@ class InsertionManager {
 
     async handleInsert(type, data) {
         try {
-            let endpoint;
+            let endpoint = '';
+            let successMessage = '';
+            
             switch(type) {
                 case 'class':
-                    endpoint = 'http://localhost:5002/api/classe/add';
+                    endpoint = `${this.apiBaseUrl}/classe/add`;
+                    successMessage = 'Classe ajoutée avec succès';
                     break;
                 case 'option':
-                    endpoint = 'http://localhost:5002/api/insertion/options';
+                    endpoint = `${this.apiBaseUrl}/insertion/options`;
+                    successMessage = 'Option ajoutée avec succès';
                     break;
                 case 'course':
-                    endpoint = 'http://localhost:5002/api/insertion/courses';
+                    endpoint = `${this.apiBaseUrl}/insertion/courses`;
+                    successMessage = 'Cours ajouté avec succès';
                     break;
                 case 'fee':
-                    endpoint = 'http://localhost:5002/api/insertion/fees';
+                    endpoint = `${this.apiBaseUrl}/insertion/fees`;
+                    successMessage = 'Frais ajouté avec succès';
                     break;
                 default:
                     throw new Error('Type non reconnu');
             }
 
-            console.log('Envoi vers:', endpoint, 'Données:', data);
-
             const response = await fetch(endpoint, {
                 method: 'POST',
-                headers: { 
+                headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(data)
             });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
-            }
-
             const result = await response.json();
             console.log('Réponse du serveur:', result);
 
-            if (result.success) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: result.message,
-                    confirmButtonColor: '#b88f1e'
-                });
-                this.resetForm(type);
-                this.loadAllData();
-            } else {
-                throw new Error(result.message);
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || 'Une erreur est survenue');
             }
+
+            // Si on arrive ici, c'est que tout s'est bien passé
+            await Swal.fire({
+                icon: 'success',
+                title: 'Succès !',
+                text: successMessage,
+                confirmButtonColor: '#28a745',
+                timer: 2000,
+                timerProgressBar: true
+            });
+
+            // Réinitialiser le formulaire
+            this.resetForm(type);
+            
+            // Recharger les données
+            await this.loadAllData();
+            
+            return true;
+
         } catch (error) {
             console.error('Erreur:', error);
-            Swal.fire({
+            
+            let errorMessage = error.message;
+            if (errorMessage.includes('duplicate key error') || errorMessage.includes('existe déjà')) {
+                errorMessage = `Un élément avec cet identifiant existe déjà`;
+            }
+
+            await Swal.fire({
                 icon: 'error',
                 title: 'Erreur',
-                text: error.message,
+                text: errorMessage,
                 confirmButtonColor: '#dc3545'
             });
+            
+            return false;
         }
     }
 
@@ -1000,7 +1044,70 @@ class InsertionManager {
                 formData.name = document.getElementById('className').value;
                 formData.classId = document.getElementById('classId').value;
                 return formData;
-            // ...autres cas...
+            case 'option':
+                formData.name = document.getElementById('optionName').value;
+                formData.optionId = document.getElementById('optionId').value;
+                return formData;
+            case 'course':
+                const classSelect = document.getElementById('courseClass');
+                const optionSelect = document.getElementById('courseOption');
+                const courseName = document.getElementById('courseName').value;
+                const courseId = document.getElementById('courseId').value;
+                
+                console.log('Valeurs des champs:', {
+                    classSelect: classSelect.value,
+                    optionSelect: optionSelect.value,
+                    courseName,
+                    courseId
+                });
+
+                // Vérification des champs requis
+                if (!classSelect.value) {
+                    throw new Error('La classe est obligatoire');
+                }
+                if (!courseName) {
+                    throw new Error('Le nom du cours est obligatoire');
+                }
+                if (!courseId) {
+                    throw new Error('L\'ID du cours est obligatoire');
+                }
+
+                formData.name = courseName;
+                formData.courseId = courseId;
+                formData.class = classSelect.value;
+
+                if (optionSelect.value && optionSelect.value !== 'pas_necessaire') {
+                    formData.option = optionSelect.value;
+                }
+
+                console.log('FormData final:', formData);
+                return formData;
+            case 'fee':
+                const feeId = document.getElementById('feeId').value.trim();
+                const feeName = document.getElementById('feeName').value.trim();
+                const feeAmount = document.getElementById('feeAmount').value;
+                const feeCurrency = document.getElementById('feeCurrency').value;
+                const classValue = document.getElementById('feeClass').value;
+                const optionValue = document.getElementById('feeOption').value;
+
+                // Validations...
+                const amount = parseFloat(feeAmount);
+                if (isNaN(amount) || amount <= 0) {
+                    throw new Error("Le montant doit être un nombre positif");
+                }
+
+                formData.feeId = feeId;
+                formData.name = feeName;
+                formData.amount = amount;
+                formData.currency = feeCurrency;
+                formData.class = classValue;
+
+                if (optionValue && optionValue !== 'pas_necessaire') {
+                    formData.option = optionValue;
+                }
+
+                console.log('Données du frais à envoyer:', formData);
+                return formData;
             default:
                 return null;
         }
@@ -1008,55 +1115,169 @@ class InsertionManager {
 
     resetForm(type) {
         const form = document.getElementById(`${type}Form`);
-        if (form) form.reset();
+        if (form) {
+            form.reset();
+            // Réinitialiser les selects
+            const selects = form.querySelectorAll('select');
+            selects.forEach(select => {
+                if (select.id === 'feeCurrency') {
+                    select.value = 'USD'; // Valeur par défaut pour la devise
+                } else {
+                    select.selectedIndex = 0;
+                }
+            });
+        }
     }
 
     async loadAllData() {
         try {
+            console.log('Début du chargement des données');
+
             // Charger les classes
-            const response = await fetch('http://localhost:5002/api/classe/all');
-            const result = await response.json();
-            console.log('Données classes reçues:', result);
+            const classResponse = await fetch(`${this.apiBaseUrl}/classe/all`);
+            const classResult = await classResponse.json();
+            console.log('Classes chargées:', classResult);
 
-            if (result.success) {
-                const tbody = document.querySelector('#classesTable tbody');
-                tbody.innerHTML = ''; // Vider le tableau
+            if (classResult.success) {
+                // Mettre à jour les éléments liés aux classes si ils existent
+                const elements = {
+                    classTbody: document.querySelector('#classesTable tbody'),
+                    courseClassSelect: document.getElementById('courseClass'),
+                    feeClassSelect: document.getElementById('feeClass')
+                };
 
-                if (result.data.length === 0) {
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="3" class="empty-message">Aucune classe enregistrée</td>
-                        </tr>
-                    `;
-                    return;
+                // Mise à jour du tableau des classes
+                if (elements.classTbody) {
+                    this.updateClassesTable(classResult.data, elements.classTbody);
                 }
 
-                result.data.forEach(classe => {
-                    tbody.innerHTML += `
-                        <tr>
-                            <td>${classe.classId}</td>
-                            <td>${classe.name}</td>
-                            <td class="action-buttons">
-                                <button class="btn-edit" onclick="InsertionManager.handleClassAction('edit', '${classe._id}')">
-                                    <i class="fas fa-edit"></i> Modifier
-                                </button>
-                                <button class="btn-delete" onclick="InsertionManager.handleClassAction('delete', '${classe._id}')">
-                                    <i class="fas fa-trash"></i> Supprimer
-                                </button>
-                            </td>
-                        </tr>
-                    `;
+                // Mise à jour des selects de classes
+                if (elements.courseClassSelect) {
+                    elements.courseClassSelect.innerHTML = '<option value="">Sélectionnez une classe</option>';
+                    classResult.data.forEach(classe => {
+                        elements.courseClassSelect.innerHTML += `
+                            <option value="${classe._id}">${classe.name}</option>
+                        `;
+                    });
+                }
+
+                if (elements.feeClassSelect) {
+                    elements.feeClassSelect.innerHTML = '<option value="">Sélectionnez une classe</option>';
+                    classResult.data.forEach(classe => {
+                        elements.feeClassSelect.innerHTML += `
+                            <option value="${classe._id}">${classe.name}</option>
+                        `;
+                    });
+                }
+            }
+
+            // Charger les options
+            const optionResponse = await fetch(`${this.apiBaseUrl}/insertion/options`);
+            const optionResult = await optionResponse.json();
+            console.log('Options chargées:', optionResult);
+
+            if (optionResult.success) {
+                const elements = {
+                    optionTbody: document.querySelector('#optionsTable tbody'),
+                    courseOptionSelect: document.getElementById('courseOption'),
+                    feeOptionSelect: document.getElementById('feeOption')
+                };
+
+                // Mise à jour du tableau des options
+                if (elements.optionTbody) {
+                    this.updateOptionsTable(optionResult.data, elements.optionTbody);
+                }
+
+                // Mise à jour des selects d'options
+                const optionSelects = [elements.courseOptionSelect, elements.feeOptionSelect];
+                optionSelects.forEach(select => {
+                    if (select) {
+                        select.innerHTML = '<option value="pas_necessaire">Pas nécessaire</option>';
+                        optionResult.data.forEach(option => {
+                            select.innerHTML += `
+                                <option value="${option._id}">${option.name}</option>
+                            `;
+                        });
+                    }
                 });
             }
+
+            // Charger les frais avec la bonne URL
+            console.log('Tentative de chargement des frais...');
+            const feeResponse = await fetch(`${this.apiBaseUrl}/insertion/fees`, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            console.log('Réponse brute des frais:', feeResponse);
+            
+            if (!feeResponse.ok) {
+                throw new Error(`Erreur HTTP: ${feeResponse.status}`);
+            }
+
+            const feeResult = await feeResponse.json();
+            console.log('Données des frais reçues:', feeResult);
+
+            if (feeResult.success) {
+                const feeTbody = document.querySelector('#feesTable tbody');
+                if (feeTbody) {
+                    this.updateFeesTable(feeResult.data, feeTbody);
+                } else {
+                    console.error('tbody des frais non trouvé');
+                }
+            } else {
+                console.error('Réponse des frais non valide:', feeResult);
+            }
+
+            // Charger les cours
+            console.log('Chargement des cours...');
+            const courseResponse = await fetch('http://localhost:5002/api/insertion/courses');
+            const courseResult = await courseResponse.json();
+            console.log('Réponse des cours:', courseResult);
+
+            if (courseResult.success) {
+                const courseTbody = document.querySelector('#coursesTable tbody');
+                if (courseTbody) {
+                    this.updateCoursesTable(courseResult.data, courseTbody);
+                }
+            }
+
         } catch (error) {
             console.error('Erreur lors du chargement des données:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: 'Impossible de charger les données',
-                confirmButtonColor: '#dc3545'
-            });
         }
+    }
+
+    // Méthodes de mise à jour des tableaux
+    updateOptionsTable(options, tbody) {
+        tbody.innerHTML = '';
+        if (options.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="3" class="empty-message">Aucune option enregistrée</td>
+                </tr>
+            `;
+            return;
+        }
+
+        options.forEach(option => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${option.optionId}</td>
+                    <td>${option.name}</td>
+                    <td class="action-buttons">
+                        <button class="btn-edit" onclick="InsertionManager.handleOptionAction('edit', '${option._id}')">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="btn-delete" onclick="InsertionManager.handleOptionAction('delete', '${option._id}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
     }
 
     async deleteClass(id) {
@@ -1073,7 +1294,7 @@ class InsertionManager {
             });
 
             if (result.isConfirmed) {
-                const response = await fetch(`http://localhost:5002/api/classe/${id}`, {
+                const response = await fetch(`${this.apiBaseUrl}/classe/${id}`, {
                     method: 'DELETE'
                 });
 
@@ -1089,7 +1310,7 @@ class InsertionManager {
                     
                     // Recharger uniquement le tableau des classes
                     const classTableBody = document.querySelector('#classesTable tbody');
-                    const classesResponse = await fetch('http://localhost:5002/api/classe/all');
+                    const classesResponse = await fetch(`${this.apiBaseUrl}/classe/all`);
                     const classesData = await classesResponse.json();
                     
                     this.updateClassesTable(classesData.data, classTableBody);
@@ -1110,7 +1331,7 @@ class InsertionManager {
 
     async editClass(id) {
         try {
-            const response = await fetch(`http://localhost:5002/api/classe/${id}`);
+            const response = await fetch(`${this.apiBaseUrl}/classe/${id}`);
             const data = await response.json();
 
             if (data.success) {
@@ -1132,7 +1353,7 @@ class InsertionManager {
 
     async updateClass(id, formData) {
         try {
-            const response = await fetch(`http://localhost:5002/api/classe/${id}`, {
+            const response = await fetch(`${this.apiBaseUrl}/classe/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1153,7 +1374,7 @@ class InsertionManager {
 
                 // Recharger uniquement le tableau des classes
                 const classTableBody = document.querySelector('#classesTable tbody');
-                const classesResponse = await fetch('http://localhost:5002/api/classe/all');
+                const classesResponse = await fetch(`${this.apiBaseUrl}/classe/all`);
                 const classesData = await classesResponse.json();
                 
                 this.updateClassesTable(classesData.data, classTableBody);
@@ -1210,10 +1431,182 @@ class InsertionManager {
             `;
         });
     }
+
+    async deleteOption(id) {
+        try {
+            const result = await Swal.fire({
+                title: 'Êtes-vous sûr ?',
+                text: "Cette suppression est irréversible !",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#b88f1e',
+                cancelButtonColor: '#dc3545',
+                confirmButtonText: 'Oui, supprimer',
+                cancelButtonText: 'Annuler'
+            });
+
+            if (result.isConfirmed) {
+                const response = await fetch(`${this.apiBaseUrl}/insertion/options/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Supprimé !',
+                        text: 'L\'option a été supprimée.',
+                        confirmButtonColor: '#b88f1e'
+                    });
+                    
+                    // Recharger les données
+                    this.loadAllData();
+                } else {
+                    throw new Error(data.message);
+                }
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.message || 'Erreur lors de la suppression',
+                confirmButtonColor: '#dc3545'
+            });
+        }
+    }
+
+    static async handleOptionAction(action, id) {
+        if (!window.insertionManager) return;
+        
+        if (action === 'edit') {
+            await window.insertionManager.editOption(id);
+        } else if (action === 'delete') {
+            await window.insertionManager.deleteOption(id);
+        }
+    }
+
+    updateCoursesTable(courses, tbody) {
+        tbody.innerHTML = '';
+        if (!courses || courses.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center">Aucun cours enregistré</td>
+                </tr>
+            `;
+            return;
+        }
+
+        courses.forEach(course => {
+            tbody.innerHTML += `
+                <tr>
+                    <td>${course.courseId || 'N/A'}</td>
+                    <td>${course.name || 'N/A'}</td>
+                    <td>${course.class?.name || 'N/A'}</td>
+                    <td>${course.option?.name || 'Pas nécessaire'}</td>
+                    <td class="action-buttons">
+                        <button class="btn-edit" onclick="window.insertionManager.handleCourseAction('edit', '${course._id}')">
+                            <i class="fas fa-edit"></i> Modifier
+                        </button>
+                        <button class="btn-delete" onclick="window.insertionManager.handleCourseAction('delete', '${course._id}')">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    async handleCourseAction(action, courseId) {
+        try {
+            switch(action) {
+                case 'edit':
+                    // Implémenter l'édition
+                    break;
+                case 'delete':
+                    const confirmed = await Swal.fire({
+                        title: 'Êtes-vous sûr ?',
+                        text: "Cette action est irréversible !",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Oui, supprimer !',
+                        cancelButtonText: 'Annuler'
+                    });
+
+                    if (confirmed.isConfirmed) {
+                        const response = await fetch(`http://localhost:5002/api/insertion/courses/${courseId}`, {
+                            method: 'DELETE'
+                        });
+
+                        const result = await response.json();
+                        if (result.success) {
+                            await Swal.fire(
+                                'Supprimé !',
+                                'Le cours a été supprimé.',
+                                'success'
+                            );
+                            await this.loadAllData();
+                        } else {
+                            throw new Error(result.message);
+                        }
+                    }
+                    break;
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: error.message
+            });
+        }
+    }
+
+    updateFeesTable(fees, tbody) {
+        console.log('Mise à jour du tableau des frais avec:', fees);
+        tbody.innerHTML = '';
+        
+        if (!fees || fees.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="text-center">Aucun frais enregistré</td>
+                </tr>
+            `;
+            return;
+        }
+
+        fees.forEach(fee => {
+            const currencySymbol = fee.currency === 'USD' ? '$' : 'FC';
+            tbody.innerHTML += `
+                <tr>
+                    <td>${fee.feeId || 'N/A'}</td>
+                    <td>${fee.name || 'N/A'}</td>
+                    <td>${(fee.amount || 0).toLocaleString()} ${currencySymbol}</td>
+                    <td>${fee.class?.name || 'N/A'}</td>
+                    <td>${fee.option?.name || 'Pas nécessaire'}</td>
+                    <td class="action-buttons">
+                        <button class="btn-edit" onclick="window.insertionManager.handleFeeAction('edit', '${fee._id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-delete" onclick="window.insertionManager.handleFeeAction('delete', '${fee._id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
 }
 
-// Initialisation immédiate
-window.insertionManager = new InsertionManager();
+// Initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Initialisation de InsertionManager');
+    window.insertionManager = new InsertionManager();
+    window.insertionManager.loadAllData();
+});
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {

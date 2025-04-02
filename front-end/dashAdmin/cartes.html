@@ -676,8 +676,8 @@
                   <span>Inscriptions</span>
                 </li>
                 <li class="menu-item" onclick="location.href='cartes.html'">
-                  <i class="fas far fa-id-card fa-2x"></i>
-                  <span>cartes</span>
+                  <i class="fas far fa-id-card fa-2x" style="color: #b88f1e;"></i>
+                  <span style="color: #b88f1e;">cartes</span>
                 </li>
               </ul>
             </div>
@@ -688,8 +688,8 @@
               <li class="menu-item" >
                 <a href="parametres.html" style="display: flex;
               align-items: center;">
-                  <i class="fas fa-cog" style="color: #b88f1e;"></i>
-                  <span style="color: #b88f1e;">Paramètres</span>
+                  <i class="fas fa-cog"></i>
+                  <span>Paramètres</span>
                 </a>
               </li>
               <li class="menu-item">
@@ -742,353 +742,20 @@
             </div>
           </header>
 
-          <!-- MAIN CONTENT -->
-          <!-- Dans la section main de votre dashIndex.html -->
-<main style="padding: 20px;">
-  <div class="head-title" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 370px;">
-          <h1 style="color: #101041; font-size: 24px;">Paramètres d'Administration</h1>
-  </div>
+          <main>
 
-  <div class="profile-container">
-      <div class="row" style="display: flex; width: 100%; gap: 40px;">
-          <!-- Carte de profil -->
-          <div class="col-md-4" style="flex: 0 0 30%;">
-              <div class="profile-card">
-                  <div class="profile-header" style="background: #101041;">
-                      <div class="profile-image-container">
-                          <img id="profileImage" src="avatar/admin.jpg" alt="Admin" class="profile-image">
-                          <div class="image-overlay">
-                              <label for="profile-upload" class="upload-icon">
-                                  <i class="fa fa-camera"></i>
-                              </label>
-                              <input type="file" id="profile-upload" accept="image/*" hidden>
-                          </div>
-                      </div>
-                      <h3 id="adminName" class="profile-name">Chargement...</h3>
-                      <p class="profile-role">Super Administrateur</p>
-                  </div>
-
-                  <div class="profile-info">
-                      <div class="info-item">
-                          <i class="fa fa-phone" style="color: #b88f1e;"></i>
-                          <div class="info-content" data-type="phone">
-                              <label>Téléphone</label>
-                              <p id="adminPhone">Chargement...</p>
-                          </div>
-                      </div>
-                      <div class="info-item">
-                          <i class="fa fa-envelope" style="color: #b88f1e;"></i>
-                          <div class="info-content" data-type="email">
-                              <label>Email</label>
-                              <p id="adminEmail">Chargement...</p>
-                          </div>
-                      </div>
-                      <div class="info-item">
-                          <i class="fa fa-map" style="color: #b88f1e;"></i>
-                          <div class="info-content" data-type="address">
-                              <label>Adresse</label>
-                              <p id="adminAddress">Chargement...</p>
-                          </div>
-                      </div>
-                      <div class="info-item">
-                          <i class="fas fa-user" style="color: #b88f1e;"></i>
-                          <div class="info-content">
-                              <label>Statut</label>
-                              <p>Actif</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-          <!-- Section des paramètres -->
-          <div class="col-md-8" style="flex: 0 0 70%;">
-              <div class="settings-card">
-                  <div class="settings-nav">
-                      <button class="nav-btn active" data-tab="profile">
-                          <i class="bx bx-user"></i> Profil
-                      </button>
-                      <button class="nav-btn" data-tab="security">
-                          <i class="bx bx-lock-alt"></i> Sécurité
-                      </button>
-                      <button class="nav-btn" data-tab="notifications">
-                          <i class="bx bx-bell"></i> Notifications
-                      </button>
-                  </div>
-
-                  <div class="settings-content">
-                      <!-- Onglet Profil -->
-                      <div class="settings-tab active" id="profile-tab">
-                          <h3>Informations du profil</h3>
-                          <form class="settings-form" id="profileForm">
-                              <div class="form-group">
-                                  <label>Nom complet</label>
-                                  <input type="text" name="fullname" placeholder="admin 01" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                  <label>Email</label>
-                                  <input type="email" name="email" placeholder="admin@cicaf.com" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                  <label>Téléphone</label>
-                                  <input type="tel" name="phone" placeholder="+243 821 762 521" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                  <label>Adresse</label>
-                                  <input type="text" name="address" placeholder="Mososo, Limete" class="form-control">
-                              </div>
-                              <button type="submit" class="btn-save">
-                                  <i class="bx bx-save"></i> Enregistrer les modifications
-                              </button>
-                          </form>
-                      </div>
-
-                      <!-- Onglet Sécurité -->
-                      <div class="settings-tab" id="security-tab">
-                          <h3>Paramètres de sécurité</h3>
-                          <form class="settings-form" id="securityForm">
-                              <div class="form-group2">
-                                  <label>Mot de passe actuel</label>
-                                  <div class="password-input">
-                                      <input type="password" name="currentPassword" class="form-control" id="currentPassword">
-                                      <i class="fas fa-eye" id="toggleCurrentPassword"></i>
-                                  </div>
-                              </div>
-                              <div class="form-group2">
-                                  <label>Nouveau mot de passe</label>
-                                  <div class="password-input">
-                                      <input type="password" name="newPassword" class="form-control" id="newPassword">
-                                      <i class="fas fa-eye" id="toggleNewPassword"></i>
-                                  </div>
-                              </div>
-                              <div class="form-group2">
-                                  <label>Confirmer le mot de passe</label>
-                                  <div class="password-input">
-                                      <input type="password" name="confirmPassword" class="form-control" id="confirmPassword">
-                                      <i class="fas fa-eye" id="toggleConfirmPassword"></i>
-                                  </div>
-                              </div>
-                              <button type="submit" class="btn-save">
-                                  <i class="bx bx-lock-alt"></i> Mettre à jour le mot de passe
-                              </button>
-                          </form>
-                      </div>
-
-                           <!-- Onglet Notifications -->
-                          <div class="settings-tab" id="notifications-tab">
-                              <h3>Préférences de notification</h3>
-                              <form class="settings-form">
-                                  <div class="form-check">
-                                      <input type="checkbox" id="email-notif" checked>
-                                      <label for="email-notif">Notifications par email</label>
-                                  </div>
-                                  <div class="form-check">
-                                      <input type="checkbox" id="browser-notif">
-                                      <label for="browser-notif">Notifications du navigateur</label>
-                                  </div>
-                                  <div class="form-check">
-                                      <input type="checkbox" id="updates-notif" checked>
-                                      <label for="updates-notif">Mises à jour du système</label>
-                                  </div>
-                                  <button type="submit" class="btn-save">
-                                      <i class="bx bx-bell"></i> Sauvegarder les préférences
-                                  </button>
-                              </form>
-                          </div>
-
-                          <script>
-                          function togglePassword(inputId, iconId) {
-                              const input = document.getElementById(inputId);
-                              const icon = document.getElementById(iconId);
-                              
-                              if (input.type === "password") {
-                                  input.type = "text";
-                                  icon.classList.remove("fa-eye");
-                                  icon.classList.add("fa-eye-slash");
-                              } else {
-                                  input.type = "password";
-                                  icon.classList.remove("fa-eye-slash");
-                                  icon.classList.add("fa-eye");
-                              }
-                          }
-
-                          document.getElementById("toggleCurrentPassword").addEventListener("click", () => {
-                              togglePassword("currentPassword", "toggleCurrentPassword");
-                          });
-                          
-                          document.getElementById("toggleNewPassword").addEventListener("click", () => {
-                              togglePassword("newPassword", "toggleNewPassword");
-                          });
-                          
-                          document.getElementById("toggleConfirmPassword").addEventListener("click", () => {
-                              togglePassword("confirmPassword", "toggleConfirmPassword");
-                          });
-
-                          // Gestion du formulaire de sécurité
-                          document.getElementById('securityForm').addEventListener('submit', async (e) => {
-                              e.preventDefault();
-                              const formData = new FormData(e.target);
-                              const data = Object.fromEntries(formData.entries());
-
-                              try {
-                                  const response = await fetch('http://localhost:5002/admin/update-password', {
-                                      method: 'POST',
-                                      headers: {
-                                          'Content-Type': 'application/json'
-                                      },
-                                      body: JSON.stringify(data)
-                                  });
-
-                                  const result = await response.json();
-                                  if (result.success) {
-                                      alert('Mot de passe mis à jour avec succès');
-                                  e.target.reset();
-                                  }
-                              } catch (error) {
-                                  console.error('Erreur:', error);
-                              }
-                          });
-
-                          // Dans la fonction qui gère le chargement des informations admin
-                          async function loadAdminInfo() {
-                              try {
-                                  const response = await fetch('http://localhost:5002/admin/test-data');
-                                  const result = await response.json();
-                                  console.log('📥 Données admin reçues:', result);
-
-                                  if (result.success) {
-                                      // Mise à jour de l'image de profil principale
-                                      if (result.admin.photo) {
-                                          document.getElementById('profileImage').src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
-                                          // Mise à jour de l'image dans la navbar
-                                          document.getElementById('navbarProfileImage').src = `http://localhost:5002/uploads/avatars/${result.admin.photo}`;
-                                      }
-                                      // ... reste du code ...
-                                  }
-                              } catch (error) {
-                                  console.error('❌ Erreur chargement données:', error);
-                              }
-                          }
-                      </script>
-
-                      
-                  </div>
-          
-      </div>
+          </main>
+ 
     </section>
     
     
 
-    // <!-- SCRIPT pour le toggle de la sidebar -->
-    <script>
-      const toggleBtn = document.getElementById('toggleBtn');
-      const sidebar = document.getElementById('sidebar');
-      
-      toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('expanded');
-        sidebar.classList.toggle('collapsed');
-      });
-
-      // Gestion des onglets
-    document.addEventListener('DOMContentLoaded', function() {
-    const navBtns = document.querySelectorAll('.nav-btn');
-    const tabs = document.querySelectorAll('.settings-tab');
-
-    // Fonction pour changer d'onglet
-    function switchTab(tabId) {
-        tabs.forEach(tab => tab.classList.remove('active'));
-        navBtns.forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(`${tabId}-tab`).classList.add('active');
-        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
-    }
-
-    // Écouteurs d'événements pour les boutons de navigation
-    navBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            switchTab(btn.dataset.tab);
-        });
-    });
-
-    // Gestion de l'upload d'image
-    const profileUpload = document.getElementById('profile-upload');
-    const profileImage = document.querySelector('.profile-image');
-
-    profileUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                profileImage.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Gestion des formulaires
-    const forms = document.querySelectorAll('.settings-form');
-    forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Animation du bouton
-            const btn = form.querySelector('.btn-save');
-            btn.style.pointerEvents = 'none';
-            btn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sauvegarde...';
-            
-            // Simuler une sauvegarde
-            setTimeout(() => {
-                btn.innerHTML = '<i class="bx bx-check"></i> Sauvegardé!';
-                btn.style.background = '#28a745';
-                
-                setTimeout(() => {
-                    btn.style.pointerEvents = 'auto';
-                    btn.style.background = '#b88f1e';
-                    btn.innerHTML = btn.dataset.originalText || '<i class="bx bx-save"></i> Enregistrer';
-                }, 2000);
-            }, 1500);
-        });
-    });
-
-    // Sauvegarder le texte original des boutons
-    document.querySelectorAll('.btn-save').forEach(btn => {
-        btn.dataset.originalText = btn.innerHTML;
-    });
-});
-
-  // Validation des formulaires
-  function validatePassword() {
-      const newPass = document.querySelector('input[type="password"]:nth-of-type(2)').value;
-      const confirmPass = document.querySelector('input[type="password"]:nth-of-type(3)').value;
-      
-      if (newPass !== confirmPass) {
-          alert('Les mots de passe ne correspondent pas');
-          return false;
-      }
-      return true;
-  }
-
-  // Notifications
-  function showNotification(message, type = 'success') {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.innerHTML = message;
-      
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-          notification.classList.add('show');
-          setTimeout(() => {
-              notification.classList.remove('show');
-              setTimeout(() => {
-                  notification.remove();
-              }, 300);
-          }, 3000);
-      }, 100);
-  }
-    </script>
+ 
   // <!-- SCRIPT pour le mode plein écran !-->
   <script src="js/fullscreen.js"></script>
+
+  <script src="js/loadProfileImage.js"></script>
+
 
 <style>
 
@@ -1115,6 +782,16 @@
     }
   });
 </script>
+
+<script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('expanded');
+      sidebar.classList.toggle('collapsed');
+    });
+  </script>
 
 <!-- À ajouter juste avant la fermeture de </body> -->
 <script src="js/parametres.js"></script>

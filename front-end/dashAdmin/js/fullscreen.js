@@ -22,24 +22,24 @@ function toggleFullScreen() {
 
 // Mettre à jour l'icône selon l'état
 function updateFullscreenIcon() {
-  const icon = document.querySelector('#fullscreenBtn i');
+  const icon = document.querySelector("#fullscreenBtn i");
   if (document.fullscreenElement) {
-    icon.classList.remove('fa-expand');
-    icon.classList.add('fa-compress');
+    icon.classList.remove("fa-expand");
+    icon.classList.add("fa-compress");
   } else {
-    icon.classList.remove('fa-compress');
-    icon.classList.add('fa-expand');
+    icon.classList.remove("fa-compress");
+    icon.classList.add("fa-expand");
   }
 }
 
 // Ajouter les écouteurs d'événements
-document.addEventListener('DOMContentLoaded', function() {
-  const fullscreenBtn = document.getElementById('fullscreenBtn');
+document.addEventListener("DOMContentLoaded", function () {
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
   if (fullscreenBtn) {
-    fullscreenBtn.addEventListener('click', toggleFullScreen);
+    fullscreenBtn.addEventListener("click", toggleFullScreen);
   }
-  
-  document.addEventListener('fullscreenchange', updateFullscreenIcon);
-  document.addEventListener('webkitfullscreenchange', updateFullscreenIcon);
-  document.addEventListener('msfullscreenchange', updateFullscreenIcon);
+
+  document.addEventListener("fullscreenchange", updateFullscreenIcon);
+  document.addEventListener("webkitfullscreenchange", updateFullscreenIcon);
+  document.addEventListener("msfullscreenchange", updateFullscreenIcon);
 });
